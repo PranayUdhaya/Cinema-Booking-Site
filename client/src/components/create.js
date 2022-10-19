@@ -31,7 +31,7 @@ export default function Create() {
      body: JSON.stringify(newPerson),
    })
    .catch(error => {
-     window.alert(error);
+    window.alert(error);
      return;
    });
  
