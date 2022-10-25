@@ -36,3 +36,9 @@ async function insertAccount(client, newAccount) {
     console.log(`New account created with the id: ${result.insertedId}`);
     
 }
+
+async function insertAccount(client, edittedAccount) {
+    const result = await client.db("user input").collection("accounts").updateOne(edittedAccount);
+
+    console.log(`Account information editted of account with the id: ${result.insertedId}`);
+}
