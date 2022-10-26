@@ -9,7 +9,21 @@ async function main() {
     try {
         await client.connect();
         await listDatabases(client);
-        await insertUser(client, "bob");
+
+        await insertUser(client, {
+            firstName: "Bob",
+            lastName: "Ross",
+            email: "bobross@gmail.com",
+            password: "bobross1!",
+            number: ""
+        });
+
+        await findUser(client, "bobross@gmail.com");
+
+        await editUser(client, "bobross@gmail.com", {number: "3456789120"})
+
+        await findUser(client, "bobross@gmail.com");
+
 
     } catch (e) {
         console.error(e);
@@ -21,6 +35,7 @@ async function main() {
 
 main().catch(console.error);
 
+//pulls the different databases and lists them out in the console log
 async function listDatabases(client) {
     const databaseList = await client.db().admin().listDatabases();
 
@@ -30,6 +45,7 @@ async function listDatabases(client) {
     })
 }
 
+//creates a new user and inserts in into the users database
 async function insertUser(client, newUser) {
     const result = await client.db("CinemaDB").collection("Users").insertOne(newUser);
 
@@ -37,23 +53,30 @@ async function insertUser(client, newUser) {
     
 }
 
+//takes a already existing user and edits the user's information
 async function editUser(client, userEmail, edittedUser) {
+    //uses the user email as the primary ID to find the user in the users database
+    //sets the newly changed information in place of the originally information
     const result = await client.db("CinemaDB").collection("Users").updateOne({email: userEmail}, {$set: edittedUser });
 
     console.log(`${result.matchCount} user matched with email criteria`);
     console.log(`${result.modifiedCount} user profile was updated`)
 }
 
+//finds a user in the users database using their email address as the primary ID
 async function findUser(client, userEmail) {
     const result = await client.db("CinemaDB").collection("Users").findOne({email: userEmail});
 
+    //if the user's email is found in the database it will display the user's account in the console log
     if (result) {
         console.log(`Found a user with the email '${userEmail}'`);
         console.log(result)
     } else {
+        //if the user's email is not found in the database, it will return the following statement
         console.log(`No user found with the email '${userEmail}'`);
     }
 }
+
 
 async function loginCheck(client, userEmail, userPassword) {
     const associatedAccount = await client.db("CinemaDB").collection("Users").findOne({email: userEmail});
@@ -96,6 +119,7 @@ async function storeFunctions() {
         number: "",
         status: "",
         rememberMe: ""
+
     });
 
     await findUser(client, "johnsmith@gmail.com");
