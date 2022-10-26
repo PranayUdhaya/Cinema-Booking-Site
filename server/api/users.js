@@ -105,37 +105,37 @@ async function loginCheck(client, userEmail, userPassword) {
 }
 
 // create booking for user
-async function createBooking(client, userEmail, booking) {
-    const result  = await client.db("CinemaDB").collection("Users").updateOne({email: userEmail}, {$set: {booking}});
+// async function createBooking(client, userEmail, booking) {
+//     const result  = await client.db("CinemaDB").collection("Users").updateOne({email: userEmail}, {$set: {booking}});
 
-    if (result) {
-        console.log(`Created a new booking for '${userEmail}'`);
-        console.log(result)
-    } else {
-        //if the user's email is not found in the database, it will return the following statement
-        console.log(`Error when creating booking for '${userEmail}'`);
-    }
-}
+//     if (result) {
+//         console.log(`Created a new booking for '${userEmail}'`);
+//         console.log(result)
+//     } else {
+//         //if the user's email is not found in the database, it will return the following statement
+//         console.log(`Error when creating booking for '${userEmail}'`);
+//     }
+// }
 
 // adding another booking for user
-async function addBooking(client, userEmail, booking) {
-    const userAccount  = await client.db("CinemaDB").collection("Users").findOne({email: userEmail});
-    const tix = userAccount.booking.tickets;
-    const newTix = booking.tickets;
-    for (let i = 0; i < newTix.length; i++) {
-        tix.push(newTix[i]);
-    }
-    userAccount.booking.totalPrice += booking.totalPrice;
+// async function addBooking(client, userEmail, booking) {
+//     const userAccount  = await client.db("CinemaDB").collection("Users").findOne({email: userEmail});
+//     const tix = userAccount.booking.tickets;
+//     const newTix = booking.tickets;
+//     for (let i = 0; i < newTix.length; i++) {
+//         tix.push(newTix[i]);
+//     }
+//     userAccount.booking.totalPrice += booking.totalPrice;
     
 
-    if (userAccount) {
-        console.log(`Update booking for '${userEmail}'`);
-        console.log(userAccount);
-    } else {
-        //if the user's email is not found in the database, it will return the following statement
-        console.log(`Error when updating booking for '${userEmail}'`);
-    }
-}
+//     if (userAccount) {
+//         console.log(`Update booking for '${userEmail}'`);
+//         console.log(userAccount);
+//     } else {
+//         //if the user's email is not found in the database, it will return the following statement
+//         console.log(`Error when updating booking for '${userEmail}'`);
+//     }
+// }
 
 async function storeFunctions() {
 
@@ -146,9 +146,10 @@ async function storeFunctions() {
         password: "jd1234!",
         number: "123-456-7890",     // optional
         status: "inactive",
-        rememberMe: "False",
+        rememberMe: false,          // if the user manually logs out, if true change this to false
         billingAddress: "",         // optional
-        cards:[]                    // optional
+        cards:[],                   // optional
+        admin: false                // optional
     })
 
     await editUser(client, "johnsmith@gmail.com", {
