@@ -8,7 +8,8 @@ async function main() {
 
     try {
         await client.connect();
-
+        await listDatabases(client);
+        await insertUser(client, "bob");
 
     } catch (e) {
         console.error(e);
