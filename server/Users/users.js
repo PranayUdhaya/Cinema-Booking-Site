@@ -30,21 +30,21 @@ async function listDatabases(client) {
 }
 
 async function insertUser(client, newUser) {
-    const result = await client.db("user").collection("Users").insertOne(newUser);
+    const result = await client.db("CinemaDB").collection("Users").insertOne(newUser);
 
     console.log(`New account created with the id: ${result.insertedId}`);
     
 }
 
 async function editUser(client, userEmail, edittedUser) {
-    const result = await client.db("user").collection("Users").updateOne({email: userEmail}, {$set: edittedUser });
+    const result = await client.db("CinemaDB").collection("Users").updateOne({email: userEmail}, {$set: edittedUser });
 
     console.log(`${result.matchCount} user matched with email criteria`);
     console.log(`${result.modifiedCount} user profile was updated`)
 }
 
 async function findUser(client, userEmail) {
-    const result = await client.db("user").collection("Users").findOne({email: userEmail});
+    const result = await client.db("CinemaDB").collection("Users").findOne({email: userEmail});
 
     if (result) {
         console.log(`Found a user with the email '${userEmail}'`);
@@ -55,7 +55,7 @@ async function findUser(client, userEmail) {
 }
 
 async function loginCheck(client, userEmail, userPassword) {
-    const associatedAccount = await client.db("user").collection("Users").findOne({email: userEmail});
+    const associatedAccount = await client.db("CinemaDB").collection("Users").findOne({email: userEmail});
 
     if (associatedAccount) {
 
