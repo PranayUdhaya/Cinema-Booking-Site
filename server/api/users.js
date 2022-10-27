@@ -1,4 +1,7 @@
 const { MongoClient } = require('mongodb');
+const Token = require("../api/token");
+const sendEmail = require("../utils/sendEmail");
+const crypto = require("crypto");
 
 async function main() {
     
