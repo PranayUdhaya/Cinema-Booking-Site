@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import U
 
 class CreateAccount extends React.Component{
 
@@ -20,7 +19,6 @@ class CreateAccount extends React.Component{
   }
 
   handleSubmit(event) {
-    
   }
 
   handleInputChange(event) {
@@ -32,18 +30,22 @@ class CreateAccount extends React.Component{
     });
   }
 
-  createUserObject(userFirstName, userLastName, userPhoneNumber, userEmailAddress, password, accountStatus, rememberMeStatus) {
+  createUserObject(userFirstName, userLastName, userEmailAddress, password, userPhoneNumber) {
     const userObject = {
         firstName: userFirstName,
         lastName: userLastName,
         email: userEmailAddress,
+        password: password,
         number: userPhoneNumber,
-        status: accountStatus,
-        rememberMe: rememberMeStatus
+        status: "active",
+        rememberMe: false
     }
-
+    return userObject;
 
   }
+
+  
+
 
   render() {
     return (
