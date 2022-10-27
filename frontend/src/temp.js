@@ -31,6 +31,7 @@ class CreateAccount extends React.Component{
   }
 
   handleSubmit(event) {
+    
   }
 
   handleInputChange(event) {
@@ -44,15 +45,13 @@ class CreateAccount extends React.Component{
 
   createUserObject() {
     const userObject = {
-      firstName: this.state.fname,
-      lastName: this.state.lname,
-      email: this.state.email,
-      password: this.state.pass,
-      number: this.state.phone,
-      status: "inactive",
-      rememberMe: false
-  }
-    return userObject;
+        firstName: this.state.fname,
+        lastName: this.state.lname,
+        email: this.state.email,
+        number: this.state.phone,
+        status: "inactive",
+        rememberMe: false
+    }
   }
 
   createPaymentObject() {
@@ -66,7 +65,7 @@ class CreateAccount extends React.Component{
       bState: this.state.bState,
       bZip: this.state.bZip
     }
-  }  
+  }
 
   render() {
     return (
