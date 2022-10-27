@@ -152,7 +152,8 @@ async function storeFunctions() {
         rememberMe: false,          // if the user manually logs out, if true change this to false
         billingAddress: "",         // optional
         cards:[],                   // optional
-        admin: false                // optional
+        admin: false,
+        verified: false                // optional
     })
 
     await editUser(client, "johnsmith@gmail.com", {
