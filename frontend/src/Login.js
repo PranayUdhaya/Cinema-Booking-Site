@@ -59,9 +59,15 @@ class Login extends React.Component{
             window.alert("Wrong password");
             return
         } else {
+            console.log(record.lastName )
+            console.log(record.firstName )
+            console.log(record.number )
             this.setState({
-                [this.state.fname]: record.firstname
+                [this.state.fname]: record.firstName,
+                [this.state.lname]: record.lastName,
+                [this.state.phone]: record.number
               });
+              
         }
 
       // window.alert(JSON.stringify(potentialUser));
@@ -71,7 +77,8 @@ class Login extends React.Component{
         //navigate("/");
         //this.pullData();
         this.createSession();
-        window.location.href = "/home";
+        //window.location.href = "/home";
+        console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
     }
 
         // const [records, setRecords] = useState([]);
@@ -105,10 +112,13 @@ class Login extends React.Component{
     createSession(event) {
         sessionStorage.setItem("loggedIn", "true");
         sessionStorage.setItem("email", this.state.email);
-        //sessionStorage.setItem("fname", );
-        //sessionStorage.setItem("lname", );
-        //sessionStorage.setItem("phone", );
-        //sessionStorage.setItem("status", );
+        sessionStorage.setItem("fname", this.state.fname);
+        sessionStorage.setItem("lname", this.state.lname);
+        sessionStorage.setItem("phone", this.state.phone);
+        //sessionStorage.setItem("status", "active");
+        console.log(this.state.fname)
+        console.log(this.state.lname)
+        console.log(this.state.phone)
 
     }
     
