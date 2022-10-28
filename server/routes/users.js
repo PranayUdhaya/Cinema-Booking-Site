@@ -132,8 +132,8 @@ router.route("/token").post(async function (req, res) {
     if (tokenDb) {
         let statusUpdate = {status: "active"};
         db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate});
-        console.log ("Account has been successfully verified");
-        await token.remove();
+        console.log("Account has been successfully verified");
+        await Token.deleteOne(tokenDb);
     } else {
         console.log("Account could not be verified");
     }
