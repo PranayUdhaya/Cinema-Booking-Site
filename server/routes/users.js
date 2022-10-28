@@ -8,10 +8,10 @@ const crypto = require("crypto");
 const { db } = require('../api/token');
 
 // this will get all users
-router.route("/users").get(function (req, res) {
+router.route("/users/session").get(function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
-    db_connect.collection("Users").find({})
-    .toArray(function (err, result) {
+    let checkEmail = { email: req.body.email };
+    db_connect.collection("Users").findOne(checkEmail, function (err, result) {
         if (err) {
             window.alert(err);
             throw err;
@@ -20,7 +20,7 @@ router.route("/users").get(function (req, res) {
     });
 });
 
-// This section will help you get a single record by id
+// This section will help you get a user by their email
 router.route("/users/email").post(function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = { email: req.body.email };
@@ -156,7 +156,7 @@ router.route("/users/updateinfo").post(function (req, response) {
         lastName: req.body.lastName,
         number: req.body.number
     };
-    db_connect.collection("Users").updateOne({email: userEmail}, { $set: updatedUser }, function (err, result) {
+    db_connect.collection("Users").updateOne(userEmail, { $set: updatedUser }, function (err, result) {
         if (err) throw err;
         response.json(result);
     });
