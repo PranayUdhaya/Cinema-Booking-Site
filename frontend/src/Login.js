@@ -17,11 +17,34 @@ class Login extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-    handleSubmit(event) {
-      // Call backend methed to verify login and return success of failure
-      // call displayFailure if failed
-      // call createSession if sucess
-      this.displayFailure(event);
+    async handleSubmit(e) {
+      e.preventDefault();
+    
+    
+      // When a post request is sent to the create url, we'll add a new record to the database.
+      //const newPerson = { ...form };
+      const potentialUser = {
+        email: this.state.email,
+        password: this.state.pass,
+      }
+    
+      
+      await fetch("http://localhost:5000/users/email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(potentialUser),
+      })
+      .catch(error => {
+       window.alert(error);
+        return;
+      });
+      window.alert(JSON.stringify(potentialUser));
+    
+      //setForm({ name: "", position: "", level: "" });
+    
+      //navigate("/");
     }
 
     createSession(event) {

@@ -17,7 +17,7 @@ router.route("/users").get(function (req, res) {
 });
 
 // This section will help you get a single record by id
-recordRoutes.route("/record/:email").get(function (req, res) {
+recordRoutes.route("/users/email").post(function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = { email: req.body.email };
     let pass = { password: req.body.password };
