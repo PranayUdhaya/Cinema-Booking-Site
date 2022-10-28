@@ -52,18 +52,18 @@ class CreateAccount extends React.Component{
     });
   }
 
-  createUserObject() {
-    const userObject = {
-      firstName: this.state.fname,
-      lastName: this.state.lname,
-      email: this.state.email,
-      password: this.state.pass,
-      number: this.state.phone,
-      status: "inactive",
-      rememberMe: false
-  }
-    return userObject;
-  }
+    createUserObject() {
+        const userObject = {
+            firstName: this.state.fname,
+            lastName: this.state.lname,
+            email: this.state.email,
+            password: this.state.pass,
+            number: this.state.phone,
+            status: "inactive",
+            rememberMe: false
+        }
+        return userObject;
+    }
 
   createPaymentObject() {
     const paymentObject = {

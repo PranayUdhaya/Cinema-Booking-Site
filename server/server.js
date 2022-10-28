@@ -18,11 +18,7 @@ app.use(express.json());
 app.use('/users', users);
 
 // Global error handling
-<<<<<<< Updated upstream
-app.use(function (err, res, _req) {
-=======
 app.use(function (err, res, _req, next) {
->>>>>>> Stashed changes
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
