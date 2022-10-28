@@ -7,6 +7,7 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const { db } = require('../api/token');
 const token = require('../api/token');
+const { send } = require('process');
 
 // this will get all users
 router.route("/users/session").get(function (req, res) {
@@ -100,37 +101,55 @@ router.route("/users/add").post(async function (req, response) {
 
 });
 
+router.route("/user/forgot").post(async function (req, res) {
+    let db_connect = dbo.getDb("CinemaDB");
+    let checkEmail = {email: req.body.email};
+
+    db_connect.collection("Users").findOne(checkEmail, async function (req, res) {
+        if (err) {
+            console.log("Invalid email");
+            throw err;
+        } else {
+            let randPass = crypto.randomBytes(16).toString("hex");
+            let tempPass = {password: randPass};
+            db_connect.collection("Users").updateOne(checkEmail, {$set: tempPass});
+
+            await sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
+        }
+    })
+}) 
+
 router.route("/token").post(async function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = {email: req.body.email};
     let code = { token: req.body.token}
     user = await db_connect.collection("Users").findOne(checkEmail);
     const tokenDb = await Token.findOne({
-        userId: user._id
+        userId: user._id,
+        token: code.token
     })
 
-    /*if (tokenDb) {
+    if (tokenDb) {
         let statusUpdate = {status: "active"};
         db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate});
         console.log ("Account has been successfully verified");
+        await token.remove();
     } else {
         console.log("Account could not be verified");
-    }*/
+    }
 
-    let statusUpdate = {status: "active"}
+    /*let statusUpdate = {status: "active"}
 
-    console.log(code.token);
-    console.log(tokenDb.token);
     if (code.token == `${tokenDb.token}`) {
         db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate})
         console.log ("Account has been successfully verified");
     } else {
         console.log("Account could not be verified");
-    }
+    }*/
 });
 
 //verifies account using verification link
-router.get("users/:_id/verify/:token", async (req, res) => {
+/*router.get("users/:_id/verify/:token", async (req, res) => {
     try {
         const user = await db_connect.collection("Users").findOne({_id: params._id});
 
@@ -158,7 +177,7 @@ router.get("users/:_id/verify/:token", async (req, res) => {
     } catch (error) {
         console.log("Internal Server Error");
     }
-})
+})*/
 
 
 // This section will change password
