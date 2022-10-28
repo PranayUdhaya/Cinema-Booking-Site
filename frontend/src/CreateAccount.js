@@ -32,10 +32,54 @@ class CreateAccount extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
+  /*async handleSubmit(event) {
     // Call backend methed to create account and return success of failure
       // call displayFailure if failed
+    event.preventDefault();
+
+  }*/
+
+
+
+
+
+  // This function will handle the submission.
+ async handleSubmit(e) {
+  e.preventDefault();
+
+  // When a post request is sent to the create url, we'll add a new record to the database.
+  //const newPerson = { ...form };
+  const newAccount = {
+    firstName: this.state.fname,
+    lastName: this.state.lname,
+    email: this.state.email,
+    password: this.state.pass,
+    number: this.state.phone,
+    status: "inactive",
+    rememberMe: false
   }
+
+  await fetch("http://localhost:5000/users/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newAccount),
+  })
+  .catch(error => {
+   window.alert(error);
+    return;
+  });
+
+  //setForm({ name: "", position: "", level: "" });
+
+  //navigate("/");
+}
+
+
+
+
+
 
   displayFailure(event) {
     this.setState({pass: ''});
