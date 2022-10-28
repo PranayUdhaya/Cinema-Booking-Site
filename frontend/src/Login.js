@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { Redirect } from "react-router-dom";
 
 class Login extends React.Component{
 
@@ -48,7 +47,11 @@ class Login extends React.Component{
         //navigate("/");
         //this.pullData();
         this.createSession();
+<<<<<<< Updated upstream
         //<Redirect to="/home"></Redirect>
+=======
+        window.location.href = "/home";
+>>>>>>> Stashed changes
     }
 
         // const [records, setRecords] = useState([]);
