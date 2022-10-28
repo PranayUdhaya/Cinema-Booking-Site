@@ -28,11 +28,10 @@ router.route("/users/email").post(function (req, res) {
             console.log("Invalid email");
             throw err;
         } else {
-            if (pass == result.password) {
+            if (pass.password == result.password) {
                 res.json(result);
             } else {
                 console.log("Username or Password is incorrect. Please try again.");
-                throw err;
             }
         }
     });
