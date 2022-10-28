@@ -15,6 +15,25 @@ router.route("/users").get(function (req, res) {
     });
 });
 
+// This section will help you create a new record.
+router.route("/users/add").post(function (req, response) {
+    let db_connect = dbo.getDb();
+    let myobj = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
+        number: req.body.number,
+        status: req.body.status,
+        rememberMe: req.body.rememberMe,
+    };
+    db_connect.collection("Users").insertOne(myobj, function (err, res) {
+    if (err) throw err;
+    response.json(res);
+    });
+});
+
+
 module.exports = router;
 
 

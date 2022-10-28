@@ -64,6 +64,7 @@ class CreateAccount extends React.Component{
         }
         return userObject;
     }
+    
 
   createPaymentObject() {
     const paymentObject = {
