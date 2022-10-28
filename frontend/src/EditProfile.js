@@ -167,7 +167,9 @@ class EditProfile extends React.Component {
                         </div>
 
                         <a>View Order History</a>
+                        <button class="logoutButton">logout</button>
                 </div>
+                
             </div>
         )
     }
