@@ -17,7 +17,7 @@ router.route("/users").get(function (req, res) {
 
 // This section will help you create a new record.
 router.route("/users/add").post(function (req, response) {
-    let db_connect = dbo.getDb();
+    let db_connect = dbo.getDb("CinemaDB");
     let myobj = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,

@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
-const Token = require("../api/token");
-const sendEmail = require("../utils/sendEmail");
+// const Token = require("../api/token");
+// const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
 async function main() {
@@ -20,17 +20,6 @@ async function main() {
         //     password: "bobross1!",
         //     number: ""
         // });
-
-        await findUser(client, "bobross@gmail.com");
-
-        await editUser(client, "bobross@gmail.com", {number: "3456789120"})
-
-        await findUser(client, "bobross@gmail.com");
-
-        var booking = {bookings: [10, 20], totalPrice: 10.0};
-        await createBooking(client, "bobross@gmail.com", booking);
-
-        await findUser(client, "bobross@gmail.com");
 
         // var booking2 = {tickets: [56, 75], totalPrice: 1.0 };
         // await addBooking(client, "bobross@gmail.com", booking2);
@@ -106,6 +95,7 @@ async function loginCheck(client, userEmail, userPassword) {
         return false;
     }
 }
+
 
 // create booking for user
 // async function createBooking(client, userEmail, booking) {

@@ -47,6 +47,7 @@ class CreateAccount extends React.Component{
  async handleSubmit(e) {
   e.preventDefault();
 
+
   // When a post request is sent to the create url, we'll add a new record to the database.
   //const newPerson = { ...form };
   const newAccount = {
@@ -59,6 +60,7 @@ class CreateAccount extends React.Component{
     rememberMe: false
   }
 
+
   await fetch("http://localhost:5000/users/add", {
     method: "POST",
     headers: {
@@ -70,6 +72,7 @@ class CreateAccount extends React.Component{
    window.alert(error);
     return;
   });
+  window.alert(JSON.stringify(newAccount));
 
   //setForm({ name: "", position: "", level: "" });
 
