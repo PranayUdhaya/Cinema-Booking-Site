@@ -97,7 +97,6 @@ router.route("/users/add").post(async function (req, response) {
 router.route("/:_id/verify/:token").get(async function (req, res) {
     try {
         const user = await db_connect.collection("Users").findOne({_id: params._id});
-        console.log(user);
 
         if (!user) {
             console.log("Invalid Link");

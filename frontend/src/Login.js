@@ -48,7 +48,7 @@ class Login extends React.Component{
         //navigate("/");
         //this.pullData();
         this.createSession();
-        <Redirect to="/home"></Redirect>
+        //<Redirect to="/home"></Redirect>
     }
 
         // const [records, setRecords] = useState([]);
