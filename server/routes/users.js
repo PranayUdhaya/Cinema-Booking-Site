@@ -73,7 +73,6 @@ router.route("/users/add").post(async function (req, response) {
         try {
             //creates a token for a verification link
             user = await db_connect.collection("Users").findOne(checkEmail);
-            console.log(user);
         
             const token = await new Token({
                 userId: user._id,
