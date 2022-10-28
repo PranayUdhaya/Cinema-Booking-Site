@@ -5,6 +5,7 @@ const dbo = require("../db/conn");
 const Token = require("../api/token");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const { db } = require('../api/token');
 
 // this will get all users
 router.route("/users/session").get(function (req, res) {
@@ -78,17 +79,51 @@ router.route("/users/add").post(async function (req, response) {
                 userId: user._id,
                 token: crypto.randomBytes(32).toString("hex")
             }).save()
-        
+            //creates a url using the user id and token string
             const url = `${process.env.BASE_URL}users/${user._id}/verify/${token.token}`;
+            
+            //sends an email with the verification url
             await sendEmail(user.email, "Please verify your email using the following link.", url);
-        
+            
             console.log("A verification email has been sent to your account");
         } catch (error) {
-            console.log(error);
+            console.log("Internal Server Error");
         }
     }
     
 });
+
+//
+router.route("/:_id/verify/:token").get(async function (req, res) {
+    try {
+        const user = await db_connect.collection("Users").findOne({_id: params._id});
+        console.log(user);
+
+        if (!user) {
+            console.log("Invalid Link");
+            return;
+        }
+
+        const token = await Token.findOne({
+            userId: user._id,
+            token: req.params.token
+        });
+
+        if(!token) {
+            console.log("Invalid Link");
+            return;
+        }
+
+        await db_connect.collection("Users").updateOne({_id: user._id, status: "active"});
+        await token.remove()
+
+        console.log("Email verified successfuly");
+
+    } catch (error) {
+        console.log("Internal Server Error");
+    }
+})
+
 
 // This section will change password
 router.route("/users/updatepass").post(function (req, response) {

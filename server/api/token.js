@@ -5,7 +5,7 @@ const uri = process.env.ATLAS_URI;
 
 mongoose.connect( uri || 'mongodb://localhost/test')
 .then(()=>{
-    console.log("Connected to the Database. Yayzow!");
+    console.log("Successfully connected to mongoose");
 })
 .catch(err => {
     console.log(err);
