@@ -3,19 +3,43 @@ const router = express.Router();
 const path = require('path');
 const dbo = require("../db/conn");
 
+// this will get all users
 router.route("/users").get(function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     db_connect.collection("Users").find({})
     .toArray(function (err, result) {
     if (err) {
-        window.alert("youfuckedup");
+        window.alert(err);
         throw err;
     }
     res.json(result);
     });
 });
 
-// This section will help you create a new record.
+// This section will help you get a single record by id
+recordRoutes.route("/record/:email").get(function (req, res) {
+    let db_connect = dbo.getDb("CinemaDB");
+    let checkEmail = { email: req.body.email };
+    let pass = { password: req.body.password };
+    db_connect
+    .collection("Users")
+    .findOne(checkEmail, function (err, result) {
+        if (err) {
+            console.log("Invalid email");
+            throw err;
+        } else {
+            if (pass == result.password) {
+                res.json(result);
+            } else {
+                console.log("Username or Password is incorrect. Please try again.");
+                throw err;
+            }
+        }
+    });
+});
+
+
+// This section will help you create a new user
 router.route("/users/add").post(function (req, response) {
     let db_connect = dbo.getDb("CinemaDB");
     let myobj = {
