@@ -9,8 +9,6 @@ class ForgotPasswordEmail extends React.Component {
     super(props);
     this.state = {
       email: "",
-      pass: "",
-      failure: ""
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -28,11 +26,36 @@ class ForgotPasswordEmail extends React.Component {
     });
   }
 
-  handleSubmit(event) {
-    // Call backend methed to verify login and return success of failure
-    // call displayFailure if failed
-    // call createSession if sucess
-    this.displayFailure(event);
+async handleSubmit(e) {
+  e.preventDefault();
+
+
+  // When a post request is sent to the create url, we'll add a new record to the database.
+  //const newPerson = { ...form };
+  const potentialUser = {
+    email: this.state.email,
+  }
+
+  const response = await fetch("http://localhost:5000/users/forgot", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(potentialUser),
+  })
+  .catch(error => {
+    window.alert(error);
+    return;
+  });
+  //console.log(response.ok);
+  //console.log(response);
+  if (!response.ok) {
+    window.alert("Incorrect email");
+    return;
+    }
+    const record = await response.json();
+    console.log(record);
+    console.log(record.password);
   }
 
   displayFailure(event) {
@@ -48,8 +71,8 @@ class ForgotPasswordEmail extends React.Component {
               <h1>Forgot Password</h1>
               <p>Enter your email address to reset your password</p>
               <form onSubmit={this.handleSubmit}>
-                  <label for="email">Enter Email </label><br></br>
-                  <input class="textfield" type="text" id="email" name="email"></input><br></br>
+                  <label for="email">Enter Email: </label><br></br>
+                  <input class="textfield" type="text" id="email" name="email" required value={this.state.email} onChange={this.handleInputChange}></input><br></br><br></br>
                   <input class="submit" type="submit" value="Enter"></input>
               </form> 
           </div>

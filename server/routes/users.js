@@ -101,7 +101,7 @@ router.route("/users/add").post(async function (req, response) {
 
 });
 
-router.route("/user/forgot").post(async function (req, res) {
+router.route("/users/forgot").post(async function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = {email: req.body.email};
 
@@ -115,6 +115,8 @@ router.route("/user/forgot").post(async function (req, res) {
             db_connect.collection("Users").updateOne(checkEmail, {$set: tempPass});
 
             await sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
+            
+            console.log("Password Reset Email has been sent");
         }
     })
 }) 
