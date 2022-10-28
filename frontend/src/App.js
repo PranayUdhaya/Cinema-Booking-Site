@@ -22,6 +22,7 @@ import Navbar from "./Navbar";
 import CustomerNavbar from "./CustomerNavbar";
 import AdminNavbar from "./AdminNavbar";
 import './styles.css';
+import EmailVerify from "./EmailVerify";
  
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
@@ -82,14 +83,17 @@ const App = () => {
 			Component = OrderHistory;
 			break;
     case "/ordersummary":
-      Component = OrderSummary;
-      break;
+      		Component = OrderSummary;
+      		break;
     case "/search":
 			Component = Search;
 			break;
     case "/seat":
-      Component = Seat;
-      break;
+      		Component = Seat;
+      		break;
+	case "/users/:id/verify/:token":
+			Component = EmailVerify;
+			break;
   }
  return (
     <div>
