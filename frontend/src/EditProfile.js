@@ -8,28 +8,26 @@ class EditProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fname: "",
-            lname: "",
+            displayfname: sessionStorage.getItem("fname"),
+            displaylname: sessionStorage.getItem("lname"),
+            displayphone: sessionStorage.getItem("phone"),
+            fname: sessionStorage.getItem("fname"),
+            lname: sessionStorage.getItem("lname"),
             pass: "",
             newPass: "",
             newPass2: "",
-            phone: "",
+            phone: sessionStorage.getItem("phone"),
             pAddress: "",
             pCity: "",
             pState: "",
             pZip: "",
         };
-    
-        this.pullData();
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
         this.updatePersonalInfo = this.updatePersonalInfo.bind(this);
     }
     
-    async pullData(event) {
-        //event.preventDefault();
-    }
 
     handleInputChange(event) {
         const name = event.target.name;
@@ -86,29 +84,14 @@ class EditProfile extends React.Component {
     async updatePersonalInfo(event) {
         event.preventDefault();
 
-        if (this.state.fname == null) {
-            this.setState({
-                [this.state.fname]: sessionStorage.getItem("fname")
-              });
-        }
-        if (this.state.lname == "") {
-            this.setState({
-                [this.state.fname]: sessionStorage.getItem("lname")
-              });
-        }
-        if (this.state.phone == "") {
-            this.setState({
-                [this.state.fname]: sessionStorage.getItem("phone")
-              });
-        }
-
         const personalInfo = {
             email: sessionStorage.getItem("email"),
-            password: this.state.pass,
+            firstName: this.state.fname,
+            lastName: this.state.lname,
             number: this.state.phone
           }
 
-        await fetch("http://localhost:5000/users/updateinfo", {
+          const response = await fetch("http://localhost:5000/users/updateinfo", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -119,7 +102,11 @@ class EditProfile extends React.Component {
         window.alert(error);
             return;
         });
-
+        const record = await response.json();
+        sessionStorage.setItem("fname", this.state.fname)
+        sessionStorage.setItem("lname", this.state.lname)
+        sessionStorage.setItem("phone", this.state.phone)
+        window.location.href = "/editprofile";
     }
 
     render() {
