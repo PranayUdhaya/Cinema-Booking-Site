@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const dbo = require("../db/conn");
+const Token = require("../api/token");
+const sendEmail = require("../utils/sendEmail");
+const crypto = require("crypto");
 
 // this will get all users
 router.route("/users").get(function (req, res) {
@@ -39,7 +42,7 @@ router.route("/users/email").post(function (req, res) {
 
 
 // This section will help you create a new user
-router.route("/users/add").post(function (req, response) {
+router.route("/users/add").post(async function (req, response) {
     let db_connect = dbo.getDb("CinemaDB");
     let myobj = {
         firstName: req.body.firstName,
@@ -53,19 +56,45 @@ router.route("/users/add").post(function (req, response) {
 
     //checks if email is already existing within the database
     let checkEmail = {email: req.body.email};
-    db_connect.collection("Users").findOne(checkEmail, function(err, res) {
-        if (err) {
-        } else {
-            //if email is in database, sends the following error message
-            console.log("User with given email already exists");
-            return;
-        }
-    });
+    existingAccount = false;
+    let user = await db_connect.collection("Users").findOne(checkEmail)
+    if (user) {
+        //if email is in database, sends the following error message
+        console.log("User with given email already exists");
+        existingAccount = true;
+        return;
+    } else {
+         //creates the new account into the database if the email is not taken.
+         db_connect.collection("Users").insertOne(myobj);
+         existingAccount = false;
+    }
 
-    db_connect.collection("Users").insertOne(myobj, function (err, res) {
-    if (err) throw err;
-    response.json(res);
-    });
+    if (existingAccount == false) {
+        try {
+            //creates a token for a verification link
+            user = await db_connect.collection("Users").findOne(checkEmail);
+            console.log(user);
+        
+            const token = await new Token({
+                userId: user._id,
+                token: crypto.randomBytes(32).toString("hex")
+            }).save()
+        
+            const url = `${process.env.BASE_URL}users/${user._id}/verify/${token.token}`;
+            await sendEmail(user.email, "Please verify your email using the following link.", url);
+        
+            console.log("A verification email has been sent to your account");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    //creates the new account into the database.
+    //db_connect.collection("Users").insertOne(myobj, function (err, res) {
+    //if (err) throw err;
+    //response.json(res);
+    //});
+
 });
 
 
