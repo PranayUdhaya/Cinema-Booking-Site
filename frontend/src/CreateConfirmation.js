@@ -14,14 +14,42 @@ class CreateConfirmation extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
-    // Call backend methed to verify code and return success or failure
-    // call displayFailure if failed
-    // this.displayFailure(event);
+  async handleSubmit(e) {
+    e.preventDefault();
+  
+  
+    // When a post request is sent to the create url, we'll add a new record to the database.
+    //const newPerson = { ...form };
+    const potentialUser = {
+      email: sessionStorage.getItem("email"),
+      token: this.state.confCode,
+    }
+  
+    
+    const response = await fetch("http://localhost:5000/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(potentialUser),
+    })
+    .catch(error => {
+     window.alert(error);
+      return;
+    });
+    //console.log(response.ok);
+    console.log(response);
+    if (!response.ok) {
+      window.alert("Incorrect email");
+      return;
+    }
+      const record = await response.json();
+      console.log(record);
+      console.log(record.password);
   }
 
   displayFailure(event) {
-    this.setState({pass: ""});
+    this.setState({confCode: ""});
     alert("The verification code entered was incorrect. Please try again.");
     event.preventDefault();
   }

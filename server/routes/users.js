@@ -6,6 +6,7 @@ const Token = require("../api/token");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const { db } = require('../api/token');
+const token = require('../api/token');
 
 // this will get all users
 router.route("/users/session").get(function (req, res) {
@@ -46,26 +47,6 @@ router.route("/users/email").post(function (req, res) {
     });
 });
 
-router.route("/token").post(async function (req, res) {
-    let db_connect = dbo.getDb("test");
-    let checkEmail = sessionStorage.getItem("email");
-    let tokenDb = db_connect.collection("tokens").findOne(checkEmail);
-
-    let code = { token: req.body.token}
-
-    let statusUpdate = {status: "active"}
-
-    if (checkEmail == tokenDb.email) {
-        if (code == tokenDb.token) {
-            dbo.getDb("CinemaDB").collection("Users").updateOne(checkEmail, {$set: statusUpdate})
-            console.log ("Account has been successfully verified");
-        } else {
-            console.log("Account could not be verifited");
-        }
-    } 
-});
-
-
 // This section will help you create a new user
 router.route("/users/add").post(async function (req, response) {
     let db_connect = dbo.getDb("CinemaDB");
@@ -100,6 +81,7 @@ router.route("/users/add").post(async function (req, response) {
             
             //creates a token for a verification link
             const token = await new Token({
+                userId: user._id,
                 userEmail: user.email,
                 token: Math.floor(1000 + Math.random() * 8999)
             }).save()
@@ -107,14 +89,44 @@ router.route("/users/add").post(async function (req, response) {
             const url = `${process.env.BASE_URL}createconfirmation`;
             
             //sends an email with the verification url
-            await sendEmail(user.email, "Verification Code", `Please enther the verifcation code\n${token.token}\n at the following link:\n${url}`);
+            await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
             
             console.log("A verification email has been sent to your account");
         } catch (error) {
+            console.log(error);
             console.log("Internal Server Error");
         }
     }
 
+});
+
+router.route("/token").post(async function (req, res) {
+    let db_connect = dbo.getDb("CinemaDB");
+    let checkEmail = {email: req.body.email};
+    let code = { token: req.body.token}
+    user = await db_connect.collection("Users").findOne(checkEmail);
+    const tokenDb = await Token.findOne({
+        userId: user._id
+    })
+
+    /*if (tokenDb) {
+        let statusUpdate = {status: "active"};
+        db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate});
+        console.log ("Account has been successfully verified");
+    } else {
+        console.log("Account could not be verified");
+    }*/
+
+    let statusUpdate = {status: "active"}
+
+    console.log(code.token);
+    console.log(tokenDb.token);
+    if (code.token == `${tokenDb.token}`) {
+        db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate})
+        console.log ("Account has been successfully verified");
+    } else {
+        console.log("Account could not be verified");
+    }
 });
 
 //verifies account using verification link

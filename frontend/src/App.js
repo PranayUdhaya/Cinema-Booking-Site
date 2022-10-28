@@ -52,10 +52,7 @@ const App = () => {
 			Component = CreateAccount;
 			break;
     case "/createconfirmation":
-<<<<<<< Updated upstream
-=======
 			//CurrentNav = null;
->>>>>>> Stashed changes
 			Component = CreateConfirmation;
 			break;
     case "/editprofile":
