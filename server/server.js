@@ -20,7 +20,13 @@ app.use('/users', users);
 // Global error handling
 app.use(function (err, res, _req, next) {
     console.error(err.stack);
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+      );
     res.status(500).send('Something broke!');
+    next();
 });
 
 // perform a database connection when the server starts
