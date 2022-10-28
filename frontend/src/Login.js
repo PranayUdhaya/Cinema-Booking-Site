@@ -150,7 +150,7 @@ class Login extends React.Component{
                 <input class="submit" type="submit" value="Log In"></input>
             </form> 
             <h5 hidden>{this.state.failure}</h5>
-            <a class="forgotPass" href="./forgotpassword">Forgot Password</a>
+            <a class="forgotPass" href="./forgotpasswordemail">Forgot Password</a>
             <a class="newAccount" href="./createaccount">Create New Account</a>
         </div>
       </div>
