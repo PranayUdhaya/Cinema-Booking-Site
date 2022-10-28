@@ -45,18 +45,24 @@ class Login extends React.Component{
         //setForm({ name: "", position: "", level: "" });
     
         //navigate("/");
+        //this.pullData();
         this.createSession();
     }
 
     createSession(event) {
-      localStorage.setItem("loggedIn", true);
-      localStorage.setItem("email", this.state.email)
+        sessionStorage.setItem("loggedIn", "true");
+        sessionStorage.setItem("email", this.state.email);
+        //sessionStorage.setItem("fname", );
+        //sessionStorage.setItem("lname", );
+        //sessionStorage.setItem("phone", );
+        //sessionStorage.setItem("status", );
+
     }
 
     displayFailure(event) {
-      this.setState({pass: ''});
-      alert("The email or password entered were incorrect. Please try again.");
-      event.preventDefault();
+        this.setState({pass: ''});
+        alert("The email or password entered were incorrect. Please try again.");
+        event.preventDefault();
     }
 
     handleInputChange(event) {

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 
-export default function Navbar() {
+export default function CustomerNavbar() {
     return (
     <header>
         <img class="logo" src={require("./images/logo.png")} alt="logo"></img>

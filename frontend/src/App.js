@@ -27,7 +27,7 @@ const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
 	let Component;
 	let CurrentNav = Navbar;
-	if (logged == true) {
+	if (logged == "true") {
 		CurrentNav = CustomerNavbar;
 	}
 	switch (window.location.pathname) {
