@@ -99,20 +99,6 @@ class CreateAccount extends React.Component{
     });
   }
 
-    createUserObject() {
-        const userObject = {
-            firstName: this.state.fname,
-            lastName: this.state.lname,
-            email: this.state.email,
-            password: this.state.pass,
-            number: this.state.phone,
-            status: "inactive",
-            rememberMe: false
-        }
-        return userObject;
-    }
-    
-
   createPaymentObject() {
     const paymentObject = {
       ctype: this.state.ctype,
@@ -147,6 +133,7 @@ class CreateAccount extends React.Component{
                   <label htmlFor="phone">Enter Phone Number</label><br></br>
                   <input class="textfield" type="tel" id="phone" name="phone" required value={this.state.phone} onChange={this.handleInputChange}></input><br></br><br></br>
                   
+                  <div hidden>
                   <h3>Enter Personal Address Info (optional)</h3>
                   <label htmlFor="pAddress">Street Address</label><br></br>
                   <input class="textfield" type="text" id="pAddress" name="pAddress" value={this.state.pAddress} onChange={this.handleInputChange}></input><br></br>
@@ -156,6 +143,7 @@ class CreateAccount extends React.Component{
                   <input class="textfield" type="text" id="pState" name="pState" value={this.state.pState} onChange={this.handleInputChange}></input><br></br>
                   <label htmlFor="pZip">Zipcode</label><br></br>
                   <input class="textfield" type="text" id="pZip" name="pZip" value={this.state.pZip} onChange={this.handleInputChange}></input><br></br><br></br>
+                    </div>
 
                   <h3>Enter Payment Details (optional)</h3>
                   <label htmlFor="ctype">Enter Card Type</label><br></br>

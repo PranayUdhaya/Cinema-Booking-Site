@@ -24,6 +24,7 @@ class EditProfile extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
+        this.updatePersonalInfo = this.updatePersonalInfo.bind(this);
     }
     
     async pullData(event) {
@@ -52,13 +53,37 @@ class EditProfile extends React.Component {
       
 
       
+<<<<<<< Updated upstream
+        const userPasswords = {
+            email: localStorage.getItem("email"),
+            password: this.state.pass,
+            updatedPassword: this.state.newPass
+        }
+    
+        console.log("email is: " + localStorage.getItem("email"));
+
+        await fetch("http://localhost:5000/users/updatepass", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userPasswords),
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+
+        alert("Password updated");
+=======
       const userPasswords = {
-        email: localStorage.getItem("email"),
+        email: sessionStorage.getItem("email"),
         password: this.state.pass,
         updatedPassword: this.state.newPass
       }
     
-      console.log("email is: " + localStorage.getItem("email"));
+      console.log("email is: " + sessionStorage.getItem("email"));
+      console.log("loggedIn is: " + sessionStorage.getItem("loggedIn"));
 
       await fetch("http://localhost:5000/users/updatepass", {
         method: "POST",
@@ -73,6 +98,7 @@ class EditProfile extends React.Component {
       });
 
       alert("Password updated");
+>>>>>>> Stashed changes
 
       //window.alert(JSON.stringify(potentialUser));
     
@@ -81,35 +107,43 @@ class EditProfile extends React.Component {
       //navigate("/");
     }
 
-    updatePersonalInfo(event) {
-        if (this.state.fname != "") {
-            this.changeFirstName();
-        }
-        if (this.state.lname != "") {
-            this.changeLastName();
-        }
-        if (this.state.phone != "") {
-            this.changePhoneNumber();
-        }
-        if (this.state.pAddress != "") {
-            this.changeAddress();
-        }
-    }
+    async updatePersonalInfo(event) {
+        event.preventDefault();
 
-    updateFirstName(event) {
-        
-    }
+        if (this.state.fname == null) {
+            this.setState({
+                [this.state.fname]: sessionStorage.getItem("fname")
+              });
+        }
+        if (this.state.lname == "") {
+            this.setState({
+                [this.state.fname]: sessionStorage.getItem("lname")
+              });
+        }
+        if (this.state.phone == "") {
+            this.setState({
+                [this.state.fname]: sessionStorage.getItem("phone")
+              });
+        }
 
-    updateLastName(event) {
-        
-    }
+        const personalInfo = {
+            email: sessionStorage.getItem("email"),
+            password: this.state.pass,
+            number: this.state.phone
+          }
 
-    updatePhoneNumber(event) {
-        
-    }
+        await fetch("http://localhost:5000/users/updateinfo", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(personalInfo),
+        })
+        .catch(error => {
+        window.alert(error);
+            return;
+        });
 
-    updateAddress(event) {
-        
     }
 
     render() {
@@ -131,16 +165,17 @@ class EditProfile extends React.Component {
 
                         <form onSubmit={this.updatePersonalInfo}>
                             <h3>Edit Personal Info</h3>
-                            <label htmlFor="fname">First Name</label><br></br>
+                            <label htmlFor="fname">First Name: {sessionStorage.getItem("fname")}</label><br></br>
                             <input class="textfield" type="text" id="fname" name="fname" value={this.state.fname} onChange={this.handleInputChange}></input><br></br>
-                            <label htmlFor="lname">Last Name</label><br></br>
+                            <label htmlFor="lname">Last Name: {sessionStorage.getItem("lname")}</label><br></br>
                             <input class="textfield" type="text" id="lname" name="lname" value={this.state.lname} onChange={this.handleInputChange}></input><br></br>
-                            <label htmlFor="phone">Phone Number</label><br></br>
+                            <label htmlFor="phone">Phone Number: {sessionStorage.getItem("phone")}</label><br></br>
                             <input class="textfield" type="tel" id="phone" name="phone" value={this.state.phone} onChange={this.handleInputChange}></input><br></br><br></br>
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
 
+                        <div hidden>
                         <form onSubmit={this.updateAddress}>
                             <h3>Edit Personal Address</h3>
                             <label htmlFor="pAddress">Street Address</label><br></br>
@@ -154,6 +189,7 @@ class EditProfile extends React.Component {
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
+                        </div>
 
                         <div class="paymentDetails">
                             <h3>Payment Details</h3>
