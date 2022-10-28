@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongodb.Schema;
+const Schema = mongoose.Schema;
 
 const tokenSchema = new Schema({
     userId: {
