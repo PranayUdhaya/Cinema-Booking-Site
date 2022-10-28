@@ -7,10 +7,10 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
 // this will get all users
-router.route("/users").get(function (req, res) {
+router.route("/users/session").get(function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
-    db_connect.collection("Users").find({})
-    .toArray(function (err, result) {
+    let checkEmail = { email: req.body.email };
+    db_connect.collection("Users").findOne(checkEmail, function (err, result) {
         if (err) {
             window.alert(err);
             throw err;
@@ -19,7 +19,7 @@ router.route("/users").get(function (req, res) {
     });
 });
 
-// This section will help you get a single record by id
+// This section will help you get a user by their email
 router.route("/users/email").post(function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = { email: req.body.email };
