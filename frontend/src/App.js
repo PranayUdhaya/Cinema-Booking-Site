@@ -26,9 +26,10 @@ import Navbar from "./Navbar";
 import './styles.css';
  
 const App = () => {
-let Component
+	sessionStorage.getItem("loggedIn");
+	let Component
 	switch (window.location.pathname) {
-
+		
 		case "/":
 			Component = Home;
 			break;

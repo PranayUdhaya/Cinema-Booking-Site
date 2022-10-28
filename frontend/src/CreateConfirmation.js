@@ -7,7 +7,8 @@ export default function CreateConfirmation() {
   return (
     <div>
         <div class="createAccount">
-            <h1>Verify Email</h1><br></br>
+            <h1>Account Created Successfully</h1>
+            <h2>Verify Email</h2><br></br>
             <p>A verification code has been sent to cinemas@movies.com</p><br></br>
             <form method="post">
                 <label for="confCode">Enter code:</label>

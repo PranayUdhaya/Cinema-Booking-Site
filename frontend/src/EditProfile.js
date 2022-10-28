@@ -11,6 +11,8 @@ class EditProfile extends React.Component {
           fname: "",
           lname: "",
           pass: "",
+          newPass: "",
+          newPass2: "",
           phone: "",
           pAddress: "",
           pCity: "",
@@ -72,12 +74,12 @@ class EditProfile extends React.Component {
                     <h1>Edit Profile</h1>
                         <form onSubmit={this.updatePassword}>
                             <h3>Change Password</h3>
-                            <label for="pwd">Enter Password</label><br></br>
-                            <input class="textfield" type="password" id="pwd" name="pwd"></input><br></br>
-                            <label for="pwd">Enter New Password</label><br></br>
-                            <input class="textfield" type="password" id="pwd" name="pwd"></input><br></br>
-                            <label for="pwd">Confirm New Password</label><br></br>
-                            <input class="textfield" type="password" id="pwd" name="pwd"></input><br></br><br></br>
+                            <label for="pass">Enter Password</label><br></br>
+                            <input class="textfield" type="password" id="pass" name="pass" value={this.state.pass} onChange={this.handleInputChange}></input><br></br>
+                            <label for="newPass">Enter New Password</label><br></br>
+                            <input class="textfield" type="password" id="newPass" name="newPass" value={this.state.newPass} onChange={this.handleInputChange}></input><br></br>
+                            <label for="newPass2">Confirm New Password</label><br></br>
+                            <input class="textfield" type="password" id="newPass2" name="newPass2" value={this.state.newPass2} onChange={this.handleInputChange}></input><br></br><br></br>
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
@@ -85,25 +87,25 @@ class EditProfile extends React.Component {
                         <form onSubmit={this.updatePersonalInfo}>
                             <h3>Edit Personal Info</h3>
                             <label for="fname">First Name</label><br></br>
-                            <input class="textfield" type="text" id="fname" name="fname" value="Jason"></input><br></br>
+                            <input class="textfield" type="text" id="fname" name="fname" value="Jason" value={this.state.fname} onChange={this.handleInputChange}></input><br></br>
                             <label for="lname">Last Name</label><br></br>
-                            <input class="textfield" type="text" id="lname" name="lname" value="Bernard"></input><br></br>
+                            <input class="textfield" type="text" id="lname" name="lname" value="Bernard" value={this.state.lname} onChange={this.handleInputChange}></input><br></br>
                             <label for="phone">Phone Number</label><br></br>
-                            <input class="textfield" type="tel" id="phone" name="phone" value="430-369-4260"></input><br></br><br></br>
+                            <input class="textfield" type="tel" id="phone" name="phone" value="430-369-4260" value={this.state.phone} onChange={this.handleInputChange}></input><br></br><br></br>
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
 
                         <form onSubmit={this.updateAddress}>
                             <h3>Edit Personal Address</h3>
-                            <label for="address">Street Address</label><br></br>
-                            <input class="textfield" type="text" id="address" name="address" value="124 Dandy Dr"></input><br></br>
-                            <label for="city">City</label><br></br>
-                            <input class="textfield" type="text" id="city" name="city" value="Athens"></input><br></br>
-                            <label for="state">State</label><br></br>
-                            <input class="textfield" type="text" id="state" name="state" value="GA"></input><br></br>
-                            <label for="zip">Zipcode</label><br></br>
-                            <input class="textfield" type="text" id="zip" name="zip" value="30601"></input><br></br><br></br>
+                            <label for="pAddress">Street Address</label><br></br>
+                            <input class="textfield" type="text" id="address" name="pAddress" value="124 Dandy Dr" value={this.state.pAddress} onChange={this.handleInputChange}></input><br></br>
+                            <label for="pCity">City</label><br></br>
+                            <input class="textfield" type="text" id="pCity" name="pCity" value="Athens" value={this.state.pCity} onChange={this.handleInputChange}></input><br></br>
+                            <label for="pState">State</label><br></br>
+                            <input class="textfield" type="text" id="pState" name="pState" value="GA" value={this.state.pState} onChange={this.handleInputChange}></input><br></br>
+                            <label for="pZip">Zipcode</label><br></br>
+                            <input class="textfield" type="text" id="pZip" name="pZip" value="30601" value={this.state.pZip} onChange={this.handleInputChange}></input><br></br><br></br>
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
