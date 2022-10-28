@@ -46,6 +46,25 @@ router.route("/users/email").post(function (req, res) {
     });
 });
 
+router.route("/token").post(async function (req, res) {
+    let db_connect = dbo.getDb("test");
+    let checkEmail = sessionStorage.getItem("email");
+    let tokenDb = db_connect.collection("tokens").findOne(checkEmail);
+
+    let code = { token: req.body.token}
+
+    let statusUpdate = {status: "active"}
+
+    if (checkEmail == tokenDb.email) {
+        if (code == tokenDb.token) {
+            dbo.getDb("CinemaDB").collection("Users").updateOne(checkEmail, {$set: statusUpdate})
+            console.log ("Account has been successfully verified");
+        } else {
+            console.log("Account could not be verifited");
+        }
+    } 
+});
+
 
 // This section will help you create a new user
 router.route("/users/add").post(async function (req, response) {
@@ -77,29 +96,29 @@ router.route("/users/add").post(async function (req, response) {
 
     if (existingAccount == false) {
         try {
-            //creates a token for a verification link
             user = await db_connect.collection("Users").findOne(checkEmail);
-        
+            
+            //creates a token for a verification link
             const token = await new Token({
-                userId: user._id,
-                token: crypto.randomBytes(32).toString("hex")
+                userEmail: user.email,
+                token: Math.floor(1000 + Math.random() * 8999)
             }).save()
             //creates a url using the user id and token string
-            const url = `${process.env.BASE_URL}users/${user._id}/verify/${token.token}`;
+            const url = `${process.env.BASE_URL}createconfirmation`;
             
             //sends an email with the verification url
-            await sendEmail(user.email, "Please verify your email using the following link.", url);
+            await sendEmail(user.email, "Verification Code", `Please enther the verifcation code\n${token.token}\n at the following link:\n${url}`);
             
             console.log("A verification email has been sent to your account");
         } catch (error) {
             console.log("Internal Server Error");
         }
     }
-    
+
 });
 
-//
-router.route("/:_id/verify/:token").get(async function (req, res) {
+//verifies account using verification link
+router.get("users/:_id/verify/:token", async (req, res) => {
     try {
         const user = await db_connect.collection("Users").findOne({_id: params._id});
 
@@ -118,7 +137,8 @@ router.route("/:_id/verify/:token").get(async function (req, res) {
             return;
         }
 
-        await db_connect.collection("Users").updateOne({_id: user._id, status: "active"});
+        updatedStatus = "active";
+        await db_connect.collection("Users").updateOne({email: user.email}, {$set: updatedStatus});
         await token.remove()
 
         console.log("Email verified successfuly");
