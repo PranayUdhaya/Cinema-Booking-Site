@@ -53,29 +53,6 @@ class EditProfile extends React.Component {
       
 
       
-<<<<<<< Updated upstream
-        const userPasswords = {
-            email: localStorage.getItem("email"),
-            password: this.state.pass,
-            updatedPassword: this.state.newPass
-        }
-    
-        console.log("email is: " + localStorage.getItem("email"));
-
-        await fetch("http://localhost:5000/users/updatepass", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userPasswords),
-        })
-        .catch(error => {
-            window.alert(error);
-            return;
-        });
-
-        alert("Password updated");
-=======
       const userPasswords = {
         email: sessionStorage.getItem("email"),
         password: this.state.pass,
@@ -98,7 +75,6 @@ class EditProfile extends React.Component {
       });
 
       alert("Password updated");
->>>>>>> Stashed changes
 
       //window.alert(JSON.stringify(potentialUser));
     
