@@ -16,7 +16,7 @@ export default function Navbar() {
             <ul class="nav_links">
                 <CustomLink href="/browse">Browse</CustomLink>
                 <CustomLink href="/search">Search</CustomLink>
-                <CustomLink href="/login">Login</CustomLink>
+                <CustomLink href="/editprofile">Profile</CustomLink>
             </ul>
         </nav>
       </header>
