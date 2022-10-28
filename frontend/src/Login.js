@@ -62,11 +62,9 @@ class Login extends React.Component{
             console.log(record.lastName )
             console.log(record.firstName )
             console.log(record.number )
-            this.setState({
-                [this.state.fname]: record.firstName,
-                [this.state.lname]: record.lastName,
-                [this.state.phone]: record.number
-              });
+            this.setState({fname: record.firstName});
+            this.setState({lname: record.lastName});
+            this.setState({phone: record.number});
               
         }
 
@@ -77,7 +75,7 @@ class Login extends React.Component{
         //navigate("/");
         //this.pullData();
         this.createSession();
-        //window.location.href = "/home";
+        window.location.href = "/home";
         console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
     }
 
