@@ -58,6 +58,10 @@ class Login extends React.Component{
         if (record.password != this.state.pass) {
             window.alert("Wrong password");
             return
+        } else {
+            this.setState({
+                [this.state.fname]: record.firstname
+              });
         }
 
       // window.alert(JSON.stringify(potentialUser));
@@ -99,7 +103,6 @@ class Login extends React.Component{
 */
 
     createSession(event) {
-        this.pullData();
         sessionStorage.setItem("loggedIn", "true");
         sessionStorage.setItem("email", this.state.email);
         //sessionStorage.setItem("fname", );
@@ -108,9 +111,7 @@ class Login extends React.Component{
         //sessionStorage.setItem("status", );
 
     }
-    pullData(event) {
-
-    }
+    
 
 
     displayFailure(event) {
@@ -141,8 +142,8 @@ class Login extends React.Component{
                 <input class="submit" type="submit" value="Log In"></input>
             </form> 
             <h5 hidden>{this.state.failure}</h5>
-            <a class="forgotPass" href="./forgotPass.html">Forgot Password</a>
-            <a class="newAccount" href="./createAccount.html">Create New Account</a>
+            <a class="forgotPass" href="./forgotpassword">Forgot Password</a>
+            <a class="newAccount" href="./createaccount">Create New Account</a>
         </div>
       </div>
     )
