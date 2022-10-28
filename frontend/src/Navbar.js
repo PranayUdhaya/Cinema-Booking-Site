@@ -3,7 +3,24 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 
+function loginLink(props) {
+    return <CustomLink href="/login">Login</CustomLink>;
+}
+  
+function profileLink(props) {
+    return <CustomLink href="/profile">Profile</CustomLink>;
+}
+
 export default function Navbar() {
+
+    let LastLink;
+
+    if (localStorage.getItem("loggedIn") == true) {
+        LastLink = profileLink;
+    } else {
+        LastLink = loginLink;
+    }
+
     return (
     <header>
         <img class="logo" src={require("./images/logo.png")} alt="logo"></img>
@@ -14,9 +31,10 @@ export default function Navbar() {
             </div>
         <nav>
             <ul class="nav_links">
-                <li><CustomLink href="/browse">Browse</CustomLink></li>
-                <li><CustomLink href="/search">Search</CustomLink></li>
-                <li><CustomLink href="/login">Login</CustomLink></li>
+                <CustomLink href="/browse">Browse</CustomLink>
+                <CustomLink href="/search">Search</CustomLink>
+                <LastLink />
+                <CustomLink hidden href="/login">Login</CustomLink>
             </ul>
         </nav>
       </header>

@@ -25,7 +25,7 @@ class Login extends React.Component{
     }
 
     createSession(event) {
-      sessionStorage.setItem("loggedIn", true);
+      localStorage.setItem("loggedIn", true);
     }
 
     displayFailure(event) {
