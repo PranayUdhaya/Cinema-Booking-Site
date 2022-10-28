@@ -10,7 +10,7 @@ const EmailVerify = () => {
     useEffect(() => {
         const verifyEmailUrl = async() => {
             try {
-                const url = `http://localhost:5000/users/${param.id}/verify/${param.token}`;
+                const url = `http://localhost:3000/users/${param.id}/verify/${param.token}`;
                 const {data} = await axios.get(url);
                 console.log(data);
                 setValidUrl(true)
@@ -22,17 +22,21 @@ const EmailVerify = () => {
         verifyEmailUrl()
     }, [param])
 
+    const Button = () => {
+        <button>Login</button>
+    }
+
     return (
         <Fragment>
             {validUrl ? (
                 <div className={styles.container}>
                     <h1>Email verified successfully</h1>
                     <Link to ="/login">
-                        <button className={styles.green_button}>Login</button>
+                        <Button />
                     </Link>
                 </div>
             ): (
-                <h1>404 Not Found </h1>
+                <h1>404 Not Found</h1>
             )}
         </Fragment>
     )
