@@ -8,6 +8,7 @@ import CreateConfirmation from "./CreateConfirmation";
 import EditProfile from "./EditProfile";
 import EnterPayment from "./EnterPayment";
 import ForgotPassword from "./ForgotPassword";
+import ForgotPasswordEmail from "./ForgotPasswordEmail";
 import Home from "./Home";
 import Login from "./Login";
 import LoginPrompt from "./LoginPrompt";
@@ -94,6 +95,9 @@ const App = () => {
 	case "/users/:id/verify/:token":
 			Component = EmailVerify;
 			break;
+    case "/forgotpasswordemail":
+        Component = ForgotPasswordEmail;
+		break;
   }
  return (
     <div>

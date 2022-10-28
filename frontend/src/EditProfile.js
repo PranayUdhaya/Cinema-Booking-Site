@@ -134,6 +134,8 @@ class EditProfile extends React.Component {
                             <input class="textfield" type="text" id="lname" name="lname" value={this.state.lname} onChange={this.handleInputChange}></input><br></br>
                             <label htmlFor="phone">Phone Number: {sessionStorage.getItem("phone")}</label><br></br>
                             <input class="textfield" type="tel" id="phone" name="phone" value={this.state.phone} onChange={this.handleInputChange}></input><br></br><br></br>
+                            <label htmlFor="promo">Opt in for Promotion Emails</label>
+                            <input class="textfield" type="checkbox" id="promo" name="promo" onChange={this.handleInputChange}></input><br></br><br></br>
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
@@ -149,6 +151,7 @@ class EditProfile extends React.Component {
                             <input class="textfield" type="text" id="pState" name="pState" value={this.state.pState} onChange={this.handleInputChange}></input><br></br>
                             <label htmlFor="pZip">Zipcode</label><br></br>
                             <input class="textfield" type="text" id="pZip" name="pZip" value={this.state.pZip} onChange={this.handleInputChange}></input><br></br><br></br>
+                            
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
