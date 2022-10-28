@@ -121,7 +121,7 @@ router.route("/users/updateinfo").post(function (req, response) {
         lastName: req.body.lastName,
         number: req.body.number
     };
-    db_connect.collection("Users").updateOne({email: userEmail}, { $set: updatedUser }, function (err, result) {
+    db_connect.collection("Users").updateOne(userEmail, { $set: updatedUser }, function (err, result) {
         if (err) throw err;
         response.json(result);
     });
