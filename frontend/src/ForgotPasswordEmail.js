@@ -48,7 +48,7 @@ async handleSubmit(e) {
     return;
   });
   //console.log(response.ok);
-  //console.log(response);
+  console.log(response);
   if (!response.ok) {
     window.alert("Incorrect email");
     return;
