@@ -73,12 +73,17 @@ router.route("/users/updatepass").post(function (req, response) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = { email: req.body.email};
     let oldPass = { password: req.body.password};
-    let newPass = { updatedPassword: req.body.updatedPassword };
+    let newPass = { password: req.body.updatedPassword };
+
     db_connect.collection("Users").findOne(checkEmail, function (err, result) {
         if (err) throw err;
         else {
             if (oldPass.password == result.password) {
-                result.password = newPass.updatedPassword;
+                db_connect.collection("Users").updateOne(checkEmail, { $set: newPass }, function (error, res) {
+                    if (error) throw error;
+                });
+            } else {
+                console.log("Incorrect password");
             }
         }
         response.json(result);
@@ -94,7 +99,7 @@ router.route("/users/updateinfo").post(function (req, response) {
         lastName: req.body.lastName,
         number: req.body.number
     };
-    db_connect.collection("Users").updateOne({email: userEmail}, {$set: updatedUser }, function (err, result) {
+    db_connect.collection("Users").updateOne({email: userEmail}, { $set: updatedUser }, function (err, result) {
         if (err) throw err;
         response.json(result);
     });
