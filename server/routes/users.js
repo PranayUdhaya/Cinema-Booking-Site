@@ -8,11 +8,11 @@ router.route("/users").get(function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     db_connect.collection("Users").find({})
     .toArray(function (err, result) {
-    if (err) {
-        window.alert(err);
-        throw err;
-    }
-    res.json(result);
+        if (err) {
+            window.alert(err);
+            throw err;
+        }
+        res.json(result);
     });
 });
 
@@ -51,8 +51,40 @@ router.route("/users/add").post(function (req, response) {
         rememberMe: req.body.rememberMe,
     };
     db_connect.collection("Users").insertOne(myobj, function (err, res) {
-    if (err) throw err;
-    response.json(res);
+        if (err) throw err;
+        response.json(res);
+    });
+});
+
+// This section will change password
+router.route("/users/updatepass").post(function (req, response) {
+    let db_connect = dbo.getDb("CinemaDB");
+    let checkEmail = { email: req.body.email};
+    let oldPass = { password: req.body.password};
+    let newPass = { updatedPassword: req.body.updatedPassword };
+    db_connect.collection("Users").findOne(checkEmail, function (err, result) {
+        if (err) throw err;
+        else {
+            if (oldPass.password == result.password) {
+                result.password = newPass.updatedPassword;
+            }
+        }
+        response.json(result);
+    });
+});
+
+// This section will change personal info
+router.route("/users/updateinfo").post(function (req, response) {
+    let db_connect = dbo.getDb("CinemaDB");
+    let userEmail = { email: req.body.email };
+    let updatedUser = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        number: req.body.number
+    };
+    db_connect.collection("Users").updateOne({email: userEmail}, {$set: updatedUser }, function (err, result) {
+        if (err) throw err;
+        response.json(result);
     });
 });
 

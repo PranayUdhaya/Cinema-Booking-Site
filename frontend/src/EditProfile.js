@@ -8,16 +8,16 @@ class EditProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          fname: "",
-          lname: "",
-          pass: "",
-          newPass: "",
-          newPass2: "",
-          phone: "",
-          pAddress: "",
-          pCity: "",
-          pState: "",
-          pZip: "",
+            fname: "",
+            lname: "",
+            pass: "",
+            newPass: "",
+            newPass2: "",
+            phone: "",
+            pAddress: "",
+            pCity: "",
+            pState: "",
+            pZip: "",
         };
     
         this.handleInputChange = this.handleInputChange.bind(this);
