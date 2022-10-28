@@ -42,13 +42,15 @@ class Login extends React.Component{
       });
       window.alert(JSON.stringify(potentialUser));
     
-      //setForm({ name: "", position: "", level: "" });
+        //setForm({ name: "", position: "", level: "" });
     
-      //navigate("/");
+        //navigate("/");
+        this.createSession();
     }
 
     createSession(event) {
       localStorage.setItem("loggedIn", true);
+      localStorage.setItem("email", this.state.email)
     }
 
     displayFailure(event) {

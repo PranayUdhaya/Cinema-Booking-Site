@@ -73,7 +73,7 @@ class CreateAccount extends React.Component{
     return;
   });
   window.alert(JSON.stringify(newAccount));
-
+  
   //setForm({ name: "", position: "", level: "" });
 
   //navigate("/");
