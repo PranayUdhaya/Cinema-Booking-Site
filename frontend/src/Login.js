@@ -2,57 +2,59 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class Login extends React.Component{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            pass: "",
-            failure: ""
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      pass: "",
+      failure: ""
+    };
 
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
     async handleSubmit(e) {
-        e.preventDefault();
+      e.preventDefault();
     
     
-        // When a post request is sent to the create url, we'll add a new user to the database.
-        const potentialUser = {
-            email: this.state.email,
-            password: this.state.pass,
-        }
+      // When a post request is sent to the create url, we'll add a new record to the database.
+      //const newPerson = { ...form };
+      const potentialUser = {
+        email: this.state.email,
+        password: this.state.pass,
+      }
     
       
-        await fetch("http://localhost:5000/users/email", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(potentialUser),
-        })
-        .catch(error => {
-            window.alert(error);
-            return;
-        });
-        window.alert(JSON.stringify(potentialUser));
+      await fetch("http://localhost:5000/users/email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(potentialUser),
+      })
+      .catch(error => {
+       window.alert(error);
+        return;
+      });
+      window.alert(JSON.stringify(potentialUser));
     
         //setForm({ name: "", position: "", level: "" });
     
         //navigate("/");
         //this.pullData();
         this.createSession();
+        <Redirect to="/home"></Redirect>
+    }
 
         // const [records, setRecords] = useState([]);
             
-        // This method fetches the records from the database.
-        useEffect(() => {
-            async function getUserInfo() {
+       /* // This method fetches the records from the database.
+            async getUserInfo() {
                 const userEmail = { email: this.state.email };
                 const response = await fetch("http://localhost:5000/users/session", {
                     method: "GET",
@@ -74,7 +76,8 @@ class Login extends React.Component{
             
             getUserInfo();            
             return;
-        })
+        }
+*/
 
     createSession(event) {
         sessionStorage.setItem("loggedIn", "true");
