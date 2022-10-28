@@ -51,10 +51,12 @@ router.route("/users/add").post(function (req, response) {
         rememberMe: req.body.rememberMe,
     };
 
+    //checks if email is already existing within the database
     let checkEmail = {email: req.body.email};
     db_connect.collection("Users").findOne(checkEmail, function(err, res) {
         if (err) {
         } else {
+            //if email is in database, sends the following error message
             console.log("User with given email already exists");
             return;
         }
