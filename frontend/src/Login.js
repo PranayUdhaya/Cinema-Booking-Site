@@ -10,6 +10,11 @@ class Login extends React.Component{
     this.state = {
       email: "",
       pass: "",
+      fname: "",
+      lname: "",
+      phone: "",
+      status: "",
+      rememberMe: "",
       failure: ""
     };
 
@@ -29,7 +34,7 @@ class Login extends React.Component{
       }
     
       
-      await fetch("http://localhost:5000/users/email", {
+      const response = await fetch("http://localhost:5000/users/email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,18 +45,29 @@ class Login extends React.Component{
        window.alert(error);
         return;
       });
-      window.alert(JSON.stringify(potentialUser));
+      //console.log(response.ok);
+      console.log(response);
+      if (!response.ok) {
+        window.alert("Incorrect email");
+        return;
+      }
+        const record = await response.json();
+        console.log(record);
+        console.log(record.password);
+        console.log(this.state.pass);
+        if (record.password != this.state.pass) {
+            window.alert("Wrong password");
+            return
+        }
+
+      // window.alert(JSON.stringify(potentialUser));
     
         //setForm({ name: "", position: "", level: "" });
     
         //navigate("/");
         //this.pullData();
         this.createSession();
-<<<<<<< Updated upstream
-        //<Redirect to="/home"></Redirect>
-=======
         window.location.href = "/home";
->>>>>>> Stashed changes
     }
 
         // const [records, setRecords] = useState([]);
@@ -83,6 +99,7 @@ class Login extends React.Component{
 */
 
     createSession(event) {
+        this.pullData();
         sessionStorage.setItem("loggedIn", "true");
         sessionStorage.setItem("email", this.state.email);
         //sessionStorage.setItem("fname", );
@@ -91,6 +108,10 @@ class Login extends React.Component{
         //sessionStorage.setItem("status", );
 
     }
+    pullData(event) {
+
+    }
+
 
     displayFailure(event) {
         this.setState({pass: ''});

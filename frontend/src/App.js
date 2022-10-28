@@ -52,7 +52,6 @@ const App = () => {
 			Component = CreateAccount;
 			break;
     case "/createconfirmation":
-			CurrentNav = null;
 			Component = CreateConfirmation;
 			break;
     case "/editprofile":

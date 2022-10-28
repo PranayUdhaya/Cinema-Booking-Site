@@ -32,11 +32,16 @@ router.route("/users/email").post(function (req, res) {
             console.log("Invalid email");
             throw err;
         } else {
-            if (pass.password == result.password) {
+            res.json(result);
+            /*if (pass.password == result.password) {
                 res.json(result);
             } else {
+                //res.send("UserNotFound");
                 console.log("Username or Password is incorrect. Please try again.");
-            }
+                throw err;
+                //window.alert("Username or Password is incorrect. Please try again.");
+                //return;
+            }*/
         }
     });
 });
