@@ -169,7 +169,10 @@ class CreateAccount extends React.Component{
                   <label htmlFor="bState">State</label><br></br>
                   <input class="textfield" type="text" id="bState" name="bState" value={this.state.bState} onChange={this.handleInputChange}></input><br></br>
                   <label htmlFor="bZip">Zipcode</label><br></br>
-                  <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.bZip} onChange={this.handleInputChange}></input><br></br><br></br>
+                  <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.promoTrue} onChange={this.handleInputChange}></input><br></br><br></br>
+
+                    <label htmlFor="promo">Opt in for Promotion Emails</label>
+                    <input class="textfield" type="checkbox" id="promo" name="promo" onChange={this.handleInputChange}></input><br></br>
 
                   <input class="submit" type="submit" value="Create Account"></input>
               </form>
