@@ -50,6 +50,16 @@ router.route("/users/add").post(function (req, response) {
         status: req.body.status,
         rememberMe: req.body.rememberMe,
     };
+
+    let checkEmail = {email: req.body.email};
+    db_connect.collection("Users").findOne(checkEmail, function(err, res) {
+        if (err) {
+        } else {
+            console.log("User with given email already exists");
+            return;
+        }
+    });
+
     db_connect.collection("Users").insertOne(myobj, function (err, res) {
     if (err) throw err;
     response.json(res);
