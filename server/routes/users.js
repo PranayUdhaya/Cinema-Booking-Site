@@ -8,6 +8,7 @@ const crypto = require("crypto");
 const { db } = require('../api/token');
 const token = require('../api/token');
 const { send } = require('process');
+const { endianness } = require('os');
 
 // this will get all users
 router.route("/users/session").get(function (req, res) {
@@ -59,6 +60,7 @@ router.route("/users/add").post(async function (req, response) {
         number: req.body.number,
         status: req.body.status,
         rememberMe: req.body.rememberMe,
+        promo: req.body.promo,
     };
 
     //checks if email is already existing within the database
@@ -93,6 +95,7 @@ router.route("/users/add").post(async function (req, response) {
             await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
             
             console.log("A verification email has been sent to your account");
+            response.end();
         } catch (error) {
             console.log(error);
             console.log("Internal Server Error");

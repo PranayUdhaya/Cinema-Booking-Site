@@ -25,11 +25,13 @@ class CreateAccount extends React.Component{
       bAddress: "",
       bCity: "",
       bState: "",
-      bZip: ""
+      bZip: "",
+      promo: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePromo = this.handlePromo.bind(this);
   }
 
   /*async handleSubmit(event) {
@@ -57,7 +59,8 @@ class CreateAccount extends React.Component{
     password: this.state.pass,
     number: this.state.phone,
     status: "inactive",
-    rememberMe: false
+    rememberMe: false,
+    promo: this.state.promo,
   }
 
 
@@ -76,11 +79,15 @@ class CreateAccount extends React.Component{
   
   //setForm({ name: "", position: "", level: "" });
 
-  //navigate("/");
+
+  window.location.href = "/home";
+  console.log();
 }
 
 
-
+handlePromo(event) {
+    this.state.promo = !this.state.promo
+}
 
 
 
@@ -172,7 +179,7 @@ class CreateAccount extends React.Component{
                   <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.promoTrue} onChange={this.handleInputChange}></input><br></br><br></br>
 
                     <label htmlFor="promo">Opt in for Promotion Emails</label>
-                    <input class="textfield" type="checkbox" id="promo" name="promo" onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="checkbox" id="promo" name="promo" onChange={this.handlePromo}></input><br></br>
 
                   <input class="submit" type="submit" value="Create Account"></input>
               </form>
