@@ -32,7 +32,8 @@ class ForgotPassword extends React.Component {
     // Call backend methed to verify login and return success of failure
     // call displayFailure if failed
     // call createSession if sucess
-    this.displayFailure(event);
+    //this.displayFailure(event);
+    window.location.href = "/home";
   }
 
   displayFailure(event) {

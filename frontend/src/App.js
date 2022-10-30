@@ -24,14 +24,19 @@ import CustomerNavbar from "./CustomerNavbar";
 import AdminNavbar from "./AdminNavbar";
 import './styles.css';
 import EmailVerify from "./EmailVerify";
+import EmptyNavbar from "./EmptyNavbar.js";
  
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
+    let admin = sessionStorage.getItem("admin");
 	let Component;
 	let CurrentNav = Navbar;
 	if (logged == "true") {
 		CurrentNav = CustomerNavbar;
 	}
+    if (admin == "true") {
+        CurrentNav = AdminNavbar;
+    }
 	switch (window.location.pathname) {
 
 	case "/":
@@ -53,7 +58,7 @@ const App = () => {
 			Component = CreateAccount;
 			break;
     case "/createconfirmation":
-			//CurrentNav = null;
+			CurrentNav = EmptyNavbar;
 			Component = CreateConfirmation;
 			break;
     case "/editprofile":
@@ -63,6 +68,7 @@ const App = () => {
 			Component = EnterPayment;
 			break;
     case "/forgotpassword":
+            CurrentNav = EmptyNavbar;
 			Component = ForgotPassword;
 			break;
     case "/home":
@@ -96,6 +102,7 @@ const App = () => {
 			Component = EmailVerify;
 			break;
     case "/forgotpasswordemail":
+        CurrentNav = EmptyNavbar;
         Component = ForgotPasswordEmail;
 		break;
   }

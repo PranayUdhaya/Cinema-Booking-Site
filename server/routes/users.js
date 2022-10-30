@@ -101,11 +101,13 @@ router.route("/users/add").post(async function (req, response) {
 
 });
 
+
+
 router.route("/users/forgot").post(async function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = {email: req.body.email};
 
-    db_connect.collection("Users").findOne(checkEmail, async function (req, res) {
+    db_connect.collection("Users").findOne(checkEmail, function (err, res) {
         if (err) {
             console.log("Invalid email");
             throw err;
@@ -114,7 +116,7 @@ router.route("/users/forgot").post(async function (req, res) {
             let tempPass = {password: randPass};
             db_connect.collection("Users").updateOne(checkEmail, {$set: tempPass});
 
-            await sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
+            sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
             
             console.log("Password Reset Email has been sent");
         }

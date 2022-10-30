@@ -59,6 +59,7 @@ async handleSubmit(e) {
     const record = await response.json();
     console.log(record);
     console.log(record.password);
+    window.location.href = "/forgotpassword";
   }
 
   displayFailure(event) {
@@ -74,7 +75,7 @@ async handleSubmit(e) {
               <h1>Forgot Password</h1>
               <p>Enter your email address to reset your password</p>
               <form onSubmit={this.handleSubmit}>
-                  <label for="email">Enter Email: </label><br></br>
+                  <label htmlFor="email">Enter Email: </label><br></br>
                   <input class="textfield" type="text" id="email" name="email" required value={this.state.email} onChange={this.handleInputChange}></input><br></br><br></br>
                   <input class="submit" type="submit" value="Enter"></input>
               </form> 

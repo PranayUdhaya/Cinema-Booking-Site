@@ -26,6 +26,7 @@ class EditProfile extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
         this.updatePersonalInfo = this.updatePersonalInfo.bind(this);
+        this.logout = this.logout.bind(this);
     }
     
 
@@ -109,6 +110,11 @@ class EditProfile extends React.Component {
         window.location.href = "/editprofile";
     }
 
+    logout(event) {
+        sessionStorage.setItem("loggedIn", "false");
+        window.location.href = "/home";
+    }
+
     render() {
         return (
             <div>
@@ -167,7 +173,7 @@ class EditProfile extends React.Component {
                         </div>
 
                         <a>View Order History</a>
-                        <button class="logoutButton">logout</button>
+                        <button class="logoutButton" onClick={this.logout}>logout</button>
                 </div>
                 
             </div>
