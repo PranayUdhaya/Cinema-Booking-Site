@@ -52,7 +52,10 @@ async handleSubmit(e) {
   if (!response.ok) {
     window.alert("Incorrect email");
     return;
+    } else {
+      window.location.href = "/forgotpassword";
     }
+
     const record = await response.json();
     console.log(record);
     console.log(record.password);
