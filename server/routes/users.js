@@ -36,16 +36,17 @@ router.route("/users/email").post(function (req, res) {
             console.log("Invalid email");
             throw err;
         } else {
-            res.json(result);
-            /*if (pass.password == result.password) {
-                res.json(result);
-            } else {
-                //res.send("UserNotFound");
-                console.log("Username or Password is incorrect. Please try again.");
-                throw err;
-                //window.alert("Username or Password is incorrect. Please try again.");
-                //return;
-            }*/
+            bcrypt.compare(pass.password, result.password, function(error, isMatch) {
+                if (error) {
+                    throw error
+                } else if (!isMatch) {
+                    result.match = isMatch;
+                    console.log("Incorrect Password");
+                } else {
+                    result.match = isMatch;
+                    res.json(result);
+                }
+            })
         }
     });
 });
@@ -55,31 +56,29 @@ router.route("/users/add").post(async function (req, response) {
     let db_connect = dbo.getDb("CinemaDB");
     const saltRounds = 10
     const pass = req.body.password;
-    var hashpass = '';
+    let myobj;
     bcrypt.genSalt(saltRounds, function (saltError, salt) {
     if (saltError) {
         throw saltError
     } else {
-        bcrypt.hash(pass, salt, function(hashError, hash) {
+        bcrypt.hash(pass, salt, function(hashError, res) {
         if (hashError) {
             throw hashError
         } else {
-            hashpass = hash;
+            myobj = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                password: res,
+                number: req.body.number,
+                status: req.body.status,
+                rememberMe: req.body.rememberMe,
+                promo: req.body.promo,
+            };
         }
         })
     }
     })
-    console.log(hashpass);
-    let myobj = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: hashpass,
-        number: req.body.number,
-        status: req.body.status,
-        rememberMe: req.body.rememberMe,
-        promo: req.body.promo,
-    };
 
     //checks if email is already existing within the database
     let checkEmail = {email: req.body.email};
@@ -215,15 +214,35 @@ router.route("/users/updatepass").post(function (req, response) {
     db_connect.collection("Users").findOne(checkEmail, function (err, result) {
         if (err) throw err;
         else {
-            if (oldPass.password == result.password) {
-                db_connect.collection("Users").updateOne(checkEmail, { $set: newPass }, function (error, res) {
-                    if (error) throw error;
-                });
-            } else {
-                console.log("Incorrect password");
-            }
+            bcrypt.compare(oldPass.password, result.password, function(error, isMatch) {
+                if (error) {
+                    throw error
+                } else if (!isMatch) {
+                    console.log("Incorrect Password");
+                } else {
+                    const saltRounds = 10
+                    bcrypt.genSalt(saltRounds, function (saltError, salt) {
+                    if (saltError) {
+                        throw saltError
+                    } else {
+                        bcrypt.hash(newPass.password, salt, function(hashError, hashpass) {
+                        if (hashError) {
+                            throw hashError
+                        } else {
+                            let newPass2 = { password: hashpass };
+                            db_connect.collection("Users").updateOne(checkEmail, { $set: newPass2 }, function (error, res) {
+                                if (error) throw error;
+                                else {
+                                    response.json(res);
+                                }
+                            });
+                        }
+                        });
+                    }
+                    });
+                }
+            })
         }
-        response.json(result);
     });
 });
 

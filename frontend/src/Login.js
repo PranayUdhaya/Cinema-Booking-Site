@@ -54,11 +54,9 @@ class Login extends React.Component{
       }
         const record = await response.json();
         console.log(record);
-        console.log(record.password);
-        console.log(this.state.pass);
-        if (record.password != this.state.pass) {
+        if (record.isMatch == false) {
             window.alert("Wrong password");
-            return
+            return;
         } else {
             console.log(record.lastName )
             console.log(record.firstName )
