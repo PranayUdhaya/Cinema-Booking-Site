@@ -9,6 +9,7 @@ const { db } = require('../api/token');
 const token = require('../api/token');
 const { send } = require('process');
 const bcrypt = require("bcryptjs")
+const { endianness } = require('os');
 
 // this will get all users
 router.route("/users/session").get(function (req, res) {
@@ -77,6 +78,7 @@ router.route("/users/add").post(async function (req, response) {
         number: req.body.number,
         status: req.body.status,
         rememberMe: req.body.rememberMe,
+        promo: req.body.promo,
     };
 
     //checks if email is already existing within the database
@@ -111,6 +113,7 @@ router.route("/users/add").post(async function (req, response) {
             await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
             
             console.log("A verification email has been sent to your account");
+            response.end();
         } catch (error) {
             console.log(error);
             console.log("Internal Server Error");
@@ -119,11 +122,13 @@ router.route("/users/add").post(async function (req, response) {
 
 });
 
+
+
 router.route("/users/forgot").post(async function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
     let checkEmail = {email: req.body.email};
 
-    db_connect.collection("Users").findOne(checkEmail, async function (req, res) {
+    db_connect.collection("Users").findOne(checkEmail, function (err, res) {
         if (err) {
             console.log("Invalid email");
             throw err;
@@ -132,7 +137,7 @@ router.route("/users/forgot").post(async function (req, res) {
             let tempPass = {password: randPass};
             db_connect.collection("Users").updateOne(checkEmail, {$set: tempPass});
 
-            await sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
+            sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
             
             console.log("Password Reset Email has been sent");
         }
@@ -229,7 +234,8 @@ router.route("/users/updateinfo").post(function (req, response) {
     let updatedUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        number: req.body.number
+        number: req.body.number,
+        promo: req.body.promo
     };
     db_connect.collection("Users").updateOne(userEmail, { $set: updatedUser }, function (err, result) {
         if (err) throw err;

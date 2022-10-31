@@ -7,6 +7,12 @@ class EditProfile extends React.Component {
 
     constructor(props) {
         super(props);
+        let promoBool = false;
+        if ("true" == sessionStorage.getItem("promo")){
+            promoBool = true;
+        }
+        console.log(sessionStorage.getItem("promo"))
+        console.log(promoBool)
         this.state = {
             displayfname: sessionStorage.getItem("fname"),
             displaylname: sessionStorage.getItem("lname"),
@@ -21,11 +27,15 @@ class EditProfile extends React.Component {
             pCity: "",
             pState: "",
             pZip: "",
+            promo: promoBool,
         };
+        console.log(this.state.promo)
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
         this.updatePersonalInfo = this.updatePersonalInfo.bind(this);
+        this.logout = this.logout.bind(this);
+        this.handlePromo = this.handlePromo.bind(this);
     }
     
 
@@ -37,9 +47,17 @@ class EditProfile extends React.Component {
           [name]: value
         });
     }
+
+    handlePromo(event) {
+        //console.log(!this.state.promo)
+        const flip = !this.state.promo;
+        console.log(flip)
+        this.setState({promo: flip});
+        console.log(this.state.promo)
+    }
     
     async updatePassword(event) {
-        event.preventDefault();
+        event.preventDefault(event);
         
         /*if (this.state.newPass != this.state.newPass2) {
             alert("New Passwords do not match!");
@@ -82,15 +100,17 @@ class EditProfile extends React.Component {
     }
 
     async updatePersonalInfo(event) {
-        event.preventDefault();
+        event.preventDefault(event);
+        console.log(this.state.promo)
 
         const personalInfo = {
             email: sessionStorage.getItem("email"),
             firstName: this.state.fname,
             lastName: this.state.lname,
-            number: this.state.phone
+            number: this.state.phone,
+            promo: this.state.promo
           }
-
+          console.log(this.state.promo);
           const response = await fetch("http://localhost:5000/users/updateinfo", {
             method: "POST",
             headers: {
@@ -106,7 +126,18 @@ class EditProfile extends React.Component {
         sessionStorage.setItem("fname", this.state.fname)
         sessionStorage.setItem("lname", this.state.lname)
         sessionStorage.setItem("phone", this.state.phone)
+        sessionStorage.setItem("promo", this.state.promo)
         window.location.href = "/editprofile";
+    }
+
+    logout(event) {
+        sessionStorage.setItem("loggedIn", "false");
+        sessionStorage.setItem("fname", "");
+        sessionStorage.setItem("lname", "")
+        sessionStorage.setItem("phone", "")
+        sessionStorage.setItem("promo", false)
+        sessionStorage.setItem("email", "")
+        window.location.href = "/home";
     }
 
     render() {
@@ -135,7 +166,7 @@ class EditProfile extends React.Component {
                             <label htmlFor="phone">Phone Number: {sessionStorage.getItem("phone")}</label><br></br>
                             <input class="textfield" type="tel" id="phone" name="phone" value={this.state.phone} onChange={this.handleInputChange}></input><br></br><br></br>
                             <label htmlFor="promo">Opt in for Promotion Emails</label>
-                            <input class="textfield" type="checkbox" id="promo" name="promo" onChange={this.handleInputChange}></input><br></br><br></br>
+                            <input class="textfield" type="checkbox" id="promo" name="promo" value={this.state.promo} onChange={this.handlePromo} checked={this.state.promo}></input><br></br><br></br>
 
                             <input class="submit" type="submit" value="Submit Changes"></input>
                         </form>
@@ -159,15 +190,15 @@ class EditProfile extends React.Component {
 
                         <div class="paymentDetails">
                             <h3>Payment Details</h3>
-                            <h5>Saved Card</h5>
-                            <h6 class="ticketItemInfo">Card Type: Visa</h6>
-                            <h6 class="ticketItemInfo">Card Number: **** **** **** 5848</h6>
-                            <a>Remove Card</a><br></br>
+                            <h5 hidden>Saved Card</h5>
+                            <h6 hidden class="ticketItemInfo">Card Type: Visa</h6>
+                            <h6 hidden class="ticketItemInfo">Card Number: **** **** **** 5848</h6>
+                            <a hidden>Remove Card</a><br></br>
                             <a>Add New Card</a>
                         </div>
 
                         <a>View Order History</a>
-                        <button class="logoutButton">logout</button>
+                        <button class="logoutButton" onClick={this.logout}>logout</button>
                 </div>
                 
             </div>
