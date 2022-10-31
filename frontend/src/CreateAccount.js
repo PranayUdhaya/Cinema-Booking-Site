@@ -75,7 +75,7 @@ class CreateAccount extends React.Component{
    window.alert(error);
     return;
   });
-  window.alert(JSON.stringify(newAccount));
+  //window.alert(JSON.stringify(newAccount));
   
   //setForm({ name: "", position: "", level: "" });
 
@@ -86,7 +86,8 @@ class CreateAccount extends React.Component{
 
 
 handlePromo(event) {
-    this.state.promo = !this.state.promo
+    const flip = !this.state.promo;
+    this.setState({promo: flip});
 }
 
 
@@ -179,7 +180,7 @@ handlePromo(event) {
                   <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.promoTrue} onChange={this.handleInputChange}></input><br></br><br></br>
 
                     <label htmlFor="promo">Opt in for Promotion Emails</label>
-                    <input class="textfield" type="checkbox" id="promo" name="promo" onChange={this.handlePromo}></input><br></br>
+                    <input class="textfield" type="checkbox" id="promo" name="promo" value={this.state.promo} onChange={this.handlePromo} checked={this.state.promo}></input><br></br>
 
                   <input class="submit" type="submit" value="Create Account"></input>
               </form>

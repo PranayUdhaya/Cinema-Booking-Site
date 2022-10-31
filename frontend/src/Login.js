@@ -15,7 +15,8 @@ class Login extends React.Component{
       phone: "",
       status: "",
       rememberMe: "",
-      failure: ""
+      failure: "",
+      promo: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -65,7 +66,7 @@ class Login extends React.Component{
             this.setState({fname: record.firstName});
             this.setState({lname: record.lastName});
             this.setState({phone: record.number});
-              
+            this.setState({promo: record.promo})
         }
 
       // window.alert(JSON.stringify(potentialUser));
@@ -113,6 +114,7 @@ class Login extends React.Component{
         sessionStorage.setItem("fname", this.state.fname);
         sessionStorage.setItem("lname", this.state.lname);
         sessionStorage.setItem("phone", this.state.phone);
+        sessionStorage.setItem("promo", this.state.promo);
         //sessionStorage.setItem("status", "active");
         console.log(this.state.fname)
         console.log(this.state.lname)
@@ -125,7 +127,7 @@ class Login extends React.Component{
     displayFailure(event) {
         this.setState({pass: ''});
         alert("The email or password entered were incorrect. Please try again.");
-        event.preventDefault();
+        event.preventDefault(event);
     }
 
     handleInputChange(event) {
