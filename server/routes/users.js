@@ -8,6 +8,7 @@ const crypto = require("crypto");
 const { db } = require('../api/token');
 const token = require('../api/token');
 const { send } = require('process');
+const bcrypt = require("bcryptjs")
 
 // this will get all users
 router.route("/users/session").get(function (req, res) {
@@ -51,11 +52,28 @@ router.route("/users/email").post(function (req, res) {
 // This section will help you create a new user
 router.route("/users/add").post(async function (req, response) {
     let db_connect = dbo.getDb("CinemaDB");
+    const saltRounds = 10
+    const pass = req.body.password;
+    var hashpass = '';
+    bcrypt.genSalt(saltRounds, function (saltError, salt) {
+    if (saltError) {
+        throw saltError
+    } else {
+        bcrypt.hash(pass, salt, function(hashError, hash) {
+        if (hashError) {
+            throw hashError
+        } else {
+            hashpass = hash;
+        }
+        })
+    }
+    })
+    console.log(hashpass);
     let myobj = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
+        password: hashpass,
         number: req.body.number,
         status: req.body.status,
         rememberMe: req.body.rememberMe,
