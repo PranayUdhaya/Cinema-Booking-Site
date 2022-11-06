@@ -161,48 +161,7 @@ router.route("/token").post(async function (req, res) {
     } else {
         console.log("Account could not be verified");
     }
-
-    /*let statusUpdate = {status: "active"}
-
-    if (code.token == `${tokenDb.token}`) {
-        db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate})
-        console.log ("Account has been successfully verified");
-    } else {
-        console.log("Account could not be verified");
-    }*/
 });
-
-//verifies account using verification link
-/*router.get("users/:_id/verify/:token", async (req, res) => {
-    try {
-        const user = await db_connect.collection("Users").findOne({_id: params._id});
-
-        if (!user) {
-            console.log("Invalid Link");
-            return;
-        }
-
-        const token = await Token.findOne({
-            userId: user._id,
-            token: req.params.token
-        });
-
-        if(!token) {
-            console.log("Invalid Link");
-            return;
-        }
-
-        updatedStatus = "active";
-        await db_connect.collection("Users").updateOne({email: user.email}, {$set: updatedStatus});
-        await token.remove()
-
-        console.log("Email verified successfuly");
-
-    } catch (error) {
-        console.log("Internal Server Error");
-    }
-})*/
-
 
 // This section will change password
 router.route("/users/updatepass").post(function (req, response) {
@@ -261,7 +220,6 @@ router.route("/users/updateinfo").post(function (req, response) {
         response.json(result);
     });
 });
-
 
 module.exports = router;
 
