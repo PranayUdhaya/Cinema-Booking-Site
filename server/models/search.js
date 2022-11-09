@@ -46,6 +46,12 @@ async function search(titleSearch, genreSearch, ageRatingSearch, directorSearch,
     }
 }
 
+async function getTitle(list, titleSearch) {
+    const result = list.find({title: {$regex: titleSearch}});
+    
+    return result;
+}
+
 async function getGenre(list, genre) {
     const result = list.find({category: genre});
     
