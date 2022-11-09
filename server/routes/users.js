@@ -9,20 +9,11 @@ const router = express.Router();
 
 // This api request will create a new user in the database when a new account is created
 router.post("/users/add", userController.createUser);
+router.post("/users/email", userController.login);
+router.post("/users/updatepass", userController.updatePassword);
+router.post("/users/updateinfo", userController.updateInfo);
 
 module.exports = router;
-
-// // this will get all users
-// router.route("/users/session").get(function (req, res) {
-//     let checkEmail = { email: req.body.email };
-//     db_connect.collection("Users").findOne(checkEmail, function (err, result) {
-//         if (err) {
-//             window.alert(err);
-//             throw err;
-//         }
-//         res.json(result);
-//     });
-// });
 
 
 
