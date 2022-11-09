@@ -121,7 +121,32 @@ router.route("/users/add").post(async function (req, response) {
 
 });
 
+router.route("/promotionEmail").post(async function (req, res) {
+    let db_connect = dbo.getDb("CinemaDB");
+    let checkPromo = {promo: true};
+    let promoList = [];
 
+    const promoUser = db_connect.collection("Users").find(checkPromo);
+
+    const promoEmails = await promoUser.toArray();
+
+    if (promoEmails.length > 0) {
+        promoEmails.forEach((result) => { 
+            promoList.push(result.email);
+        });
+    } else {
+        console.log("No users found");
+    }
+
+    if (promoList > 0) {
+        promoList.forEach((result) => {
+            sendEmail(result.email, "New Promotion", "Check out our new movie promotion!");
+        });
+    }
+
+
+
+})
 
 router.route("/users/forgot").post(async function (req, res) {
     let db_connect = dbo.getDb("CinemaDB");
