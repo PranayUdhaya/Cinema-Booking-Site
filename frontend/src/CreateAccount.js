@@ -75,13 +75,10 @@ class CreateAccount extends React.Component{
    window.alert(error);
     return;
   });
-  //window.alert(JSON.stringify(newAccount));
-  
-  //setForm({ name: "", position: "", level: "" });
-
+  window.alert(JSON.stringify(newAccount));
 
   window.location.href = "/home";
-  console.log();
+  console.log("here");
 }
 
 

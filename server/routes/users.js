@@ -1,227 +1,256 @@
-const express = require('express');
+/**
+ *  Writing all the different api requests that can be used to modify the users collection
+ *  Using the schema that was defined in the models/users file
+ */
+
+const express = require("express");
+const userController = require("../controller/users");
 const router = express.Router();
-const path = require('path');
-const dbo = require("../db/conn");
-const Token = require("../api/token");
-const sendEmail = require("../utils/sendEmail");
-const crypto = require("crypto");
-const { db } = require('../api/token');
-const token = require('../api/token');
-const { send } = require('process');
-const bcrypt = require("bcryptjs")
-const { endianness } = require('os');
 
-// this will get all users
-router.route("/users/session").get(function (req, res) {
-    let db_connect = dbo.getDb("CinemaDB");
-    let checkEmail = { email: req.body.email };
-    db_connect.collection("Users").findOne(checkEmail, function (err, result) {
-        if (err) {
-            window.alert(err);
-            throw err;
-        }
-        res.json(result);
-    });
-});
-
-// This section will help you get a user by their email
-router.route("/users/email").post(function (req, res) {
-    let db_connect = dbo.getDb("CinemaDB");
-    let checkEmail = { email: req.body.email };
-    let pass = { password: req.body.password };
-    db_connect
-    .collection("Users")
-    .findOne(checkEmail, function (err, result) {
-        if (err) {
-            console.log("Invalid email");
-            throw err;
-        } else {
-            bcrypt.compare(pass.password, result.password, function(error, isMatch) {
-                if (error) {
-                    throw error
-                } else if (!isMatch) {
-                    result.match = isMatch;
-                    console.log("Incorrect Password");
-                } else {
-                    result.match = isMatch;
-                    res.json(result);
-                }
-            })
-        }
-    });
-});
-
-// This section will help you create a new user
-router.route("/users/add").post(async function (req, response) {
-    let db_connect = dbo.getDb("CinemaDB");
-    const saltRounds = 10
-    const pass = req.body.password;
-    let myobj;
-    bcrypt.genSalt(saltRounds, function (saltError, salt) {
-    if (saltError) {
-        throw saltError
-    } else {
-        bcrypt.hash(pass, salt, function(hashError, res) {
-        if (hashError) {
-            throw hashError
-        } else {
-            myobj = {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                password: res,
-                number: req.body.number,
-                status: req.body.status,
-                rememberMe: req.body.rememberMe,
-                promo: req.body.promo,
-            };
-        }
-        })
-    }
-    })
-
-    //checks if email is already existing within the database
-    let checkEmail = {email: req.body.email};
-    existingAccount = false;
-    let user = await db_connect.collection("Users").findOne(checkEmail)
-    if (user) {
-        //if email is in database, sends the following error message
-        console.log("User with given email already exists");
-        existingAccount = true;
-        return;
-    } else {
-         //creates the new account into the database if the email is not taken.
-         db_connect.collection("Users").insertOne(myobj);
-         existingAccount = false;
-    }
-
-    if (existingAccount == false) {
-        try {
-            user = await db_connect.collection("Users").findOne(checkEmail);
-            
-            //creates a token for a verification link
-            const token = await new Token({
-                userId: user._id,
-                userEmail: user.email,
-                token: Math.floor(1000 + Math.random() * 8999)
-            }).save()
-            //creates a url using the user id and token string
-            const url = `${process.env.BASE_URL}createconfirmation`;
-            
-            //sends an email with the verification url
-            await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
-            
-            console.log("A verification email has been sent to your account");
-            response.end();
-        } catch (error) {
-            console.log(error);
-            console.log("Internal Server Error");
-        }
-    }
-
-});
-
-
-
-router.route("/users/forgot").post(async function (req, res) {
-    let db_connect = dbo.getDb("CinemaDB");
-    let checkEmail = {email: req.body.email};
-
-    db_connect.collection("Users").findOne(checkEmail, function (err, res) {
-        if (err) {
-            console.log("Invalid email");
-            throw err;
-        } else {
-            let randPass = crypto.randomBytes(16).toString("hex");
-            let tempPass = {password: randPass};
-            db_connect.collection("Users").updateOne(checkEmail, {$set: tempPass});
-
-            sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
-            
-            console.log("Password Reset Email has been sent");
-        }
-    })
-}) 
-
-router.route("/token").post(async function (req, res) {
-    let db_connect = dbo.getDb("CinemaDB");
-    let checkEmail = {email: req.body.email};
-    let code = { token: req.body.token}
-    user = await db_connect.collection("Users").findOne(checkEmail);
-    const tokenDb = await Token.findOne({
-        userId: user._id,
-        token: code.token
-    })
-
-    if (tokenDb) {
-        let statusUpdate = {status: "active"};
-        db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate});
-        console.log("Account has been successfully verified");
-        await Token.deleteOne(tokenDb);
-    } else {
-        console.log("Account could not be verified");
-    }
-});
-
-// This section will change password
-router.route("/users/updatepass").post(function (req, response) {
-    let db_connect = dbo.getDb("CinemaDB");
-    let checkEmail = { email: req.body.email};
-    let oldPass = { password: req.body.password};
-    let newPass = { password: req.body.updatedPassword };
-
-    db_connect.collection("Users").findOne(checkEmail, function (err, result) {
-        if (err) throw err;
-        else {
-            bcrypt.compare(oldPass.password, result.password, function(error, isMatch) {
-                if (error) {
-                    throw error
-                } else if (!isMatch) {
-                    console.log("Incorrect Password");
-                } else {
-                    const saltRounds = 10
-                    bcrypt.genSalt(saltRounds, function (saltError, salt) {
-                    if (saltError) {
-                        throw saltError
-                    } else {
-                        bcrypt.hash(newPass.password, salt, function(hashError, hashpass) {
-                        if (hashError) {
-                            throw hashError
-                        } else {
-                            let newPass2 = { password: hashpass };
-                            db_connect.collection("Users").updateOne(checkEmail, { $set: newPass2 }, function (error, res) {
-                                if (error) throw error;
-                                else {
-                                    response.json(res);
-                                }
-                            });
-                        }
-                        });
-                    }
-                    });
-                }
-            })
-        }
-    });
-});
-
-// This section will change personal info
-router.route("/users/updateinfo").post(function (req, response) {
-    let db_connect = dbo.getDb("CinemaDB");
-    let userEmail = { email: req.body.email };
-    let updatedUser = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        number: req.body.number,
-        promo: req.body.promo
-    };
-    db_connect.collection("Users").updateOne(userEmail, { $set: updatedUser }, function (err, result) {
-        if (err) throw err;
-        response.json(result);
-    });
-});
+// This api request will create a new user in the database when a new account is created
+router.post("/users/add", userController.createUser);
 
 module.exports = router;
+
+// // this will get all users
+// router.route("/users/session").get(function (req, res) {
+//     let checkEmail = { email: req.body.email };
+//     db_connect.collection("Users").findOne(checkEmail, function (err, result) {
+//         if (err) {
+//             window.alert(err);
+//             throw err;
+//         }
+//         res.json(result);
+//     });
+// });
+
+
+
+
+// const express = require('express');
+// const router = express.Router();
+// const path = require('path');
+// const dbo = require("../db/conn");
+// const Token = require("../models/token");
+// const sendEmail = require("../utils/sendEmail");
+// const crypto = require("crypto");
+// const { db } = require('../models/token');
+// const token = require('../models/token');
+// const { send } = require('process');
+// const bcrypt = require("bcryptjs")
+// const { endianness } = require('os');
+
+// // this will get all users
+// router.route("/users/session").get(function (req, res) {
+//     let db_connect = dbo.getDb("CinemaDB");
+//     let checkEmail = { email: req.body.email };
+//     db_connect.collection("Users").findOne(checkEmail, function (err, result) {
+//         if (err) {
+//             window.alert(err);
+//             throw err;
+//         }
+//         res.json(result);
+//     });
+// });
+
+// // This section will help you get a user by their email
+// router.route("/users/email").post(function (req, res) {
+//     let db_connect = dbo.getDb("CinemaDB");
+//     let checkEmail = { email: req.body.email };
+//     let pass = { password: req.body.password };
+//     db_connect
+//     .collection("Users")
+//     .findOne(checkEmail, function (err, result) {
+//         if (err) {
+//             console.log("Invalid email");
+//             throw err;
+//         } else {
+//             bcrypt.compare(pass.password, result.password, function(error, isMatch) {
+//                 if (error) {
+//                     throw error
+//                 } else if (!isMatch) {
+//                     result.match = isMatch;
+//                     console.log("Incorrect Password");
+//                 } else {
+//                     result.match = isMatch;
+//                     res.json(result);
+//                 }
+//             })
+//         }
+//     });
+// });
+
+// // This section will help you create a new user
+// router.route("/users/add").post(async function (req, response) {
+//     let db_connect = dbo.getDb("CinemaDB");
+//     const saltRounds = 10
+//     const pass = req.body.password;
+//     let myobj;
+//     bcrypt.genSalt(saltRounds, function (saltError, salt) {
+//     if (saltError) {
+//         throw saltError
+//     } else {
+//         bcrypt.hash(pass, salt, function(hashError, res) {
+//         if (hashError) {
+//             throw hashError
+//         } else {
+//             myobj = {
+//                 firstName: req.body.firstName,
+//                 lastName: req.body.lastName,
+//                 email: req.body.email,
+//                 password: res,
+//                 number: req.body.number,
+//                 status: req.body.status,
+//                 rememberMe: req.body.rememberMe,
+//                 promo: req.body.promo,
+//             };
+//         }
+//         })
+//     }
+//     })
+
+//     //checks if email is already existing within the database
+//     let checkEmail = {email: req.body.email};
+//     existingAccount = false;
+//     let user = await db_connect.collection("Users").findOne(checkEmail)
+//     if (user) {
+//         //if email is in database, sends the following error message
+//         console.log("User with given email already exists");
+//         existingAccount = true;
+//         return;
+//     } else {
+//          //creates the new account into the database if the email is not taken.
+//          db_connect.collection("Users").insertOne(myobj);
+//          existingAccount = false;
+//     }
+
+//     if (existingAccount == false) {
+//         try {
+//             user = await db_connect.collection("Users").findOne(checkEmail);
+            
+//             //creates a token for a verification link
+//             const token = await new Token({
+//                 userId: user._id,
+//                 userEmail: user.email,
+//                 token: Math.floor(1000 + Math.random() * 8999)
+//             }).save()
+//             //creates a url using the user id and token string
+//             const url = `${process.env.BASE_URL}createconfirmation`;
+            
+//             //sends an email with the verification url
+//             await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
+            
+//             console.log("A verification email has been sent to your account");
+//             response.end();
+//         } catch (error) {
+//             console.log(error);
+//             console.log("Internal Server Error");
+//         }
+//     }
+
+// });
+
+
+
+// router.route("/users/forgot").post(async function (req, res) {
+//     let db_connect = dbo.getDb("CinemaDB");
+//     let checkEmail = {email: req.body.email};
+
+//     db_connect.collection("Users").findOne(checkEmail, function (err, res) {
+//         if (err) {
+//             console.log("Invalid email");
+//             throw err;
+//         } else {
+//             let randPass = crypto.randomBytes(16).toString("hex");
+//             let tempPass = {password: randPass};
+//             db_connect.collection("Users").updateOne(checkEmail, {$set: tempPass});
+
+//             sendEmail(user.email, "Password Reset", `Your password has been reset with the temporary pass:\n${tempPass}\nPlease log into your account with this password and reset your password in profile.`)
+            
+//             console.log("Password Reset Email has been sent");
+//         }
+//     })
+// }) 
+
+// router.route("/token").post(async function (req, res) {
+//     let db_connect = dbo.getDb("CinemaDB");
+//     let checkEmail = {email: req.body.email};
+//     let code = { token: req.body.token}
+//     user = await db_connect.collection("Users").findOne(checkEmail);
+//     const tokenDb = await Token.findOne({
+//         userId: user._id,
+//         token: code.token
+//     })
+
+//     if (tokenDb) {
+//         let statusUpdate = {status: "active"};
+//         db_connect.collection("Users").updateOne(checkEmail, {$set: statusUpdate});
+//         console.log("Account has been successfully verified");
+//         await Token.deleteOne(tokenDb);
+//     } else {
+//         console.log("Account could not be verified");
+//     }
+// });
+
+// // This section will change password
+// router.route("/users/updatepass").post(function (req, response) {
+//     let db_connect = dbo.getDb("CinemaDB");
+//     let checkEmail = { email: req.body.email};
+//     let oldPass = { password: req.body.password};
+//     let newPass = { password: req.body.updatedPassword };
+
+//     db_connect.collection("Users").findOne(checkEmail, function (err, result) {
+//         if (err) throw err;
+//         else {
+//             bcrypt.compare(oldPass.password, result.password, function(error, isMatch) {
+//                 if (error) {
+//                     throw error
+//                 } else if (!isMatch) {
+//                     console.log("Incorrect Password");
+//                 } else {
+//                     const saltRounds = 10
+//                     bcrypt.genSalt(saltRounds, function (saltError, salt) {
+//                     if (saltError) {
+//                         throw saltError
+//                     } else {
+//                         bcrypt.hash(newPass.password, salt, function(hashError, hashpass) {
+//                         if (hashError) {
+//                             throw hashError
+//                         } else {
+//                             let newPass2 = { password: hashpass };
+//                             db_connect.collection("Users").updateOne(checkEmail, { $set: newPass2 }, function (error, res) {
+//                                 if (error) throw error;
+//                                 else {
+//                                     response.json(res);
+//                                 }
+//                             });
+//                         }
+//                         });
+//                     }
+//                     });
+//                 }
+//             })
+//         }
+//     });
+// });
+
+// // This section will change personal info
+// router.route("/users/updateinfo").post(function (req, response) {
+//     let db_connect = dbo.getDb("CinemaDB");
+//     let userEmail = { email: req.body.email };
+//     let updatedUser = {
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         number: req.body.number,
+//         promo: req.body.promo
+//     };
+//     db_connect.collection("Users").updateOne(userEmail, { $set: updatedUser }, function (err, result) {
+//         if (err) throw err;
+//         response.json(result);
+//     });
+// });
+
+// module.exports = router;
 
 
 // const express = require("express");
