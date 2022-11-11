@@ -1,31 +1,37 @@
 import React from "react";
-import Book from "./Book";
-import Browse from "./Browse";
-import ChangePassword from "./ChangePassword";
-import Checkout from "./Checkout";
-import CreateAccount from "./CreateAccount";
-import CreateConfirmation from "./CreateConfirmation";
-import EditProfile from "./EditProfile";
-import EnterPayment from "./EnterPayment";
-import ForgotPassword from "./ForgotPassword";
-import ForgotPasswordEmail from "./ForgotPasswordEmail";
-import Home from "./Home";
-import Login from "./Login";
-import LoginPrompt from "./LoginPrompt";
-import Movie from "./Movie";
-import OrderConfirmation from "./OrderConfirmation";
-import OrderHistory from "./OrderHistory";
-import OrderSummary from "./OrderSummary";
-import Search from "./Search";
-import Seat from "./Seat";
-import { Route, Routes } from "react-router-dom";
-import Navbar from "./Navbar";
-import CustomerNavbar from "./CustomerNavbar";
-import AdminNavbar from "./AdminNavbar";
+import Book from "./pages/Book";
+import Browse from "./pages/Browse";
+import ChangePassword from "./pages/ChangePassword";
+import Checkout from "./pages/Checkout";
+import CreateAccount from "./pages/CreateAccount";
+import CreateConfirmation from "./pages/CreateConfirmation";
+import EditProfile from "./pages/EditProfile";
+import EnterPayment from "./pages/EnterPayment";
+import ForgotPassword from "./pages/ForgotPassword";
+import ForgotPasswordEmail from "./pages/ForgotPasswordEmail";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import LoginPrompt from "./pages/LoginPrompt";
+import Movie from "./pages/Movie";
+import OrderConfirmation from "./pages/OrderConfirmation";
+import OrderHistory from "./pages/OrderHistory";
+import OrderSummary from "./pages/OrderSummary";
+import Search from "./pages/Search";
+import Seat from "./pages/Seat";
+import { Switch, Link, Route, Routes } from "react-router-dom";
+import Navbar from "./navbars/Navbar";
+import CustomerNavbar from "./navbars/CustomerNavbar";
+import AdminNavbar from "./navbars/AdminNavbar";
 import './styles.css';
 import EmailVerify from "./EmailVerify";
-import EmptyNavbar from "./EmptyNavbar.js";
- 
+import EmptyNavbar from "./navbars/EmptyNavbar.js";
+import CustomerRoutes from "./Routing/CustomerRoutes.js";
+import LoginRoutes from "./Routing/LoginRoutes.js" 
+import PasswordRoutes from "./Routing/PasswordRoutes.js"
+import AdminRoutes from "./Routing/AdminRoutes.js"
+import GuestRoutes from "./Routing/GuestRoutes.js"
+import CreatingAccountRoutes from "./Routing/CreatingAccountRoutes.js"
+
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
     let admin = sessionStorage.getItem("admin");
@@ -37,80 +43,53 @@ const App = () => {
     if (admin == "true") {
         CurrentNav = AdminNavbar;
     }
-	switch (window.location.pathname) {
 
-	case "/":
-			Component = Home;
-			break;
-	case "/book":
-			Component = Book;
-			break;
-	case "/browse":
-			Component = Browse;
-			break;
-    case "/changepassword":
-			Component = ChangePassword;
-			break;
-    case "/checkout":
-			Component = Checkout;
-			break;
-    case "/createaccount":
-			Component = CreateAccount;
-			break;
-    case "/createconfirmation":
-			CurrentNav = EmptyNavbar;
-			Component = CreateConfirmation;
-			break;
-    case "/editprofile":
-			Component = EditProfile;
-			break;
-    case "/enterpayment":
-			Component = EnterPayment;
-			break;
-    case "/forgotpassword":
-            CurrentNav = EmptyNavbar;
-			Component = ForgotPassword;
-			break;
-    case "/home":
-			Component = Home;
-			break;
-    case "/login":
-			Component = Login;
-			break;
-    case "/loginprompt":
-			Component = LoginPrompt;
-			break;
-    case "/movie":
-			Component = Movie;
-			break;
-    case "/orderconfirmation":
-			Component = OrderConfirmation;
-			break;
-    case "/orderhistory":
-			Component = OrderHistory;
-			break;
-    case "/ordersummary":
-      		Component = OrderSummary;
-      		break;
-    case "/search":
-			Component = Search;
-			break;
-    case "/seat":
-      		Component = Seat;
-      		break;
-	case "/users/:id/verify/:token":
-			Component = EmailVerify;
-			break;
-    case "/forgotpasswordemail":
-        CurrentNav = EmptyNavbar;
-        Component = ForgotPasswordEmail;
-		break;
-  }
  return (
-    <div>
-      <CurrentNav />
-      <div className="container"><Component /></div>
-    </div>
+    <>
+        <CurrentNav />
+        {/*<div className="container"><Component /></div>*/}
+        <Routes>
+            <Route path="/" element=<Home/> />
+            <Route path="/home" element=<Home/> />
+            <Route path="/browse" element=<Browse/> />
+            <Route path="/movie" element=<Movie/> />
+            <Route path="/search" element=<Search/> />
+            <Route element = { <CustomerRoutes /> }>
+                <Route path="/book" element=<Book/> />
+                <Route path="/editprofile" element=<EditProfile/> />
+                <Route path="/checkout" element=<Checkout /> />
+                <Route path="/enterpayment" element=<EnterPayment/> />
+                <Route path="/orderconfirmation" element=<OrderConfirmation /> />
+                <Route path="/orderhistory" element=<OrderHistory/> />
+                <Route path="/ordersummary" element=<OrderSummary/> />
+                <Route path="/seat" element=<Seat/> />
+            </Route>
+            <Route element = { <AdminRoutes /> }>
+                
+            </Route>
+            <Route element = { <LoginRoutes /> }>
+                
+            </Route>
+            <Route element = { <PasswordRoutes /> }>
+                <Route path="/changepassword" element=<ChangePassword /> />
+                <Route path="/forgotpasswordemail" element=<ForgotPasswordEmail/> />
+                <Route path="/forgotpassword" element=<ForgotPassword /> />
+            </Route>
+            <Route element = { <GuestRoutes /> }>
+                <Route path="/createaccount" element=<CreateAccount/> />
+                <Route path="/login" element=<Login/> />
+                <Route path="/loginprompt" element=<LoginPrompt/> />
+                <Route path="/createconfirmation" element=<CreateConfirmation/> />
+                <Route path="users/:id/verify/:token" element=<EmailVerify/> />
+
+            </Route>
+            <Route element = { <CreatingAccountRoutes /> }>
+                
+            </Route>
+            <Route path="*" element=<Home /> />
+        </Routes>
+
+    </>
   );
 };
  

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
 class CreateAccount extends React.Component{
@@ -61,6 +61,7 @@ class CreateAccount extends React.Component{
     status: "inactive",
     rememberMe: false,
     promo: this.state.promo,
+    admin: false
   }
 
 
@@ -76,7 +77,7 @@ class CreateAccount extends React.Component{
     return;
   });
   window.alert(JSON.stringify(newAccount));
-
+  sessionStorage.setItem("")
   window.location.href = "/home";
   console.log("here");
 }
