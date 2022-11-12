@@ -17,7 +17,6 @@ module.exports = router;
 
 
 
-
 // const express = require('express');
 // const router = express.Router();
 // const path = require('path');
@@ -141,7 +140,24 @@ module.exports = router;
 
 // });
 
+        /*async function promoEmail(client) {
+            const promoList = [];
+            const cursor = client.db("CinemaDB").collection("Users").find({promo: true});
 
+            const results = await cursor.toArray();
+
+            console.log(results);
+
+            if (results.length > 0) {
+                results.forEach((result, i) => { 
+                    promoList.push(result.email);
+                });
+            } else {
+                console.log("No users found");
+            }
+
+            console.log(promoList)
+        */
 
 // router.route("/users/forgot").post(async function (req, res) {
 //     let db_connect = dbo.getDb("CinemaDB");
