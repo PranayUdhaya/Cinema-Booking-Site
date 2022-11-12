@@ -1,24 +1,19 @@
-const { MongoClient } = require('mongodb');
+/**
+ *  Defining the CRUD functions that will be called in routes/users.js 
+ */
+// importing model
+const Movies = require("../models/movies");
 
-
-async function main() {
+exports.search = async (req, res) => {
     
-    const uri = "mongodb+srv://Admin:Admin@cluster0.1dx8tdy.mongodb.net/?retryWrites=true&w=majority";
-    
-    const client = new MongoClient(uri);
-
     try {
-        await client.connect();
-        await listDatabases(client);
-
-
-
+        movies = await search(req.body.title, req.body.category, req.body.ageRating, req.body.director, req.body.producer, req.body.cast, req.body.reviewScore)
+        return res.json(movies);
     } catch (e) {
-        console.error(e);
-    } finally {
-        client.close();
+        console.log(e);
+        return res.json(e);
     }
-
+    
 }
 
 async function search(titleSearch, genreSearch, ageRatingSearch, directorSearch, producerSearch, castSearch, reviewScoreMinimum) {

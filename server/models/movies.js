@@ -1,4 +1,20 @@
-// connecting to mongoDB
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs")
+
+const MovieSchema = mongoose.Schema({
+    title: String,
+    category: String,
+    ageRating: String,
+    director: String,
+    producers: [String],
+    cast: [String],
+    reviewScore: Number,
+    synopsis: String
+});
+
+module.exports = mongoose.model("Movie", MovieSchema);
+
+/*// connecting to mongoDB
 const { MongoClient } = require('mongodb');
 
 // main function to connect to URI and run tests of the functions
@@ -72,4 +88,4 @@ async function deleteMovie(client, movieName) {
     } else {
         console.log(`No movie found with the name '${movieName}'`);
     }
-}
+} */
