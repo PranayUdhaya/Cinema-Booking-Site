@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
 export default function Home() {
@@ -21,27 +21,27 @@ export default function Home() {
             <div class="movieStrip">
                 <button class="arrowButton">&lt</button>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/solo.jpg")}></img>
+                    <img class="promoHome" src={require("../images/solo.jpg")}></img>
                     <a>Book Now</a>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/womanKing.jpg")}></img>
+                    <img class="promoHome" src={require("../images/womanKing.jpg")}></img>
                     <a>Book Now</a>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/weathering.jpg")}></img>
+                    <img class="promoHome" src={require("../images/weathering.jpg")}></img>
                     <a>Book Now</a>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/morbius.jpg")}></img>
+                    <img class="promoHome" src={require("../images/morbius.jpg")}></img>
                     <a>Book Now</a>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/doctorstrange2.jpg")}></img>
+                    <img class="promoHome" src={require("../images/doctorstrange2.jpg")}></img>
                     <a>Book Now</a>
                     <a>View Details</a>
                 </div>
@@ -53,23 +53,23 @@ export default function Home() {
             <div class="movieStrip">
                 <button class="arrowButton">&lt</button>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/avatar2.jpg")}></img>
+                    <img class="promoHome" src={require("../images/avatar2.jpg")}></img>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/halloween.jpg")}></img>
+                    <img class="promoHome" src={require("../images/halloween.jpg")}></img>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/knock.jpg")}></img>
+                    <img class="promoHome" src={require("../images/knock.jpg")}></img>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/despicable4.jpg")}></img>
+                    <img class="promoHome" src={require("../images/despicable4.jpg")}></img>
                     <a>View Details</a>
                 </div>
                 <div class="movieElement">
-                    <img class="promoHome" src={require("./images/blackadam.jpg")}></img>
+                    <img class="promoHome" src={require("../images/blackadam.jpg")}></img>
                     <a>View Details</a>
                 </div>
             <button class="arrowButton">&gt</button>

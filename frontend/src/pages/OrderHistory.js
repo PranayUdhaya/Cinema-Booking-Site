@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
 export default function Browse() {
@@ -14,7 +14,7 @@ export default function Browse() {
                 <div class="allTicketsPast">
                     <div class="ticket">
                         <div class="ticketLeft">
-                            <img class="ticketPoster" src="./images/solo.jpg"></img>
+                            <img class="ticketPoster" src="../images/solo.jpg"></img>
                             <div class="ticketInfo">
                                 <h2 class="ticketMovieTitle">Solo: A Star Wars Story</h2>
                                 <h6 class="ticketItemInfo">Showtime: 4:00pm October 14th</h6>
@@ -33,7 +33,7 @@ export default function Browse() {
                     </div>
                     <div class="ticket">
                         <div class="ticketLeft">
-                            <img class="ticketPoster" src="./images/solo.jpg"></img>
+                            <img class="ticketPoster" src="../images/solo.jpg"></img>
                             <div class="ticketInfo">
                                 <h2 class="ticketMovieTitle">Solo: A Star Wars Story</h2>
                                 <h6 class="ticketItemInfo">Showtime: 4:00pm October 14th</h6>
@@ -52,7 +52,7 @@ export default function Browse() {
                     </div>
                     <div class="ticket">
                         <div class="ticketLeft">
-                            <img class="ticketPoster" src="./images/solo.jpg"></img>
+                            <img class="ticketPoster" src="../images/solo.jpg"></img>
                             <div class="ticketInfo">
                                 <h2 class="ticketMovieTitle">Solo: A Star Wars Story</h2>
                                 <h6 class="ticketItemInfo">Showtime: 4:00pm October 14th</h6>
@@ -82,7 +82,7 @@ export default function Browse() {
                     <div class="allTicketsPast">
                         <div class="ticket">
                             <div class="ticketLeft">
-                                <img class="ticketPoster" src="./images/womanKing.jpg"></img>
+                                <img class="ticketPoster" src="../images/womanKing.jpg"></img>
                                 <div class="ticketInfo">
                                     <h2 class="ticketMovieTitle">The Woman King</h2>
                                     <h6 class="ticketItemInfo">Showtime: 6:00pm August 14th</h6>

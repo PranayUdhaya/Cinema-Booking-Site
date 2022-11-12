@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
 export default function Browse() {
@@ -9,7 +9,7 @@ export default function Browse() {
     <div class="movieDetails">
         <h1 class="detailsTitle">Solo: A Star Wars Story</h1>
         <div class="detailsTop">
-            <img class="detailsPoster" src="./images/solo.jpg"></img>
+            <img class="detailsPoster" src="../images/solo.jpg"></img>
             <iframe class="detailsTrailer" src="https://www.youtube.com/embed/jPEYpryMp2s"></iframe>
         </div>
         <div class="detailsBottom">

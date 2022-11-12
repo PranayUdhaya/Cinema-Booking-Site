@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
 export default function Browse() {
@@ -41,7 +41,7 @@ export default function Browse() {
         </div>
         <div class="movieList">
             <div class="movieResult">
-                <img class="promoPoster" src={require("./images/solo.jpg")}></img>
+                <img class="promoPoster" src={require("../images/solo.jpg")}></img>
                 <div class="resultInfo">
                     <h2>Solo</h2>
                     <p>Rated: PG-13</p>
@@ -50,7 +50,7 @@ export default function Browse() {
                 </div>
             </div>
             <div class="movieResult">
-                <img class="promoPoster" src="./images/womanKing.jpg"></img>
+                <img class="promoPoster" src="../images/womanKing.jpg"></img>
                 <div class="resultInfo">
                     <h2>The Woman King</h2>
                     <p>Rated: PG-13</p>
@@ -59,7 +59,7 @@ export default function Browse() {
                 </div>
             </div>
             <div class="movieResult">
-                <img class="promoPoster" src="./images/weathering.jpg"></img>
+                <img class="promoPoster" src="../images/weathering.jpg"></img>
                 <div class="resultInfo">
                     <h2>Weathering With You</h2>
                     <p>Rated: PG-13</p>

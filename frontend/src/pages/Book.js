@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
 export default function Book() {
@@ -8,7 +8,7 @@ export default function Book() {
     <div>
         <h1 class="bookTitle">Select Showtime</h1>
         <div class="bookMovie">
-            <img class="bookPoster" src={require("./images/solo.jpg")}></img>
+            <img class="bookPoster" src={require("../images/solo.jpg")}></img>
             <div class="bookInfo">
                 <h2 class="bookMovieTitle">Solo: A Star Wars Story</h2>
                 <form class="form" method="post">

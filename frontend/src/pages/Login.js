@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
 class Login extends React.Component{
@@ -64,7 +64,8 @@ class Login extends React.Component{
             this.setState({fname: record.firstName});
             this.setState({lname: record.lastName});
             this.setState({phone: record.number});
-            this.setState({promo: record.promo})
+            this.setState({promo: record.promo});
+            this.setState({isAdmin: record.admin})
         }
 
       // window.alert(JSON.stringify(potentialUser));
@@ -74,8 +75,8 @@ class Login extends React.Component{
         //navigate("/");
         //this.pullData();
         this.createSession();
-        window.location.href = "/home";
         console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
+        //window.location.href = "/home";
     }
 
         // const [records, setRecords] = useState([]);
@@ -113,6 +114,7 @@ class Login extends React.Component{
         sessionStorage.setItem("lname", this.state.lname);
         sessionStorage.setItem("phone", this.state.phone);
         sessionStorage.setItem("promo", this.state.promo);
+        sessionStorage.setItem("isAdmin", this.state.admin);
         //sessionStorage.setItem("status", "active");
         console.log(this.state.fname)
         console.log(this.state.lname)
