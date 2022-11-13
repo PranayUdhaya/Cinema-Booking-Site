@@ -4,10 +4,10 @@
  */
 
  const express = require("express");
- const userController = require("../controller/movies");
+ const movieController = require("../controller/movies");
  const router = express.Router();
  
  // This request will add a new movie to the movies database
- router.post("/movies/add", userController.addMovie);
+ router.post("/movies/add", movieController.addMovie);
  
  module.exports = router;

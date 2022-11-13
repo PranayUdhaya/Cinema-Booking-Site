@@ -4,7 +4,7 @@
 // importing model
  const User = require("../models/users");
 
-// export creatUser function
+// export createUser function
 exports.createUser = async (req, res) => {
     let email = req.body.email;
     let user = await User.findOne({ email });
@@ -32,19 +32,24 @@ exports.createUser = async (req, res) => {
 
 // export login function
 exports.login = async (req, res) => {
-    let { email, pwd } = req.body;
-    if (!email || !pwd) {
+    let { email, password } = req.body;
+    if (!email || !password) {
         return res.json({ message: "Incomplete Request", status: 400 });
     }
+    console.log(password)
     let user = await User.findOne({ email });
     if (!user) {
         return res.json({ message: "Email not found", status: 404 });
     }
-    User.comparePassword(pwd, match);
-    if (!match) {
-        return res.json({ message: "Incorrect Password", status: 404 });
-    }
-    return res.json(user);
+    user.comparePassword(password, function(matchError, isMatch) {
+        if (matchError) {
+            return res.json({ message: "Error", status: 404 });
+        } else if (!isMatch) {
+            return res.json({ message: "Incorrect Password", status: 404 });
+        } else {
+            return res.json(user);
+        }
+    });
 }
 
 // export updateInfo function
