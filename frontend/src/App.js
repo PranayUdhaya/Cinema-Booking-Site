@@ -77,7 +77,7 @@ const App = () => {
                 <Route path="/login" element=<Login/> />
                 <Route path="/loginprompt" element=<LoginPrompt/> />
                 <Route path="/createconfirmation" element=<CreateConfirmation/> />
-                <Route path="users/:id/verify/:token" element=<EmailVerify/> />
+                <Route path="/users/:id/verify/:token" element=<EmailVerify/> />
 
             </Route>
             <Route path="*" element=<Home /> />

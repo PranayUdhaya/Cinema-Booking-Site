@@ -77,8 +77,8 @@ class CreateAccount extends React.Component{
     return;
   });
   window.alert(JSON.stringify(newAccount));
-  sessionStorage.setItem("")
-  window.location.href = "/home";
+  //sessionStorage.setItem("")
+  window.location.href = "/createconfirmation";
   console.log("here");
 }
 
