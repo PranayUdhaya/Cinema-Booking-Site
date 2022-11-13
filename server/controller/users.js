@@ -138,32 +138,3 @@ exports.promoEmail = async (req, res) => {
         })
     }
 }
-
-//exports promoEmail function
-exports.promoEmail = async (req, res) => {
-    //finds users who want promotional emails and puts them in an array
-    const promoList = [];
-    const cursor = User.find({promo: true});
-    const results = await cursor.toArray();
-
-    //pushes all the users emails into an array
-    if (results.length > 0) {
-        results.forEach((result, i) => { 
-            promoList.push(result.email);
-        });
-    } else {
-        console.log("No users found");
-    }
-
-    //sends each email in the array a promotional email
-    if (promoList.length > 0) {
-        promoList.forEach(async (result) => {
-            try {
-                await sendEmail(result.email, "Promotional Email", "Check out our new movie promotion!");
-                console.log(`Promotional email successfully sent to ${result.email}`);
-            } catch (e) {
-                console.log(`Promotional email could not be sent to ${result.email}`);
-            }
-        })
-    }
-}
