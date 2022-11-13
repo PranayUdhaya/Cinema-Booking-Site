@@ -123,7 +123,7 @@ exports.verifyAccount = async (req, res) => {
 
     if (tokenDb) {
         let statusUpdate = {status: "active"};
-        user.updateOne(checkEmail, {$set: statusUpdate});
+        User.updateOne(checkEmail, {$set: statusUpdate});
         console.log("Account has been successfully verified");
         await Token.deleteOne(tokenDb);
     } else {
