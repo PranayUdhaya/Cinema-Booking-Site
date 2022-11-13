@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "../App";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Navigate } from "react-router-dom";
 
 class Login extends React.Component{
 
@@ -65,7 +65,9 @@ class Login extends React.Component{
             this.setState({lname: record.lastName});
             this.setState({phone: record.number});
             this.setState({promo: record.promo});
-            this.setState({isAdmin: record.admin})
+            this.setState({isAdmin: record.admin});
+            this.createSession();
+            window.location.href = "/home";
         }
 
       // window.alert(JSON.stringify(potentialUser));
@@ -74,7 +76,6 @@ class Login extends React.Component{
     
         //navigate("/");
         //this.pullData();
-        this.createSession();
         console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
         //window.location.href = "/home";
     }
