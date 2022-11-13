@@ -26,6 +26,7 @@ exports.createUser = async (req, res) => {
     try {
         await newUser.save();
 
+        //code block to send a verification email
         let user = await User.findOne({ email });
         const token = await new Token({
             userId: user._id,
@@ -38,13 +39,13 @@ exports.createUser = async (req, res) => {
         //sends an email with the verification url
         try {
             await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
-            return res.json({message: "A verification email has been sent to your account"});
+            res.json({message: "A verification email has been sent to your account"});
         } catch (e) {
             console.log(e)
-            return res.json({message: "A verification email could not be sent", status: 404})
+            res.json({message: "A verification email could not be sent", status: 404})
         }
 
-        //return res.json(newUser);
+        return res.json(newUser);
 
     } catch (e) {
         console.log(e);
@@ -110,7 +111,7 @@ exports.updatePassword = async (req, res) => {
     });
 }
 
-//exports promoEmail function
+// exports promoEmail function
 exports.promoEmail = async (req, res) => {
     //finds users who want promotional emails and puts them in an array
     const promoList = [];
