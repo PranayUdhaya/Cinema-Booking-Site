@@ -22,6 +22,7 @@ exports.createUser = async (req, res) => {
         status: req.body.status,
         rememberMe: req.body.rememberMe,
         promo: req.body.promo,
+        admin: false,
     })
     try {
         await newUser.save();

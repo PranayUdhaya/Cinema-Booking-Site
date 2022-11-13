@@ -17,6 +17,8 @@ class Login extends React.Component{
       rememberMe: false,
       failure: "",
       promo: false,
+      admin: false,
+      status: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -65,9 +67,16 @@ class Login extends React.Component{
             this.setState({lname: record.lastName});
             this.setState({phone: record.number});
             this.setState({promo: record.promo});
-            this.setState({isAdmin: record.admin});
+            this.setState({admin: record.admin});
+            this.setState({status: record.status});
             this.createSession();
-            window.location.href = "/home";
+            if (sessionStorage.getItem("status") == "inactive") {
+                window.location.href = "/createconfirmation";
+            } else if (sessionStorage.getItem("admin") == "true") {
+                window.location.href = "/admin/home";
+            } else {
+                window.location.href = "/home";
+            }
         }
 
       // window.alert(JSON.stringify(potentialUser));
@@ -115,12 +124,13 @@ class Login extends React.Component{
         sessionStorage.setItem("lname", this.state.lname);
         sessionStorage.setItem("phone", this.state.phone);
         sessionStorage.setItem("promo", this.state.promo);
-        sessionStorage.setItem("isAdmin", this.state.admin);
+        sessionStorage.setItem("admin", this.state.admin);
+        sessionStorage.setItem("status", this.state.status);
         //sessionStorage.setItem("status", "active");
         console.log(this.state.fname)
         console.log(this.state.lname)
         console.log(this.state.phone)
-
+        console.log(this.state.admin)
     }
     
 

@@ -27,6 +27,7 @@ class CreateAccount extends React.Component{
       bState: "",
       bZip: "",
       promo: false,
+      status: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -65,7 +66,7 @@ class CreateAccount extends React.Component{
   }
 
 
-  await fetch("http://localhost:5000/users/add", {
+  const response = await fetch("http://localhost:5000/users/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -78,8 +79,18 @@ class CreateAccount extends React.Component{
   });
   window.alert(JSON.stringify(newAccount));
   //sessionStorage.setItem("")
-  window.location.href = "/createconfirmation";
-  console.log("here");
+
+    const record = await response.json();
+    this.setState({fname: record.firstName});
+    this.setState({lname: record.lastName});
+    this.setState({phone: record.number});
+    this.setState({isAdmin: record.admin});
+    this.setState({status: record.status});
+    this.setState({promo: record.promo});
+
+    this.createSession();
+    window.location.href = "/createconfirmation";
+    console.log("here");
 }
 
 
@@ -90,11 +101,21 @@ handlePromo(event) {
 
 
 
-  displayFailure(event) {
-    this.setState({pass: ''});
-    alert("The email or password entered were incorrect. Please try again.");
-    event.preventDefault();
-  }
+createSession(event) {
+    sessionStorage.setItem("loggedIn", "true");
+    sessionStorage.setItem("email", this.state.email);
+    sessionStorage.setItem("fname", this.state.fname);
+    sessionStorage.setItem("lname", this.state.lname);
+    sessionStorage.setItem("phone", this.state.phone);
+    sessionStorage.setItem("promo", this.state.promo);
+    sessionStorage.setItem("status", "inactive");
+    sessionStorage.setItem("isAdmin", false);
+    //sessionStorage.setItem("status", "active");
+    console.log(this.state.fname)
+    console.log(this.state.lname)
+    console.log(this.state.phone)
+
+}
 
   handleInputChange(event) {
     const name = event.target.name;

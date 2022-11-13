@@ -31,6 +31,10 @@ import PasswordRoutes from "./Routing/PasswordRoutes.js"
 import AdminRoutes from "./Routing/AdminRoutes.js"
 import GuestRoutes from "./Routing/GuestRoutes.js"
 //import CreatingAccountRoutes from "./Routing/CreatingAccountRoutes.js"
+import InactiveCustomerRoutes from "./Routing/InactiveCustomerRoutes.js"
+
+import AdminHome from "./admin/AdminHome.js"
+import AddMovie from "./admin/AddMovie.js"
 
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
@@ -64,8 +68,12 @@ const App = () => {
                 <Route path="/ordersummary" element=<OrderSummary/> />
                 <Route path="/seat" element=<Seat/> />
             </Route>
+            <Route element = { <InactiveCustomerRoutes />} >
+                <Route path="/createconfirmation" element=<CreateConfirmation/> />
+            </Route>
             <Route element = { <AdminRoutes /> }>
-                
+                <Route path="/admin/home" element=<AdminHome /> />
+                <Route path="/admin/addmovie" element=<AddMovie /> />
             </Route>
             <Route element = { <PasswordRoutes /> }>
                 <Route path="/changepassword" element=<ChangePassword /> />
@@ -76,7 +84,6 @@ const App = () => {
                 <Route path="/createaccount" element=<CreateAccount/> />
                 <Route path="/login" element=<Login/> />
                 <Route path="/loginprompt" element=<LoginPrompt/> />
-                <Route path="/createconfirmation" element=<CreateConfirmation/> />
                 <Route path="/users/:id/verify/:token" element=<EmailVerify/> />
 
             </Route>

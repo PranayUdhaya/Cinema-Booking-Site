@@ -6,6 +6,7 @@ const Movie = require("../models/movies");
 
 // export addMovie function
 exports.addMovie = async (req, res) => {
+    console.log("In addMovie function, within controller/movies.js")
     let title = req.body.title;
     let movie = await Movie.findOne({ title });
     if (!movie) {
@@ -16,7 +17,9 @@ exports.addMovie = async (req, res) => {
             director: req.body.director,
             producer: req.body.producer,
             cast: req.body.cast,
-            synopsis: req.body.synopsis
+            synopsis: req.body.synopsis,
+            picture: req.body.picture,
+            trailer: req.body.trailer,
         })
         try {
             await newMovie.save();

@@ -5,7 +5,15 @@ import { Outlet, Route, Navigate, BrowserRouter, NavLink } from "react-router-do
 import Home from "../pages/Home"
 
 const useAuth = () => {
-    if (sessionStorage.getItem("loggedIn") == "true") {
+    if (sessionStorage.getItem("loggedIn") == "true" && sessionStorage.getItem("status") == "active") {
+        return true
+    } else {
+        return false
+    }
+}
+
+const inactiveCheck = () => {
+    if (sessionStorage.getItem("loggedIn") == "true" && sessionStorage.getItem("status") == "inactive") {
         return true
     } else {
         return false
@@ -13,6 +21,10 @@ const useAuth = () => {
 }
 
 const CustomerRoutes = () => {
+    const isInactive = inactiveCheck()
+    if (isInactive) {
+        return <CreateConfirmation />
+    }
     const isAuth = useAuth()
     return isAuth ? <Outlet /> : <Home /> 
 }

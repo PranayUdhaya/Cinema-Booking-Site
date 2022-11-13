@@ -69,7 +69,7 @@ class CreateConfirmation extends React.Component {
           <div class="createAccount">
               <h1>Account Created Successfully</h1>
               <h2>Verify Email</h2><br></br>
-              <p>A verification code has been sent to cinemas@movies.com</p><br></br>
+              <p>A verification code has been sent to {sessionStorage.getItem("email")}</p><br></br>
               <form onSubmit={this.handleSubmit}>
                   <label for="confCode">Enter code:</label>
                   <input class="smalltextfield" type="text" id="confCode" name="confCode" value={this.state.confCode} onChange={this.handleInputChange}></input>

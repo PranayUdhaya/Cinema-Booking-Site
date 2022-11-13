@@ -29,10 +29,10 @@ class EditPromo extends React.Component {
                             <label>Promotion Code: Samurai24</label><br></br>
                             <label>Expiration Date: 10-16-2022</label><br></br>
                             <label>Discount Percentage: 10%</label><br></br><br></br>
-                            <label for="amount">Modify Discount Percentage:</label><br></br>
+                            <label htmlFor="amount">Modify Discount Percentage:</label><br></br>
                             <input class="textfield" type="text" id="amount" name="amount"></input><br></br>
 
-                            <label for="date">Change Expiration Date: </label><br></br>
+                            <label htmlFor="date">Change Expiration Date: </label><br></br>
                             <input class="textfield" type="text" id="date" name="date"></input><br></br>
                     
                             <input type="submit" value="Submit"></input><br></br>
