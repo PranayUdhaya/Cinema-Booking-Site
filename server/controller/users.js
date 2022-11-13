@@ -132,7 +132,6 @@ exports.promoEmail = async (req, res) => {
         promoList.forEach(async (result) => {
             try {
                 await sendEmail(result.email, "Promotional Email", "Check out our new movie promotion!");
-                console.log(`Promotional email successfully sent to ${result.email}`);
             } catch (e) {
                 console.log(`Promotional email could not be sent to ${result.email}`);
             }
