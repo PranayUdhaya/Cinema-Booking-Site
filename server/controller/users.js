@@ -3,6 +3,8 @@
  */
 // importing model
  const User = require("../models/users");
+ const Token = require("../models/token");
+ const sendEmail = require("../utils/sendEmail");
 
 // export createUser function
 exports.createUser = async (req, res) => {
@@ -23,7 +25,27 @@ exports.createUser = async (req, res) => {
     })
     try {
         await newUser.save();
-        return res.json(newUser)
+
+        let user = await User.findOne({ email });
+        const token = await new Token({
+            userId: user._id,
+            userEmail: user.email,
+            token: Math.floor(1000 + Math.random() * 8999)
+        }).save()
+        //creates a url using the user id and token string
+        const url = "localhost:3000/createconfirmation";
+            
+        //sends an email with the verification url
+        try {
+            await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
+            return res.json({message: "A verification email has been sent to your account"});
+        } catch (e) {
+            console.log(e)
+            return res.json({message: "A verification email could not be sent", status: 404})
+        }
+
+        //return res.json(newUser);
+
     } catch (e) {
         console.log(e);
         return res.json(e)
@@ -82,4 +104,33 @@ exports.updatePassword = async (req, res) => {
     user.password = change;
     await user.save();
     return res.json(user);
+}
+
+//exports promoEmail function
+exports.promoEmail = async (req, res) => {
+    //finds users who want promotional emails and puts them in an array
+    const promoList = [];
+    const cursor = User.find({promo: true});
+    const results = await cursor.toArray();
+
+    //pushes all the users emails into an array
+    if (results.length > 0) {
+        results.forEach((result, i) => { 
+            promoList.push(result.email);
+        });
+    } else {
+        console.log("No users found");
+    }
+
+    //sends each email in the array a promotional email
+    if (promoList.length > 0) {
+        promoList.forEach(async (result) => {
+            try {
+                await sendEmail(result.email, "Promotional Email", "Check out our new movie promotion!");
+                console.log(`Promotional email successfully sent to ${result.email}`);
+            } catch (e) {
+                console.log(`Promotional email could not be sent to ${result.email}`);
+            }
+        })
+    }
 }
