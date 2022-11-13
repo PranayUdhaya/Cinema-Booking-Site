@@ -26,11 +26,11 @@ import './styles.css';
 import EmailVerify from "./EmailVerify";
 import EmptyNavbar from "./navbars/EmptyNavbar.js";
 import CustomerRoutes from "./Routing/CustomerRoutes.js";
-import LoginRoutes from "./Routing/LoginRoutes.js" 
+//import LoginRoutes from "./Routing/LoginRoutes.js" 
 import PasswordRoutes from "./Routing/PasswordRoutes.js"
 import AdminRoutes from "./Routing/AdminRoutes.js"
 import GuestRoutes from "./Routing/GuestRoutes.js"
-import CreatingAccountRoutes from "./Routing/CreatingAccountRoutes.js"
+//import CreatingAccountRoutes from "./Routing/CreatingAccountRoutes.js"
 
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
@@ -67,9 +67,6 @@ const App = () => {
             <Route element = { <AdminRoutes /> }>
                 
             </Route>
-            <Route element = { <LoginRoutes /> }>
-                
-            </Route>
             <Route element = { <PasswordRoutes /> }>
                 <Route path="/changepassword" element=<ChangePassword /> />
                 <Route path="/forgotpasswordemail" element=<ForgotPasswordEmail/> />
@@ -82,9 +79,6 @@ const App = () => {
                 <Route path="/createconfirmation" element=<CreateConfirmation/> />
                 <Route path="users/:id/verify/:token" element=<EmailVerify/> />
 
-            </Route>
-            <Route element = { <CreatingAccountRoutes /> }>
-                
             </Route>
             <Route path="*" element=<Home /> />
         </Routes>
