@@ -111,6 +111,26 @@ exports.updatePassword = async (req, res) => {
     });
 }
 
+exports.verifyAccount = async (req, res) => {
+    let checkEmail = {email: req.body.email};
+    let code = { token: req.body.token}
+
+    let user = User.findOne(checkEmail);
+    const tokenDb = await Token.findOne({
+        userId: user._id,
+        token: code.token
+    })
+
+    if (tokenDb) {
+        let statusUpdate = {status: "active"};
+        user.updateOne(checkEmail, {$set: statusUpdate});
+        console.log("Account has been successfully verified");
+        await Token.deleteOne(tokenDb);
+    } else {
+        console.log("Account could not be verified");
+    }
+}
+
 // exports promoEmail function
 exports.promoEmail = async (req, res) => {
     //finds users who want promotional emails and puts them in an array
