@@ -9,5 +9,6 @@
  
  // This request will add a new movie to the movies database
  router.post("/movies/add", movieController.addMovie);
+ router.post("/movies/edit", movieController.editMovie);
  
  module.exports = router;

@@ -13,7 +13,9 @@
      director: [String],
      producer: [String],
      cast: [String],
-     synopsis: String
+     synopsis: String,
+     picture: String,
+     trailer: String
  });
 
  module.exports = mongoose.model("Movie", MovieSchema);

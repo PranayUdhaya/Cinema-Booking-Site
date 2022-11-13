@@ -6,28 +6,36 @@ const Movie = require("../models/movies");
 
 // export addMovie function
 exports.addMovie = async (req, res) => {
-    let newMovie = new Movie({
-        title: req.body.title,
-        category: req.body.category,
-        ageRating: req.body.ageRating,
-        director: req.body.director,
-        producer: req.body.producer,
-        cast: req.body.cast,
-        synopsis: req.body.synopsis
-    })
-    try {
-        await newMovie.save();
-        return res.json(newMovie);
-    } catch (e) {
-        console.log(e);
-        return res.json(e);
+    let title = req.body.title;
+    let movie = await Movie.findOne({ title });
+    if (!movie) {
+        let newMovie = new Movie({
+            title: req.body.title,
+            category: req.body.category,
+            ageRating: req.body.ageRating,
+            director: req.body.director,
+            producer: req.body.producer,
+            cast: req.body.cast,
+            synopsis: req.body.synopsis
+        })
+        try {
+            await newMovie.save();
+            return res.json(newMovie);
+        } catch (e) {
+            console.log(e);
+            return res.json(e);
+        }
+    } else {
+        return res.json({ message: "Movie already exists", status: 400 })
     }
+
 };
 
 
 // export editMovie function
 exports.editMovie = async (req, res) => {
-    let updateMovie = new Movie({
+    let title = req.body.title;
+    let updatedMovie = {
         title: req.body.title,
         category: req.body.category,
         ageRating: req.body.ageRating,
@@ -35,10 +43,10 @@ exports.editMovie = async (req, res) => {
         producer: req.body.producer,
         cast: req.body.cast,
         synopsis: req.body.synopsis
-    })
+    }
     try {
-        await newMovie.save();
-        return res.json(newMovie);
+        let movie = await Movie.findOneAndUpdate(title, updatedMovie);
+        return res.json(movie);
     } catch (e) {
         console.log(e);
         return res.json(e);
