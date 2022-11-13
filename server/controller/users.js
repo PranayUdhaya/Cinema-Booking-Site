@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
     if (!user) {
         return res.json({ message: "Email not found", status: 404 });
     }
-    user.comparePassword(password, function(matchError, isMatch) {
+    user.comparePassword(password, async function(matchError, isMatch) {
         if (matchError) {
             return res.json({ message: "Error", status: 404 });
         } else if (!isMatch) {
@@ -73,13 +73,17 @@ exports.updateInfo = async (req, res) => {
 
 // export updatePassword function
 exports.updatePassword = async (req, res) => {
-    let { email, old, change } = req.body;
+    let { email, password, updatedPassword } = req.body;
     let user = await User.findOne({ email });
-    User.comparePassword(old, match);
-    if (!match) {
-        return res.json({ message: "Incorrect Password", status: 404 });
-    }
-    user.password = change;
-    await user.save();
-    return res.json(user);
+    user.comparePassword(password, async function(matchError, isMatch) {
+        if (matchError) {
+            return res.json({ message: "Error", status: 404 });
+        } else if (!isMatch) {
+            return res.json({ message: "Incorrect Password", status: 404 });
+        } else if (isMatch) {
+            user.password = updatedPassword;
+            await user.save();
+            return res.json(user);
+        }
+    });
 }
