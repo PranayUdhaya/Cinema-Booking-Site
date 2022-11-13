@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
     if (!user) {
         return res.json({ message: "Email not found", status: 404 });
     }
-    user.comparePassword(password, function(matchError, isMatch) {
+    user.comparePassword(password, async function(matchError, isMatch) {
         if (matchError) {
             return res.json({ message: "Error", status: 404 });
         } else if (!isMatch) {
@@ -95,15 +95,48 @@ exports.updateInfo = async (req, res) => {
 
 // export updatePassword function
 exports.updatePassword = async (req, res) => {
-    let { email, old, change } = req.body;
+    let { email, password, updatedPassword } = req.body;
     let user = await User.findOne({ email });
-    User.comparePassword(old, match);
-    if (!match) {
-        return res.json({ message: "Incorrect Password", status: 404 });
+    user.comparePassword(password, async function(matchError, isMatch) {
+        if (matchError) {
+            return res.json({ message: "Error", status: 404 });
+        } else if (!isMatch) {
+            return res.json({ message: "Incorrect Password", status: 404 });
+        } else if (isMatch) {
+            user.password = updatedPassword;
+            await user.save();
+            return res.json(user);
+        }
+    });
+}
+
+//exports promoEmail function
+exports.promoEmail = async (req, res) => {
+    //finds users who want promotional emails and puts them in an array
+    const promoList = [];
+    const cursor = User.find({promo: true});
+    const results = await cursor.toArray();
+
+    //pushes all the users emails into an array
+    if (results.length > 0) {
+        results.forEach((result, i) => { 
+            promoList.push(result.email);
+        });
+    } else {
+        console.log("No users found");
     }
-    user.password = change;
-    await user.save();
-    return res.json(user);
+
+    //sends each email in the array a promotional email
+    if (promoList.length > 0) {
+        promoList.forEach(async (result) => {
+            try {
+                await sendEmail(result.email, "Promotional Email", "Check out our new movie promotion!");
+                console.log(`Promotional email successfully sent to ${result.email}`);
+            } catch (e) {
+                console.log(`Promotional email could not be sent to ${result.email}`);
+            }
+        })
+    }
 }
 
 //exports promoEmail function
