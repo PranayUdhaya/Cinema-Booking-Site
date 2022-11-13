@@ -14,7 +14,7 @@ class Login extends React.Component{
       lname: "",
       phone: "",
       status: "",
-      rememberMe: "",
+      rememberMe: false,
       failure: "",
       promo: false,
     };
