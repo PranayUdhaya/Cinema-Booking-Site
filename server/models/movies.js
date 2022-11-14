@@ -4,18 +4,21 @@
  *  Exports the schema as "Movie" so that it may be used in other files
  */
 
- const mongoose = require("mongoose");
+ const { ObjectId } = require("mongodb");
+const mongoose = require("mongoose");
  
  const MovieSchema = mongoose.Schema({
-     title: String,
-     category: [String],
-     ageRating: String,
-     director: [String],
-     producer: [String],
-     cast: [String],
-     synopsis: String,
-     picture: String,
-     trailer: String
+    title: String,
+    category: [String],
+    ageRating: String,
+    director: String,
+    producer: [String],
+    cast: [String],
+    synopsis: String,
+    picture: String,
+    trailer: String,
+    availability: String, // now playing, coming soon, or (unavilable) or deleted
+    showings: [ObjectId]
  });
 
  module.exports = mongoose.model("Movie", MovieSchema);

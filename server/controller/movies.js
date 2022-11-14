@@ -55,3 +55,8 @@ exports.editMovie = async (req, res) => {
         return res.json(e);
     }
 };
+
+// find currently showing movies
+// find coming soon movies
+// exports.findCurrent
+
