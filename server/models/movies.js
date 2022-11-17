@@ -17,7 +17,7 @@ const mongoose = require("mongoose");
     synopsis: String,
     picture: String,
     trailer: String,
-    availability: String, // now playing, coming soon, or (unavilable) or deleted
+    availability: String, // now playing, coming soon, or (unavailable) or deleted
     showings: [ObjectId]
  });
 
