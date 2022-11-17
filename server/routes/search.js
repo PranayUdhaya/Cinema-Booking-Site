@@ -8,6 +8,6 @@
  const router = express.Router();
  
  // This request will add a new movie to the movies database
- router.post("/search/search", searchController.search);
+ router.post("/search", searchController.search);
  
  module.exports = router;

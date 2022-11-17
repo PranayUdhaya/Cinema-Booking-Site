@@ -7,7 +7,13 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            titleQuery: "",
+            genreQuery: "",
+            availability: "",
         }
+        
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInputChange(event) {
@@ -21,6 +27,25 @@ class Search extends React.Component {
 
     async handleSubmit(e) {
         e.preventDefault();
+
+        const query = {
+            title: this.state.titleQuery,
+            category: this.state.genreQuery,
+            availability: this.state.availability,
+        }
+
+        const response = await fetch("http://localhost:5000/search", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+          })
+          .catch(error => {
+           window.alert(error);
+            return;
+          });
+
     }
 
     render() {
@@ -28,8 +53,17 @@ class Search extends React.Component {
             <div>
             <div class="search">
                 <div class="searchLine">
-                    <input class="searchBar" type="search" placeholder="Enter a Movie Title"></input>
-                    <button class="searchButton">Search</button>
+                    <form onSubmit={this.handleSubmit}>
+                        <input class="searchBar" type="search" placeholder="Enter a Movie Title" value={this.state.titleQuery} onChange={this.handleInputChange}></input>
+                        <input class="searchBar" type="search" placeholder="Enter a Movie Genre" value={this.state.genreQuery} onChange={this.handleInputChange}></input>
+                        <label htmlFor="ctype">Enter Card Type</label><br></br>
+                        <select class="textfield" name="availability" id="availability" value={this.state.availability} onChange={this.handleInputChange}>
+                            <option value="All">All</option>
+                            <option value="Currently Showing">Currently Showing</option>
+                            <option value="Coming Soon">Coming Soon</option>
+                        </select><br></br>
+                        <input class="submit" type="submit" value="Search"></input>
+                    </form>
                 </div>
             </div>
             <div class="movieList">
