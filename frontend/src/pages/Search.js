@@ -11,7 +11,7 @@ class Search extends React.Component {
             genreQuery: "",
             availability: "",
         }
-        
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -53,15 +53,15 @@ class Search extends React.Component {
             <div>
             <div class="search">
                 <div class="searchLine">
-                    <form onSubmit={this.handleSubmit}>
-                        <input class="searchBar" type="search" placeholder="Enter a Movie Title" value={this.state.titleQuery} onChange={this.handleInputChange}></input>
-                        <input class="searchBar" type="search" placeholder="Enter a Movie Genre" value={this.state.genreQuery} onChange={this.handleInputChange}></input>
-                        <label htmlFor="ctype">Enter Card Type</label><br></br>
+                    <form class="form" onSubmit={this.handleSubmit}>
+                        <input class="searchBar" type="search"  id="titleQuery" name="titleQuery" placeholder="Enter a Movie Title" value={this.state.titleQuery} onChange={this.handleInputChange}></input>
+                        <input class="searchBar" type="search" id="genreQuery" name="genreQuery" placeholder="Enter a Movie Genre" value={this.state.genreQuery} onChange={this.handleInputChange}></input>
+                        <label htmlFor="ctype">Select Filter</label>
                         <select class="textfield" name="availability" id="availability" value={this.state.availability} onChange={this.handleInputChange}>
                             <option value="All">All</option>
                             <option value="Currently Showing">Currently Showing</option>
                             <option value="Coming Soon">Coming Soon</option>
-                        </select><br></br>
+                        </select>
                         <input class="submit" type="submit" value="Search"></input>
                     </form>
                 </div>
