@@ -18,7 +18,7 @@ exports.search = async (req, res) => {
 }
 
 async function search(titleSearch, genreSearch, availibilitySearch) {
-    const searchList = await client.db("CinemaDB").collection("Movies");
+    const searchList = await Movies.find({});
     if (titleSearch != "") {
         searchList = getTitle(searchList, titleSearch);
     }
