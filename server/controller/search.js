@@ -7,6 +7,7 @@ const Movies = require("../models/movies");
 exports.search = async (req, res) => {
     
     try {
+        console.log(req.body.title, req.body.category, req.body.availibility)
         movies = await search(req.body.title, req.body.category, req.body.availibility)
         return res.json(movies);
     } catch (e) {
@@ -24,7 +25,7 @@ async function search(titleSearch, genreSearch, availibilitySearch) {
     if (genreSearch != "") {
         searchList = getGenre(searchList, genreSearch);
     }
-    if (availibilitySearch != "All Movies") {
+    if (availibilitySearch != "All") {
         searchList = getAvailibility(searchList, availibilitySearch);
     }
 }
