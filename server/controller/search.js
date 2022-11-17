@@ -7,8 +7,8 @@ const Movies = require("../models/movies");
 exports.search = async (req, res) => {
     
     try {
-        console.log(req.body.title, req.body.category, req.body.availibility)
-        movies = await search(req.body.title, req.body.category, req.body.availibility)
+        console.log(req.body.title, req.body.category, req.body.availability)
+        movies = await search(req.body.title, req.body.category, req.body.availability)
         return res.json(movies);
     } catch (e) {
         console.log(e);
@@ -17,7 +17,10 @@ exports.search = async (req, res) => {
     
 }
 
-async function search(titleSearch, genreSearch, availibilitySearch) {
+async function search(titleSearch, genreSearch, availabilitySearch) {
+    console.log(titleSearch);
+    console.log(genreSearch);
+    console.log(availabilitySearch);
     const searchList = await Movies.find({});
     if (titleSearch != "") {
         searchList = getTitle(searchList, titleSearch);
@@ -25,8 +28,8 @@ async function search(titleSearch, genreSearch, availibilitySearch) {
     if (genreSearch != "") {
         searchList = getGenre(searchList, genreSearch);
     }
-    if (availibilitySearch != "All") {
-        searchList = getAvailibility(searchList, availibilitySearch);
+    if (availabilitySearch != "All") {
+        searchList = getAvailability(searchList, availabilitySearch);
     }
 }
 
@@ -42,8 +45,8 @@ async function getGenre(list, genre) {
     return result;
 }
 
-async function getAvailibility(list, availibilitySearch) {
-    const result = list.find({availibility: availibilitySearch});
+async function getAvailability(list, availabilitySearch) {
+    const result = list.find({availability: availabilitySearch});
     
     return result;
 }
