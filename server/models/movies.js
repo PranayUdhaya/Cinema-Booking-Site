@@ -4,7 +4,7 @@
  *  Exports the schema as "Movie" so that it may be used in other files
  */
 
- const { ObjectId } = require("mongodb");
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
  
  const MovieSchema = mongoose.Schema({
