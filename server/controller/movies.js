@@ -77,5 +77,3 @@ exports.findFutureMovies = async (req, res) => {
     return res.json(futureMovies);
 };
 
-
-
