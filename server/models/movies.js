@@ -4,7 +4,7 @@
  *  Exports the schema as "Movie" so that it may be used in other files
  */
 
- const { ObjectId } = require("mongodb");
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
  
  const MovieSchema = mongoose.Schema({
@@ -18,7 +18,8 @@ const mongoose = require("mongoose");
     picture: String,
     trailer: String,
     availability: String, // now playing, coming soon, or (unavailable) or deleted
-    showings: [ObjectId]
+    showings: [ObjectId],
+    runtime: Number
  });
 
  module.exports = mongoose.model("Movie", MovieSchema);
