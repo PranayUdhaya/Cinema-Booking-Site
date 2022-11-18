@@ -4,6 +4,7 @@
 // importing model
 const promo = require("../models/promo");
 const Promo = require("../models/promo");
+const { promoEmail } = require("./users");
 
 // export addMovie function
 exports.addPromo = async (req, res) => {
@@ -25,6 +26,34 @@ exports.addPromo = async (req, res) => {
     } else {
         return res.json({ message: "Promotion already exists", status: 400 })
     }
-
 };
 
+exports.editPromo = async (req, res) => {
+    let title = req.body.title;
+    let updatedMovie = {
+        title: req.body.title,
+        category: req.body.category,
+        picture: req.body.picture,
+    }
+    try {
+        let movie = await Movie.findOneAndUpdate(title, updatedMovie);
+        return res.json(movie);
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
+    }
+};
+
+exports.sendPromo = async (req, res) => {
+    let title = req.body.title;
+    let updatedMovie = {
+        sentEmail: true,
+    }
+    try {
+        let movie = await Movie.findOneAndUpdate(title, updatedMovie);
+        await promoEmail;
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
+    }
+};
