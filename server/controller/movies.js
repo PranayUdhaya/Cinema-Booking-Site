@@ -65,15 +65,15 @@ exports.findCurrentMovies = async (req, res) => {
         return res.json({ message: "Internal Error", status: 404 });
     }
     return res.json(currentMovies);
-}
+};
 
 // find movies that are coming soon
 exports.findFutureMovies = async (req, res) => {
     let filter = "coming soon";
-    let currentMovies = await movies.find( {availability: filter} );
-    if (!currentMovies) {
+    let futureMovies = await movies.find( {availability: filter} );
+    if (!futureMovies) {
         return res.json({ message: "Internal Error", status: 404 });
     }
-    return res.json(currentMovies);
-}
+    return res.json(futureMovies);
+};
 

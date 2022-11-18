@@ -18,7 +18,8 @@ const mongoose = require("mongoose");
     picture: String,
     trailer: String,
     availability: String, // now playing, coming soon, or (unavailable) or deleted
-    showings: [ObjectId]
+    showings: [ObjectId],
+    runtime: Number
  });
 
  module.exports = mongoose.model("Movie", MovieSchema);

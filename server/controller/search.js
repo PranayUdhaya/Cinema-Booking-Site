@@ -1,9 +1,10 @@
 /**
- *  Defining the CRUD functions that will be called in routes/movies.js 
+ *  Defining the search function
  */
 // importing model
 const Movies = require("../models/movies");
 
+// defining search function which will be called in routes/search
 exports.search = async (req, res) => {
     
     try {
@@ -14,9 +15,9 @@ exports.search = async (req, res) => {
         console.log(e);
         return res.json(e);
     }
-    
-}
+};
 
+// building the query based off of user inputs in each search bar
 async function search(titleSearch, genreSearch, availabilitySearch) {
     console.log(titleSearch);
     console.log(genreSearch);
