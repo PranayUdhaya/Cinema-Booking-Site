@@ -2,7 +2,6 @@
  *  Defining the CRUD functions that will be called in routes/movies.js 
  */
 // importing model
-const movies = require("../models/movies");
 const Movie = require("../models/movies");
 
 // export addMovie function
@@ -60,7 +59,7 @@ exports.editMovie = async (req, res) => {
 // find currently showing movies
 exports.findCurrentMovies = async (req, res) => {
     let filter = "now playing";
-    let currentMovies = await movies.find( {availability: filter} );
+    let currentMovies = await Movie.find( {availability: filter} );
     if (!currentMovies) {
         return res.json({ message: "Internal Error", status: 404 });
     }
@@ -70,7 +69,7 @@ exports.findCurrentMovies = async (req, res) => {
 // find movies that are coming soon
 exports.findFutureMovies = async (req, res) => {
     let filter = "coming soon";
-    let futureMovies = await movies.find( {availability: filter} );
+    let futureMovies = await Movie.find( {availability: filter} );
     if (!futureMovies) {
         return res.json({ message: "Internal Error", status: 404 });
     }
