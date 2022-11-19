@@ -86,7 +86,7 @@ class ManagePromos extends React.Component {
         const currentPromos = await response.json();
         
 
-        //console.log(currentMovies)
+        console.log(currentPromos)
         //console.log("currentMovies: " + currentMovies)
         
         this.setState({currentPromosArray: currentPromos});

@@ -72,12 +72,25 @@ exports.sendPromo = async (req, res) => {
 };
 
 exports.findPromos = async (req, res) => {
-    try {
+    let currentPromos = await Promo.find({});
+    if (!currentPromos) {
+        return res.json({ message: "Internal Error", status: 404 });
+    }
+    //console.log(currentMovies)
+    /*const currentMoviesArray = [];
+    for(let x in currentMovies) {
+        console.log(x);
+        currentMoviesArray[x] = currentMovies[x];
+    }
+    console.log(currentMoviesArray)*/
+    return res.json(currentPromos);
+
+    /*try {
         const cursor = Promo.find();
         const results = await cursor.toArray();
         return res.json(results);
     } catch (e) {
         console.log(e);
         return res.json(e);
-    }
+    }*/
 }
