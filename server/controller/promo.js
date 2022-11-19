@@ -72,11 +72,11 @@ exports.sendPromo = async (req, res) => {
 };
 
 exports.findPromos = async (req, res) => {
-    const allPromos = Promo.find();
-
-    if (allPromos.length > 0) {
+    try {
+        const allPromos = Promo.find();
         return res.json(allPromos);
-    } else {
-        console.log("No promos found");
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
     }
 }
