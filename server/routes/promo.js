@@ -7,4 +7,6 @@ router.post("/addpromo", promoController.addPromo);
 
 router.post("/sendpromo", promoController.sendPromo);
 
+router.post("/findpromos", promoController.findPromos);
+
 module.exports = router;

@@ -42,22 +42,22 @@ exports.sendPromo = async (req, res) => {
     
     try {
         //finds users who want promotional emails and puts them in an array
-        const promoList = [];
+        const promoUsers = [];
         const cursor = User.find({promo: true});
         const results = await cursor.toArray();
 
         //pushes all the users emails into an array
         if (results.length > 0) {
-            results.forEach((result, i) => { 
-                promoList.push(result.email);
+            results.forEach((result) => { 
+                promoUsers.push(result.email);
             });
         } else {
             console.log("No users found");
         }
 
         //sends each email in the array a promotional email
-        if (promoList.length > 0) {
-            promoList.forEach(async (result) => {
+        if (promoUsers.length > 0) {
+            promoUsers.forEach(async (result) => {
                 try {
                     await sendEmail(result.email, "Promotional Email", "Check out our new promotion!");
                 } catch (e) {
@@ -70,3 +70,16 @@ exports.sendPromo = async (req, res) => {
         return res.json(e);
     }
 };
+
+exports.findPromos = async (req, res) => {
+    const cursor = Promo.find();
+    const results = await cursor.toArray();
+
+    if (results.length > 0) {
+        results.forEach((result) => { 
+            res.json(result);
+        });
+    } else {
+        console.log("No promos found");
+    }
+}
