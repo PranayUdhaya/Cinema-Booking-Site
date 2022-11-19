@@ -81,6 +81,23 @@ exports.findCurrentMovies = async (req, res) => {
     return res.json(currentMovies);
 };
 
+exports.find30CurrentMovies = async (req, res) => {
+    console.log("In find30Current")
+    let filter = "now playing";
+    let currentMovies = await Movie.find( {availability: filter} ).limit(30);
+    if (!currentMovies) {
+        return res.json({ message: "Internal Error", status: 404 });
+    }
+    //console.log(currentMovies)
+    /*const currentMoviesArray = [];
+    for(let x in currentMovies) {
+        console.log(x);
+        currentMoviesArray[x] = currentMovies[x];
+    }
+    console.log(currentMoviesArray)*/
+    res.json(currentMovies);
+};
+
 // find movies that are coming soon
 exports.findFutureMovies = async (req, res) => {
     let filter = "coming soon";
@@ -91,3 +108,12 @@ exports.findFutureMovies = async (req, res) => {
     return res.json(futureMovies);
 };
 
+// find 30 movies that are coming soon
+exports.find30FutureMovies = async (req, res) => {
+    let filter = "coming soon";
+    let futureMovies = await Movie.find( {availability: filter} ).limit(30);
+    if (!futureMovies) {
+        return res.json({ message: "Internal Error", status: 404 });
+    }
+    return res.json(futureMovies);
+};

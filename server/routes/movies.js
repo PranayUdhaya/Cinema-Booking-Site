@@ -14,9 +14,13 @@
  router.post("/movies/edit", movieController.editMovie);
 
  // This request will find the movies that are currently showing
- router.post("/movies/edit", movieController.findCurrentMovies);
+ router.post("/movies/findcurrent", movieController.findCurrentMovies);
 
  // This request will find the movies that are coming soon
- router.post("/movies/edit", movieController.findFutureMovies);
+ router.post("/movies/findfuture", movieController.findFutureMovies);
+
+ router.post("/movies/find30current", movieController.find30CurrentMovies);
+ 
+ router.post("/movies/find30future", movieController.find30FutureMovies);
  
  module.exports = router;
