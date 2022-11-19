@@ -35,6 +35,9 @@ import InactiveCustomerRoutes from "./Routing/InactiveCustomerRoutes.js"
 
 import AdminHome from "./admin/AdminHome.js"
 import AddMovie from "./admin/AddMovie.js"
+import EditPromo from "./admin/EditPromo.js"
+import ManagePromos from "./admin/ManagePromos.js"
+import ScheduleMovie from "./admin/ScheduleMovie.js"
 
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
@@ -74,6 +77,9 @@ const App = () => {
             <Route element = { <AdminRoutes /> }>
                 <Route path="/admin/home" element=<AdminHome /> />
                 <Route path="/admin/addmovie" element=<AddMovie /> />
+                <Route path="/admin/editpromo" element=<EditPromo /> />
+                <Route path="/admin/managepromos" element=<ManagePromos /> />
+                <Route path="/admin/schedulemovie" element=<ScheduleMovie /> />
             </Route>
             <Route element = { <PasswordRoutes /> }>
                 <Route path="/changepassword" element=<ChangePassword /> />

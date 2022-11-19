@@ -3,15 +3,15 @@ import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter, NavLink } from "react-router-dom";
 
-export default function Navbar() {
+export default function EmptyNavbar() {
     return (
     <header>
         <img class="logo" src={require("../images/logo.png")} alt="logo"></img>
         <NavLink class="siteName" href="./home">C7 Cinemas</NavLink>
         <div hidden class="searchLineHome">
-           <input class="searchBar" type="search" placeholder="Enter a Movie Title"></input>
-            <button class="searchButton">Search</button>
-            </div>
+           <input hidden class="searchBar" type="search" placeholder="Enter a Movie Title"></input>
+            <button hidden class="searchButton">Search</button>
+        </div>
         <nav hidden>
             <ul class="nav_links">
                 <li><NavLink to="./browse">Browse</NavLink></li>

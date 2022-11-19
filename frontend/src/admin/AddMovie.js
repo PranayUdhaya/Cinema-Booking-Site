@@ -19,6 +19,7 @@ class AddMovie extends React.Component {
             synopsis: "",
             picture: "",
             trailer: "",
+            runtime: "",
           };
 
           this.handleInputChange = this.handleInputChange.bind(this);
@@ -56,6 +57,8 @@ class AddMovie extends React.Component {
           synopsis: this.state.synopsis,
           picture: this.state.picture,
           trailer: this.state.trailer,
+          availability: "unavailable",
+          runtime: this.state.runtime,
         }
         
         console.log(newMovie)
@@ -76,18 +79,10 @@ class AddMovie extends React.Component {
           if (record.isMatch == false) {
               window.alert("Wrong password");
               return;
-          } else {
-              window.location.href = "/addmovie";
+          } else {  
+            //window.location.href = "/admin/addmovie";
           }
   
-        // window.alert(JSON.stringify(potentialUser));
-      
-          //setForm({ name: "", position: "", level: "" });
-      
-          //navigate("/");
-          //this.pullData();
-          console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
-          //window.location.href = "/home";
       }
 
     render() {
@@ -121,6 +116,9 @@ class AddMovie extends React.Component {
                     
                     <label htmlFor="synopsis">Enter Synopsis:</label><br></br>
                     <textarea class="textfield" id="synopsis" name="synopsis" rows="8" cols="30" value={this.state.synopsis} onChange={this.handleInputChange}></textarea><br></br>
+                    
+                    <label htmlFor="runtime">Enter Runtime:</label><br></br>
+                    <input class="textfield" type="number" id="runtime" name="runtime" value={this.state.runtime} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="picture">Add Promo Picture:</label><br></br>
                     <input class="textfield" type="url" id="picture" name="picture" value={this.state.picture} onChange={this.handleInputChange}></input><br></br>

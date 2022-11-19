@@ -35,12 +35,6 @@ class CreateAccount extends React.Component{
     this.handlePromo = this.handlePromo.bind(this);
   }
 
-  /*async handleSubmit(event) {
-    // Call backend methed to create account and return success of failure
-      // call displayFailure if failed
-    event.preventDefault();
-
-  }*/
 
 
 
