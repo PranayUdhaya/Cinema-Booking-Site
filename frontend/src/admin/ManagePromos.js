@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter } from "react-router-dom";
+import ExistingPromos from "./ExistingPromos.js"
 
 class ManagePromos extends React.Component {
 
@@ -10,6 +11,7 @@ class ManagePromos extends React.Component {
         this.state = {
             newPromoName: "",
             newPromoAmount: 0,
+            newPromoDate: "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -49,6 +51,9 @@ class ManagePromos extends React.Component {
                             
                             <label htmlFor="amount">Enter Discount Percentage:</label><br></br>
                             <input class="textfield" type="number" id="amount" name="amount" min="1" max="100" value={this.state.newPromoAmount} onChange={this.handleInputChange}></input><br></br>
+
+                            <label hidden htmlFor="pDate">Enter New Promotion Expiration:</label><br></br>
+                            <input hidden class="textfield" type="text" id="pDate" name="pDate" value={this.state.newPromoDate} onChange={this.handleInputChange}></input><br></br>
                     
                             <input type="submit" value="Submit"></input><br></br>
                         </form>
@@ -63,7 +68,7 @@ class ManagePromos extends React.Component {
                     </div>
                     <div class="existingPromos">
                         <h4>Existing Promotions</h4>
-
+                        <ExistingPromos />
                     </div>
                 </div>
             </div>

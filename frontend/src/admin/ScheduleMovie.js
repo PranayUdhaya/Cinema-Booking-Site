@@ -61,7 +61,7 @@ class ScheduleMovie extends React.Component {
     render() {
         return (
             <div class="manageMoviesDetails">
-                <h4>Schedule a Movie</h4>
+                <h4>Schedule {this.state.movie}</h4>
                 <form onSubmit={this.handleAvailability}>
                 <label htmlFor="availability">Set Availability: </label><br></br>
                 <select class="textfield" name="availability" id="availability" value={this.state.availability} onChange={this.handleInputChange}>
