@@ -75,7 +75,7 @@ exports.deleteMovie = async (req, res) => {
 
 // find currently showing movies
 exports.findCurrentMovies = async (req, res) => {
-    let filter = "now playing";
+    let filter = "Currently Showing";
     let currentMovies = await Movie.find( {availability: filter} );
     if (!currentMovies) {
         return res.json({ message: "Internal Error", status: 404 });
@@ -85,7 +85,7 @@ exports.findCurrentMovies = async (req, res) => {
 
 exports.find30CurrentMovies = async (req, res) => {
     //console.log("In find30Current")
-    let filter = "now playing";
+    let filter = "Currently Showing";
     let currentMovies = await Movie.find( {availability: filter} ).limit(30);
     if (!currentMovies) {
         return res.json({ message: "Internal Error", status: 404 });
@@ -102,7 +102,7 @@ exports.find30CurrentMovies = async (req, res) => {
 
 // find movies that are coming soon
 exports.findFutureMovies = async (req, res) => {
-    let filter = "coming soon";
+    let filter = "Coming Soon";
     let futureMovies = await Movie.find( {availability: filter} );
     if (!futureMovies) {
         return res.json({ message: "Internal Error", status: 404 });
@@ -112,7 +112,7 @@ exports.findFutureMovies = async (req, res) => {
 
 // find 30 movies that are coming soon
 exports.find30FutureMovies = async (req, res) => {
-    let filter = "coming soon";
+    let filter = "Coming Soon";
     let futureMovies = await Movie.find( {availability: filter} ).limit(30);
     if (!futureMovies) {
         return res.json({ message: "Internal Error", status: 404 });
