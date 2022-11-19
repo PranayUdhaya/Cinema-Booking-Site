@@ -11,8 +11,8 @@
     descriptor: String,
     discount: Number,
     code: String,
-    adminEdit: true,
-    sentEmail: false,
+    adminEdit: Boolean,
+    sentEmail: Boolean,
 });
 
 module.exports = mongoose.model("Promo", promoSchema);

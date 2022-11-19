@@ -3,18 +3,18 @@
  */
 // importing model
 const { findOne } = require("../models/promo");
-const promo = require("../models/promo");
+const Promo = require("../models/promo");
 const { promoEmail } = require("./users");
 
 // export addMovie function
 exports.addPromo = async (req, res) => {
-    let promo = await promo.findOne({code: req.body.code});
+    let promo = await Promo.findOne({code: req.body.code});
     
     if (!promo) {
         let newPromo = new Promo({
-            descriptor: String,
-            discount: Number,
-            code: String,
+            descriptor: req.body.descriptor,
+            discount: req.body.discount,
+            code: req.body.code,
             adminEdit: true,
             sentEmail: false,
         })

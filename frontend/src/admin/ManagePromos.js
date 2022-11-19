@@ -9,9 +9,9 @@ class ManagePromos extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newPromoName: "",
-            newPromoAmount: 0,
-            newPromoDate: "",
+            code: "",
+            discount: 0,
+            descriptor: "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -31,6 +31,26 @@ class ManagePromos extends React.Component {
     async handleNewPromo(e) {
         e.preventDefault();
 
+        const newPromo = {
+            descriptor: this.state.descriptor,
+            discount: this.state.discount,
+            code: this.state.code,
+        }
+
+        console.log(this.state)
+        const response = await fetch("http://localhost:5000/addpromo", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newPromo),
+          })
+          .catch(error => {
+           window.alert(error);
+            return;
+          });
+
+        console.log(response);
     }
 
     async handleEditPromo(e) {
@@ -46,19 +66,22 @@ class ManagePromos extends React.Component {
                     <div class="addPromo">
                         <h4> Add New Promotion</h4>
                         <form onSubmit={this.handleNewPromo}>
-                            <label htmlFor="pName">Enter New Promotion Code:</label><br></br>
-                            <input class="textfield" type="text" id="pName" name="pName" value={this.state.newPromoName} onChange={this.handleInputChange}></input><br></br>
+                            <label htmlFor="code">Enter New Promotion Code:</label><br></br>
+                            <input class="textfield" type="text" id="code" name="code" value={this.state.code} onChange={this.handleInputChange}></input><br></br>
                             
-                            <label htmlFor="amount">Enter Discount Percentage:</label><br></br>
-                            <input class="textfield" type="number" id="amount" name="amount" min="1" max="100" value={this.state.newPromoAmount} onChange={this.handleInputChange}></input><br></br>
+                            <label htmlFor="discount">Enter Discount Percentage:</label><br></br>
+                            <input class="textfield" type="number" id="discount" name="discount" min="1" max="100" value={this.state.discount} onChange={this.handleInputChange}></input><br></br>
 
-                            <label hidden htmlFor="pDate">Enter New Promotion Expiration:</label><br></br>
-                            <input hidden class="textfield" type="text" id="pDate" name="pDate" value={this.state.newPromoDate} onChange={this.handleInputChange}></input><br></br>
+                            <label htmlFor="descriptor">Enter New Promotion Descriptor:</label><br></br>
+                            <input class="textfield" type="text" id="descriptor" name="descriptor" value={this.state.descriptor} onChange={this.handleInputChange}></input><br></br>
+                            
+                            <label hidden htmlFor="pDate">Enter New Promotion Expiration:</label>
+                            <input hidden class="textfield" type="text" id="pDate" name="pDate" value={this.state.newPromoDate} onChange={this.handleInputChange}></input>
                     
                             <input type="submit" value="Submit"></input><br></br>
                         </form>
                     </div>
-                    <div class="editPromo">
+                    <div hidden class="editPromo">
                         <h4>Edit an Existing Promotion</h4>
                         <form onSubmit={this.handleEditPromo}>
                         <label htmlFor="pSearch">Search Promotion Code:</label><br></br>
@@ -68,7 +91,7 @@ class ManagePromos extends React.Component {
                     </div>
                     <div class="existingPromos">
                         <h4>Existing Promotions</h4>
-                        <ExistingPromos />
+                        
                     </div>
                 </div>
             </div>
