@@ -84,7 +84,7 @@ exports.findCurrentMovies = async (req, res) => {
 };
 
 exports.find30CurrentMovies = async (req, res) => {
-    console.log("In find30Current")
+    //console.log("In find30Current")
     let filter = "now playing";
     let currentMovies = await Movie.find( {availability: filter} ).limit(30);
     if (!currentMovies) {
@@ -97,7 +97,7 @@ exports.find30CurrentMovies = async (req, res) => {
         currentMoviesArray[x] = currentMovies[x];
     }
     console.log(currentMoviesArray)*/
-    res.json(currentMovies);
+    return res.json(currentMovies);
 };
 
 // find movies that are coming soon

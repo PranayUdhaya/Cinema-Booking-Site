@@ -10,6 +10,7 @@ class Search extends React.Component {
             titleQuery: "",
             genreQuery: "",
             availability: "",
+            results: "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -32,8 +33,10 @@ class Search extends React.Component {
             title: this.state.titleQuery,
             category: this.state.genreQuery,
             availability: this.state.availability,
+
         }
 
+        console.log(this.state)
         const response = await fetch("http://localhost:5000/search", {
             method: "POST",
             headers: {
@@ -46,6 +49,12 @@ class Search extends React.Component {
             return;
           });
 
+        console.log(response);
+
+        const queryResults = await response.json();
+        this.setState({results: queryResults})
+
+        console.log(queryResults)
     }
 
     render() {
@@ -67,33 +76,9 @@ class Search extends React.Component {
                 </div>
             </div>
             <div class="movieList">
-                <div class="movieResult">
-                    <img class="promoPoster" src="../images/solo.jpg"></img>
-                    <div class="resultInfo">
-                        <h2>Solo</h2>
-                        <p>Rated: PG-13</p>
-                        <a>View Movie Details</a>
-                        <a>Book Tickets</a> 
-                    </div>
-                </div>
-                <div class="movieResult">
-                    <img class="promoPoster" src="../images/womanKing.jpg"></img>
-                    <div class="resultInfo">
-                        <h2>The Woman King</h2>
-                        <p>Rated: PG-13</p>
-                        <a>View Movie Details</a>
-                        <a>Book Tickets</a> 
-                    </div>
-                </div>
-                <div class="movieResult">
-                    <img class="promoPoster" src="../images/weathering.jpg"></img>
-                    <div class="resultInfo">
-                        <h2>Weathering With You</h2>
-                        <p>Rated: PG-13</p>
-                        <a>View Movie Details</a>
-                        <a>Book Tickets</a> 
-                    </div>
-                </div>
+               {this.state.results && this.state.results.map((result) => (
+                <p key={result._id}>{result.title}</p>
+               ))}
             </div>
             </div>
         )

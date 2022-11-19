@@ -15,6 +15,7 @@ exports.search = async (req, res) => {
         console.log(e);
         return res.json(e);
     }
+
 };
 
 // building the query based off of user inputs in each search bar
@@ -22,8 +23,15 @@ async function search(titleSearch, genreSearch, availabilitySearch) {
     console.log(titleSearch);
     console.log(genreSearch);
     console.log(availabilitySearch);
-    const searchList = await Movies.find({});
-    if (titleSearch != "") {
+    let searchList;
+    if (availabilitySearch == "all") {
+        searchList = await Movies.find({title: {$regex: titleSearch}, category: {$regex: genreSearch}});
+    } else {
+        searchList = await Movies.find({title: {$regex: titleSearch}, category: {$regex: genreSearch}, availability: {$regex: availabilitySearch, $options: "i"}});
+    }
+    console.log(searchList);
+    return searchList;
+    /*if (titleSearch != "") {
         searchList = getTitle(searchList, titleSearch);
     }
     if (genreSearch != "") {
@@ -31,11 +39,12 @@ async function search(titleSearch, genreSearch, availabilitySearch) {
     }
     if (availabilitySearch != "All") {
         searchList = getAvailability(searchList, availabilitySearch);
-    }
+    }*/
 }
 
 async function getTitle(list, titleSearch) {
-    const result = list.find({title: {$regex: titleSearch}});
+    console.log("This is list in getTitle:\n" + list);
+    let result = await list.find({});
     
     return result;
 }
