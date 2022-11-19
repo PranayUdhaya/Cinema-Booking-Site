@@ -72,13 +72,10 @@ exports.sendPromo = async (req, res) => {
 };
 
 exports.findPromos = async (req, res) => {
-    const cursor = Promo.find();
-    const results = await cursor.toArray();
+    const allPromos = Promo.find();
 
-    if (results.length > 0) {
-        results.forEach((result) => { 
-            res.json(result);
-        });
+    if (allPromos.length > 0) {
+            return res.json(allPromos);
     } else {
         console.log("No promos found");
     }
