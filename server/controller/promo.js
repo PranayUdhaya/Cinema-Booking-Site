@@ -73,8 +73,9 @@ exports.sendPromo = async (req, res) => {
 
 exports.findPromos = async (req, res) => {
     try {
-        const allPromos = Promo.find();
-        return res.json(allPromos);
+        const cursor = Promo.find();
+        const results = await cursor.toArray();
+        return res.json(results);
     } catch (e) {
         console.log(e);
         return res.json(e);
