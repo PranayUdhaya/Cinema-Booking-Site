@@ -46,7 +46,8 @@ exports.editMovie = async (req, res) => {
         producer: req.body.producer,
         cast: req.body.cast,
         synopsis: req.body.synopsis
-    }
+    };
+
     try {
         let movie = await Movie.findOneAndUpdate(title, updatedMovie);
         return res.json(movie);
@@ -55,6 +56,20 @@ exports.editMovie = async (req, res) => {
         return res.json(e);
     }
 };
+
+// export deleteMovie function
+exports.deleteMovie = async (req, res) => {
+    let title = req.body.title;
+
+    try {
+        let movie = await Movie.findOneAndRemove(title);
+        return res.json({ message: "Movie deleted" });
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
+    }
+};
+
 
 // find currently showing movies
 exports.findCurrentMovies = async (req, res) => {
