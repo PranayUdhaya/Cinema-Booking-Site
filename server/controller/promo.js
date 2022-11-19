@@ -5,6 +5,7 @@
 const { findOne } = require("../models/promo");
 const Promo = require("../models/promo");
 const { promoEmail } = require("./users");
+const User = require("../models/users");
 
 // export addMovie function
 exports.addPromo = async (req, res) => {
