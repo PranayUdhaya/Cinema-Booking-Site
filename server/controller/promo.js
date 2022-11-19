@@ -45,16 +45,11 @@ exports.sendPromo = async (req, res) => {
         //finds users who want promotional emails and puts them in an array
         const promoUsers = [];
         const cursor = User.find({promo: true});
-        const results = await cursor.toArray();
 
         //pushes all the users emails into an array
-        if (results.length > 0) {
-            results.forEach((result) => { 
-                promoUsers.push(result.email);
-            });
-        } else {
-            console.log("No users found");
-        }
+        cursor.forEach((result) => { 
+            promoUsers.push(result.email);
+        });
 
         //sends each email in the array a promotional email
         if (promoUsers.length > 0) {
