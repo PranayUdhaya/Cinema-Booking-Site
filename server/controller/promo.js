@@ -75,7 +75,7 @@ exports.findPromos = async (req, res) => {
     const allPromos = Promo.find();
 
     if (allPromos.length > 0) {
-            return res.json(allPromos);
+        return res.json(allPromos);
     } else {
         console.log("No promos found");
     }
