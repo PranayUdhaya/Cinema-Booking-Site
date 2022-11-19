@@ -29,6 +29,7 @@ app.use(express.json());
 app.use(require("./routes/users"));
 app.use(require("./routes/movies"));
 app.use(require("./routes/search"));
+app.use(require("./routes/showings"));
 
 
 // once connection is established and server has been hosted at port 5000, set app to listen at the port

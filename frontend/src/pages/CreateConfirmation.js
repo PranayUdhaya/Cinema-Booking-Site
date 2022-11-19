@@ -26,7 +26,7 @@ class CreateConfirmation extends React.Component {
     }
   
     
-    const response = await fetch("http://localhost:5000/token", {
+    const response = await fetch("http://localhost:5000/users/verify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

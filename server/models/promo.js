@@ -13,6 +13,6 @@
     code: String,
     adminEdit: true,
     sentEmail: false,
-  });
+});
 
 module.exports = mongoose.model("Promo", promoSchema);

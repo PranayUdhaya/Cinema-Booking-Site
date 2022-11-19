@@ -14,4 +14,4 @@ const mongoose = require("mongoose");
     room: String
  });
 
- module.exports = mongoose.model("Showings", ShowingsSchema);
+ module.exports = mongoose.model("Showing", ShowingsSchema);

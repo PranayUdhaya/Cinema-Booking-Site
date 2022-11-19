@@ -6,7 +6,6 @@ const Movie = require("../models/movies");
 
 // export addMovie function
 exports.addMovie = async (req, res) => {
-    console.log("In addMovie function, within controller/movies.js")
     let title = req.body.title;
     let movie = await Movie.findOne({ title });
     if (!movie) {
@@ -20,6 +19,9 @@ exports.addMovie = async (req, res) => {
             synopsis: req.body.synopsis,
             picture: req.body.picture,
             trailer: req.body.trailer,
+            availability: req.body.availability,
+            showings: req.body.showings,
+            runtime: req.body.runtime
         })
         try {
             await newMovie.save();
@@ -46,7 +48,8 @@ exports.editMovie = async (req, res) => {
         producer: req.body.producer,
         cast: req.body.cast,
         synopsis: req.body.synopsis
-    }
+    };
+
     try {
         let movie = await Movie.findOneAndUpdate(title, updatedMovie);
         return res.json(movie);
@@ -56,6 +59,20 @@ exports.editMovie = async (req, res) => {
     }
 };
 
+// export deleteMovie function
+exports.deleteMovie = async (req, res) => {
+    let title = req.body.title;
+
+    try {
+        let movie = await Movie.findOneAndRemove(title);
+        return res.json({ message: "Movie deleted" });
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
+    }
+};
+
+
 // find currently showing movies
 exports.findCurrentMovies = async (req, res) => {
     let filter = "now playing";
@@ -64,6 +81,23 @@ exports.findCurrentMovies = async (req, res) => {
         return res.json({ message: "Internal Error", status: 404 });
     }
     return res.json(currentMovies);
+};
+
+exports.find30CurrentMovies = async (req, res) => {
+    console.log("In find30Current")
+    let filter = "now playing";
+    let currentMovies = await Movie.find( {availability: filter} ).limit(30);
+    if (!currentMovies) {
+        return res.json({ message: "Internal Error", status: 404 });
+    }
+    //console.log(currentMovies)
+    /*const currentMoviesArray = [];
+    for(let x in currentMovies) {
+        console.log(x);
+        currentMoviesArray[x] = currentMovies[x];
+    }
+    console.log(currentMoviesArray)*/
+    res.json(currentMovies);
 };
 
 // find movies that are coming soon
@@ -76,3 +110,12 @@ exports.findFutureMovies = async (req, res) => {
     return res.json(futureMovies);
 };
 
+// find 30 movies that are coming soon
+exports.find30FutureMovies = async (req, res) => {
+    let filter = "coming soon";
+    let futureMovies = await Movie.find( {availability: filter} ).limit(30);
+    if (!futureMovies) {
+        return res.json({ message: "Internal Error", status: 404 });
+    }
+    return res.json(futureMovies);
+};
