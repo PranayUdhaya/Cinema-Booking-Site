@@ -12,6 +12,7 @@ class ManagePromos extends React.Component {
             code: "",
             discount: 0,
             descriptor: "",
+            promosArray: "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -53,8 +54,42 @@ class ManagePromos extends React.Component {
         console.log(response);
     }
 
+
+
     async handleEditPromo(e) {
         e.preventDefault();
+        
+    }
+
+    componentDidMount() {
+        this.gatherPromos();
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    async gatherPromos() {
+
+        console.log("gatherPromos function")
+
+        const response = await fetch("http://localhost:5000/findpromos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+        const currentPromos = await response.json();
+        
+
+        //console.log(currentMovies)
+        //console.log("currentMovies: " + currentMovies)
+        
+        this.setState({currentPromosArray: currentPromos});
         
     }
 
@@ -91,7 +126,16 @@ class ManagePromos extends React.Component {
                     </div>
                     <div class="existingPromos">
                         <h4>Existing Promotions</h4>
-                        
+                        {this.state.promosArray && this.state.promosArray.map((result) => (
+                            
+                            <div class="promoResult">
+                                <p key={result._id}>{result.code}</p>
+                                <p key={result._id}>{result.discount}</p>
+                                <p key={result._id}>{result.descriptor}</p>
+                                {result.adminEdit && <button onClick={this.goToEdit}>Edit</button>}
+                                {result.setEmail && <p>Email has been sent</p>}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
