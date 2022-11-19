@@ -19,6 +19,9 @@ router.post("/users/updatepass", userController.updatePassword);
 // this api request will update the user's info when it is changed in the profile section
 router.post("/users/updateinfo", userController.updateInfo);
 
+// this api request will verify the user's account
+router.post("/users/verify", userController.verifyAccount);
+
 module.exports = router;
 
 

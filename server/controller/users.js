@@ -38,15 +38,8 @@ exports.createUser = async (req, res) => {
         const url = "localhost:3000/createconfirmation";
             
         //sends an email with the verification url
-        try {
-            await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
-            res.json({message: "A verification email has been sent to your account"});
-        } catch (e) {
-            console.log(e)
-            res.json({message: "A verification email could not be sent", status: 404})
-        }
-
-        return res.json(newUser);
+        await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
+        return res.json({message: "A verification email has been sent to your account"}, newUser);
 
     } catch (e) {
         console.log(e);
@@ -115,7 +108,7 @@ exports.updatePassword = async (req, res) => {
 // exports verifyAccount function
 exports.verifyAccount = async (req, res) => {
     let checkEmail = {email: req.body.email};
-    let code = { token: req.body.token}
+    let code = { token: req.body.token }
 
     // finds logged in user
     let user = User.findOne(checkEmail);
@@ -134,7 +127,7 @@ exports.verifyAccount = async (req, res) => {
     } else {
         console.log("Account could not be verified");
     }
-}
+};
 
 // exports promoEmail function
 exports.promoEmail = async (req, res) => {
@@ -162,4 +155,4 @@ exports.promoEmail = async (req, res) => {
             }
         })
     }
-}
+};
