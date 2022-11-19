@@ -2,19 +2,21 @@
  *  Defining the CRUD functions that will be called in routes/promo.js 
  */
 // importing model
+const { findOne } = require("../models/promo");
 const promo = require("../models/promo");
-const Promo = require("../models/promo");
 const { promoEmail } = require("./users");
 
 // export addMovie function
 exports.addPromo = async (req, res) => {
-    let title = req.body.title;
-    let promo = await Promo.findOne({ title });
+    let promo = await promo.findOne({code: req.body.code});
+    
     if (!promo) {
         let newPromo = new Promo({
-            title: req.body.title,
-            category: req.body.category,
-            picture: req.body.picture,
+            descriptor: String,
+            discount: Number,
+            code: String,
+            adminEdit: true,
+            sentEmail: false,
         })
         try {
             await newPromo.save();
@@ -28,30 +30,41 @@ exports.addPromo = async (req, res) => {
     }
 };
 
-exports.editPromo = async (req, res) => {
-    let title = req.body.title;
-    let updatedMovie = {
-        title: req.body.title,
-        category: req.body.category,
-        picture: req.body.picture,
-    }
-    try {
-        let movie = await Movie.findOneAndUpdate(title, updatedMovie);
-        return res.json(movie);
-    } catch (e) {
-        console.log(e);
-        return res.json(e);
-    }
-};
-
 exports.sendPromo = async (req, res) => {
-    let title = req.body.title;
-    let updatedMovie = {
+    let code = req.body.code;
+
+    let updatedPromo = {
+        adminEdit: false,
         sentEmail: true,
     }
+    
+    let promo = await promo.findOneAndUpdate(code, updatedPromo);
+    
     try {
-        let movie = await Movie.findOneAndUpdate(title, updatedMovie);
-        await promoEmail;
+        //finds users who want promotional emails and puts them in an array
+        const promoList = [];
+        const cursor = User.find({promo: true});
+        const results = await cursor.toArray();
+
+        //pushes all the users emails into an array
+        if (results.length > 0) {
+            results.forEach((result, i) => { 
+                promoList.push(result.email);
+            });
+        } else {
+            console.log("No users found");
+        }
+
+        //sends each email in the array a promotional email
+        if (promoList.length > 0) {
+            promoList.forEach(async (result) => {
+                try {
+                    await sendEmail(result.email, "Promotional Email", "Check out our new promotion!");
+                } catch (e) {
+                    console.log(`Promotional email could not be sent to ${result.email}`);
+                }
+            })
+        }
     } catch (e) {
         console.log(e);
         return res.json(e);

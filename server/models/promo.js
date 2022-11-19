@@ -8,10 +8,10 @@
  const mongoose = require("mongoose");
   
   const promoSchema = mongoose.Schema({
-    title: String,
-    category: [String],
-    picture: String,
-    availability: String,
+    descriptor: String,
+    discount: Number,
+    code: String,
+    adminEdit: true,
     sentEmail: false,
   });
 
