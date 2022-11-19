@@ -146,9 +146,14 @@ header {
     color: black;
 }
 
-.searchLine, .searchLineHome {
+.searchLine, .searchLineHome , .promoResult {
     display: flex;
     align-items: center;
+}
+
+.promoResult * {
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 .searchButton {

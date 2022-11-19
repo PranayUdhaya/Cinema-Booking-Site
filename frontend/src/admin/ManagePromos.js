@@ -18,6 +18,8 @@ class ManagePromos extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleNewPromo = this.handleNewPromo.bind(this);
         this.handleEditPromo = this.handleEditPromo.bind(this);
+        this.sendPromo = this.sendPromo.bind(this);
+        this.goToEdit = this.goToEdit.bind(this);
     }
 
     handleInputChange(event) {
@@ -52,6 +54,10 @@ class ManagePromos extends React.Component {
           });
 
         console.log(response);
+
+        const currentPromosArray = await response.json();
+
+        this.setState({promosArray: currentPromosArray})
     }
 
 
@@ -89,7 +95,26 @@ class ManagePromos extends React.Component {
         console.log(currentPromos)
         //console.log("currentMovies: " + currentMovies)
         
-        this.setState({currentPromosArray: currentPromos});
+        this.setState({promosArray: currentPromos});
+        console.log(this.state)
+    }
+
+    async sendPromo(event) {
+        console.log("sendPromo function")
+
+        const response = await fetch("http://localhost:5000/sendpromo", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+    }
+
+    goToEdit(event) {
         
     }
 
@@ -128,12 +153,13 @@ class ManagePromos extends React.Component {
                         <h4>Existing Promotions</h4>
                         {this.state.promosArray && this.state.promosArray.map((result) => (
                             
-                            <div class="promoResult">
-                                <p key={result._id}>{result.code}</p>
-                                <p key={result._id}>{result.discount}</p>
-                                <p key={result._id}>{result.descriptor}</p>
+                            <div class="promoResult" key={result._id}>
+                                <p>{result.code}</p>
+                                <p>{result.discount}</p>
+                                <p>{result.descriptor}</p>
                                 {result.adminEdit && <button onClick={this.goToEdit}>Edit</button>}
-                                {result.setEmail && <p>Email has been sent</p>}
+                                {result.sentEmail && <p>Email has been sent</p>}
+                                {!result.setEmail && <button onClick={this.sendPromo}>Send Out</button>}
                             </div>
                         ))}
                     </div>

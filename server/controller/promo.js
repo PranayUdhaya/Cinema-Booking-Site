@@ -38,7 +38,7 @@ exports.sendPromo = async (req, res) => {
         sentEmail: true,
     }
     
-    let promo = await promo.findOneAndUpdate(code, updatedPromo);
+    let promo = await Promo.findOneAndUpdate(code, updatedPromo);
     
     try {
         //finds users who want promotional emails and puts them in an array
