@@ -72,11 +72,11 @@ class ScheduleMovie extends React.Component {
                   </select><br></br>
                 </form>
                 <form onSubmit={this.handleSumbit}>
-                    <label htmlFor="date">Enter Date: </label><br></br>
-                    <input class="textfield" type="date" id="date" name="date"></input><br></br>
+                    <label htmlFor="date">Enter Start Time and Date: </label><br></br>
+                    <input class="textfield" type="datetime-local" id="start" name="start"></input><br></br>
 
-                    <label htmlFor="start">Enter Start Time: </label><br></br>
-                    <input class="textfield" type="number" id="start" name="start"></input><br></br>
+                    <label htmlFor="date">Enter End Time and Date: </label><br></br>
+                    <input class="textfield" type="datetime-local" id="end" name="end"></input><br></br>
                 
                     <label htmlFor="showrooms">Select Showroom: </label><br></br>
                     <select class="textfield" name="showrooms" id="showrooms" value={this.state.room} onChange={this.handleInputChange}>
