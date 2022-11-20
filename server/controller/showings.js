@@ -39,7 +39,7 @@ exports.editShowing = async (req, res) => {
     }
 
     try  {
-        let showing = Showing.findOneAndUpdate(showingID, updatedShowing);
+        let showing = Showing.findOneAndUpdate({_id: showingID}, updatedShowing);
         return res.json(showing);
     } catch (e) {
         console.log(e);
@@ -52,7 +52,7 @@ exports.deleteShowing = async (req, res) => {
     let showingID = req.body.showingID;
 
     try {
-        let showing = await Showing.findOneAndRemove(showingID);
+        let showing = await Showing.findOneAndRemove({_id: showingID});
         return res.json({ message: "Showing Deleted" });
     } catch (e) {
         console.log(e);

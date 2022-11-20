@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
         return res.json({ message: "Incomplete Request", status: 400 });
     }
     console.log(password)
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email: email });
     if (!user) {
         return res.json({ message: "Email not found", status: 404 });
     }
