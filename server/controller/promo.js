@@ -6,6 +6,7 @@ const { findOne } = require("../models/promo");
 const Promo = require("../models/promo");
 const { promoEmail } = require("./users");
 const User = require("../models/users");
+const sendEmail = require("../utils/sendEmail");
 
 // export addMovie function
 exports.addPromo = async (req, res) => {
@@ -45,11 +46,20 @@ exports.sendPromo = async (req, res) => {
         //finds users who want promotional emails and puts them in an array
         const promoUsers = [];
         const cursor = User.find({promo: true});
-
+        //console.log(cursor)
+        const cursorArray = await cursor.exec()
+        
         //pushes all the users emails into an array
-        cursor.forEach((result) => { 
+        cursorArray.forEach((result) => { 
             promoUsers.push(result.email);
         });
+
+        /*for (let result in cursor) {
+            console.log(result)
+            promoUsers.push(result.email)
+        }*/
+
+        console.log(promoUsers)
 
         //sends each email in the array a promotional email
         if (promoUsers.length > 0) {
