@@ -60,7 +60,7 @@ exports.sendPromo = async (req, res) => {
         
         promotion.sentEmail = true;
         await promotion.save();
-    
+        return res.json({message: "sent"});
     } catch (e) {
         console.log(e);
         return res.json(e);

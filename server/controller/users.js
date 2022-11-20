@@ -131,3 +131,12 @@ exports.verifyAccount = async (req, res) => {
         return res.json({message: "Failure"});
     }
 }
+
+exports.findAllUsers = async (req, res) => {
+    let allUsers = await User.find({});
+    if (!allUsers) {
+        return res.json({ message: "Internal Error", status: 404 });
+    }
+
+    return res.json(allUsers);
+}

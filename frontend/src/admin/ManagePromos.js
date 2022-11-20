@@ -55,10 +55,11 @@ class ManagePromos extends React.Component {
 
         console.log(response);
 
-        const currentPromosArray = await response.json();
+        //const currentPromosArray = await response.json();
 
-        this.setState({promosArray: currentPromosArray})
+        //this.setState({promosArray: currentPromosArray})
 
+        window.location.reload(true);
     }
 
 
@@ -97,6 +98,7 @@ class ManagePromos extends React.Component {
         //console.log("currentMovies: " + currentMovies)
         
         this.setState({promosArray: currentPromos});
+        
         console.log(this.state)
     }
 
@@ -121,7 +123,7 @@ class ManagePromos extends React.Component {
             return;
         });
 
-        window.location.reload();
+        window.location.reload(true);
     }
 
     goToEdit(event) {
@@ -161,6 +163,7 @@ class ManagePromos extends React.Component {
                     </div>
                     <div class="existingPromos">
                         <h4>Existing Promotions</h4>
+
                         {this.state.promosArray && this.state.promosArray.map((result) => (
                             
                             <div class="promoResult" key={result._id}>
