@@ -90,13 +90,6 @@ exports.find30CurrentMovies = async (req, res) => {
     if (!currentMovies) {
         return res.json({ message: "Internal Error", status: 404 });
     }
-    //console.log(currentMovies)
-    /*const currentMoviesArray = [];
-    for(let x in currentMovies) {
-        console.log(x);
-        currentMoviesArray[x] = currentMovies[x];
-    }
-    console.log(currentMoviesArray)*/
     return res.json(currentMovies);
 };
 
@@ -118,4 +111,14 @@ exports.find30FutureMovies = async (req, res) => {
         return res.json({ message: "Internal Error", status: 404 });
     }
     return res.json(futureMovies);
+};
+
+// find one movie by id
+exports.findMovie = async (req, res) => {
+    let id = req.body.id;
+    let movie = await Movie.find({_id: id});
+    if (!movie) {
+        return res.json({ message: "Internal Error", status: 404 });
+    }
+    return res.json(movie);
 };
