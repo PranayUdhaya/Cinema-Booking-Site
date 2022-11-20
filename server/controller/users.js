@@ -125,9 +125,9 @@ exports.verifyAccount = async (req, res) => {
     if (tokenDb) {
         user.status = "active";
         await user.save();
-        console.log("Account has been successfully verified");
+        return res.json("Account has been successfully verified");
         await Token.deleteOne(tokenDb);
     } else {
-        console.log("Account could not be verified");
+        return res.json("Account could not be verified");
     }
 }
