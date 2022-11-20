@@ -33,15 +33,15 @@ exports.addPromo = async (req, res) => {
 };
 
 exports.sendPromo = async (req, res) => {
-    let code = req.body.code;
+    let promoId = req.body.id;
 
     let updatedPromo = {
         adminEdit: false,
         sentEmail: true,
     }
     
-    let promo = await Promo.findOneAndUpdate(code, updatedPromo);
-    
+    let promotion = Promo.find({_id: promoId});
+
     try {
         //finds users who want promotional emails and puts them in an array
         const promoUsers = [];
@@ -64,12 +64,16 @@ exports.sendPromo = async (req, res) => {
             promoUsers.forEach(async (result) => {
                 try {
                     console.log(result)
-                    await sendEmail(result.email, "Promotional Email", "Check out our new promotion!");
+                    await sendEmail(result.email, "Promotional Email", `Check out our new promotion!\n${promotion.descriptor}\nUse code ${promotion.code}`);
+                    
+                    let promotion = await Promo.findOneAndUpdate(promoId, updatedPromo);
+                    await promotion.save();
                 } catch (e) {
                     console.log(`Promotional email could not be sent to ${result.email}`);
                 }
             })
         }
+        
     } catch (e) {
         console.log(e);
         return res.json(e);
