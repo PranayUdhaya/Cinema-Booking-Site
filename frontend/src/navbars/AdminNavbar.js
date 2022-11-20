@@ -16,7 +16,7 @@ export default function AdminNavbar() {
             <ul class="nav_links">
                 <li><NavLink to="./admin/addmovie">Movies</NavLink></li>
                 <li><NavLink to="./admin/managepromos">Promotions</NavLink></li>
-                <li><NavLink to="./admin/users">Users</NavLink></li>
+                <li><NavLink to="./admin/manageusers">Users</NavLink></li>
             </ul>
         </nav>
       </header>

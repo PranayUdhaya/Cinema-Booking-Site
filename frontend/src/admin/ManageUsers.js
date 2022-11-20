@@ -23,6 +23,7 @@ class ManagePromos extends React.Component {
 
     gatherUsers() {
         // Find all users fetch request
+        
     }
 
     render() {
