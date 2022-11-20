@@ -107,12 +107,12 @@ exports.updatePassword = async (req, res) => {
 
 // exports verifyAccount function
 exports.verifyAccount = async (req, res) => {
-    let checkEmail = req.body.email;
+    let checkEmail = {email: req.body.email};
     let code = { token: req.body.token }
     console.log(checkEmail)
 
     // finds logged in user
-    let user = await User.findOne({email: checkEmail});
+    let user = await User.findOne(checkEmail);
     console.log(user.email)
     console.log(user._id)
     // checks if verification code matches the one in the database
