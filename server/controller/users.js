@@ -39,7 +39,7 @@ exports.createUser = async (req, res) => {
             
         //sends an email with the verification url
         await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
-        return res.json({message: "A verification email has been sent to your account"}, newUser);
+        return res.json({message: "A verification email has been sent to your account"});
 
     } catch (e) {
         console.log(e);
