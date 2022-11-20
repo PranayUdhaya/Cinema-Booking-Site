@@ -25,9 +25,9 @@ async function search(titleSearch, genreSearch, availabilitySearch) {
     console.log(availabilitySearch);
     let searchList;
     if (availabilitySearch == "all") {
-        searchList = await Movies.find({title: {$regex: titleSearch}, category: {$regex: genreSearch}});
+        searchList = await Movies.find({title: {$regex: titleSearch, $options: "i"}, category: {$regex: genreSearch, $options: "i"}});
     } else {
-        searchList = await Movies.find({title: {$regex: titleSearch}, category: {$regex: genreSearch}, availability: {$regex: availabilitySearch, $options: "i"}});
+        searchList = await Movies.find({title: {$regex: titleSearch, $options: "i"}, category: {$regex: genreSearch, $options: "i"}, availability: {$regex: availabilitySearch, $options: "i"}});
     }
     console.log(searchList);
     return searchList;
