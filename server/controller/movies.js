@@ -51,7 +51,7 @@ exports.editMovie = async (req, res) => {
     };
 
     try {
-        let movie = await Movie.findOneAndUpdate(title, updatedMovie);
+        let movie = await Movie.findOneAndUpdate({title: title}, updatedMovie);
         return res.json(movie);
     } catch (e) {
         console.log(e);
@@ -64,7 +64,7 @@ exports.deleteMovie = async (req, res) => {
     let title = req.body.title;
 
     try {
-        let movie = await Movie.findOneAndRemove(title);
+        let movie = await Movie.findOneAndRemove({title: title});
         return res.json({ message: "Movie deleted" });
     } catch (e) {
         console.log(e);
@@ -114,7 +114,7 @@ exports.find30FutureMovies = async (req, res) => {
 };
 
 // find one movie by id
-exports.findMovie = async (req, res) => {
+exports.findById = async (req, res) => {
     let id = req.body.id;
     let movie = await Movie.find({_id: id});
     if (!movie) {

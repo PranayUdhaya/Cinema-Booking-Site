@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
         return res.json({ message: "Incomplete Request", status: 400 });
     }
     console.log(password)
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email: email });
     if (!user) {
         return res.json({ message: "Email not found", status: 404 });
     }
@@ -79,7 +79,7 @@ exports.updateInfo = async (req, res) => {
         promo: req.body.promo
     }
     try {
-        let user = await User.findOneAndUpdate(email, updatedInfo);
+        let user = await User.findOneAndUpdate({email: email}, updatedInfo);
         return res.json(user);
     } catch (e) {
         console.log(e);
