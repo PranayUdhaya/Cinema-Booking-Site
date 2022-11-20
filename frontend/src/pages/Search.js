@@ -80,7 +80,7 @@ class Search extends React.Component {
                 {this.state.results && this.state.results.map((result) => (
                     <div class="movieResult" key={result._id}>
                         <img class="promoPoster" src={result.picture}></img>
-                        <iframe class="homeTrailer" src={result.trailer}></iframe>
+                        <iframe class="homeTrailer" src={result.trailer} allowFullScreen></iframe>
                         <div class="resultInfo" key={result._id}>
                             <h2>{result.title}</h2>
                             <p>Rated: {result.ageRating}</p>

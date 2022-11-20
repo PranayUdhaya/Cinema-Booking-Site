@@ -58,6 +58,7 @@ class ManagePromos extends React.Component {
         const currentPromosArray = await response.json();
 
         this.setState({promosArray: currentPromosArray})
+
     }
 
 
@@ -120,7 +121,7 @@ class ManagePromos extends React.Component {
             return;
         });
 
-        window.location.href = "/admin/managepromos"
+        window.location.reload();
     }
 
     goToEdit(event) {

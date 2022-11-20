@@ -54,30 +54,31 @@ class Login extends React.Component{
         window.alert("Incorrect email");
         return;
       }
+      if (response.status == 404) {
+        window.alert("Incorrect username or password");
+        return;
+      }
         const record = await response.json();
         console.log(record);
-        if (record.isMatch == false) {
-            window.alert("Wrong password");
-            return;
+        
+        console.log(record.lastName )
+        console.log(record.firstName )
+        console.log(record.number )
+        this.setState({fname: record.firstName});
+        this.setState({lname: record.lastName});
+        this.setState({phone: record.number});
+        this.setState({promo: record.promo});
+        this.setState({admin: record.admin});
+        this.setState({status: record.status});
+        this.createSession();
+        if (sessionStorage.getItem("status") == "inactive") {
+            window.location.href = "/createconfirmation";
+        } else if (sessionStorage.getItem("admin") == "true") {
+            window.location.href = "/admin/home";
         } else {
-            console.log(record.lastName )
-            console.log(record.firstName )
-            console.log(record.number )
-            this.setState({fname: record.firstName});
-            this.setState({lname: record.lastName});
-            this.setState({phone: record.number});
-            this.setState({promo: record.promo});
-            this.setState({admin: record.admin});
-            this.setState({status: record.status});
-            this.createSession();
-            if (sessionStorage.getItem("status") == "inactive") {
-                window.location.href = "/createconfirmation";
-            } else if (sessionStorage.getItem("admin") == "true") {
-                window.location.href = "/admin/home";
-            } else {
-                window.location.href = "/home";
-            }
+            window.location.href = "/home";
         }
+        
 
       // window.alert(JSON.stringify(potentialUser));
     
