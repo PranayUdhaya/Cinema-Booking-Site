@@ -124,7 +124,7 @@ exports.verifyAccount = async (req, res) => {
     console.log(tokenDb)   // if verification codes match, set account status to active
     if (tokenDb) {
         let statusUpdate = {status: "active"};
-        User.updateOne(checkEmail, {$set: statusUpdate});
+        User.findOneAndUpdate(checkEmail, statusUpdate);
         console.log("Account has been successfully verified");
         await Token.deleteOne(tokenDb);
     } else {
