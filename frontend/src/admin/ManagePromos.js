@@ -119,6 +119,8 @@ class ManagePromos extends React.Component {
             window.alert(error);
             return;
         });
+
+        window.location.href = "/admin/managepromos"
     }
 
     goToEdit(event) {
@@ -164,7 +166,7 @@ class ManagePromos extends React.Component {
                                 <p>{result.code}</p>
                                 <p>{result.discount}</p>
                                 <p>{result.descriptor}</p>
-                                {result.adminEdit && <button onClick={this.goToEdit}>Edit</button>}
+                                {!result.sentEmail && <button onClick={this.goToEdit}>Edit</button>}
                                 {result.sentEmail && <p>Email has been sent</p>}
                                 {!result.setEmail && <button onClick={(e) => this.sendPromo(result._id, e)}>Send Out</button>}
                             </div>
