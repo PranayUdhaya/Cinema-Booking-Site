@@ -168,7 +168,7 @@ class ManagePromos extends React.Component {
                                 <p>{result.descriptor}</p>
                                 {!result.sentEmail && <button onClick={this.goToEdit}>Edit</button>}
                                 {result.sentEmail && <p>Email has been sent</p>}
-                                {!result.setEmail && <button onClick={(e) => this.sendPromo(result._id, e)}>Send Out</button>}
+                                {!result.sentEmail && <button onClick={(e) => this.sendPromo(result._id, e)}>Send Out</button>}
                             </div>
                         ))}
                     </div>
