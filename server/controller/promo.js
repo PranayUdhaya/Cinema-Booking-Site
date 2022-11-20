@@ -34,19 +34,12 @@ exports.addPromo = async (req, res) => {
 
 exports.sendPromo = async (req, res) => {
     let promoId = req.body.id;
-
-    let updatedPromo = {
-        adminEdit: false,
-        sentEmail: true,
-    }
-    
-    let promotion = Promo.find({_id: promoId});
+    let promotion = await Promo.findOne({_id: promoId});
 
     try {
         //finds users who want promotional emails and puts them in an array
         const promoUsers = [];
         const cursor = User.find({promo: true});
-        //console.log(cursor)
         const cursorArray = await cursor.exec()
         
         //pushes all the users emails into an array
@@ -54,26 +47,22 @@ exports.sendPromo = async (req, res) => {
             promoUsers.push(result.email);
         });
 
-        /*for (let result in cursor) {
-            console.log(result)
-            promoUsers.push(result.email)
-        }*/
-
         //sends each email in the array a promotional email
         if (promoUsers.length > 0) {
             promoUsers.forEach(async (result) => {
                 try {
-                    console.log(result)
-                    await sendEmail(result.email, "Promotional Email", `Check out our new promotion!\n${promotion.descriptor}\nUse code ${promotion.code}`);
-                    
-                    let promotion = await Promo.findOneAndUpdate(promoId, updatedPromo);
-                    await promotion.save();
+                    await sendEmail(result, "Promotional Email", `Check out our new promotion!\n${promotion.descriptor}\nUse code ${promotion.code}`);
                 } catch (e) {
-                    console.log(`Promotional email could not be sent to ${result.email}`);
+                    console.log(`Promotional email could not be sent to ${result}`);
+                    console.log(e);
                 }
             })
         }
         
+        promotion.adminEdit = false;
+        promotion.sentEmail = true;
+        await promotion.save();
+    
     } catch (e) {
         console.log(e);
         return res.json(e);
@@ -85,21 +74,6 @@ exports.findPromos = async (req, res) => {
     if (!currentPromos) {
         return res.json({ message: "Internal Error", status: 404 });
     }
-    //console.log(currentMovies)
-    /*const currentMoviesArray = [];
-    for(let x in currentMovies) {
-        console.log(x);
-        currentMoviesArray[x] = currentMovies[x];
-    }
-    console.log(currentMoviesArray)*/
-    return res.json(currentPromos);
 
-    /*try {
-        const cursor = Promo.find();
-        const results = await cursor.toArray();
-        return res.json(results);
-    } catch (e) {
-        console.log(e);
-        return res.json(e);
-    }*/
+    return res.json(currentPromos);
 }
