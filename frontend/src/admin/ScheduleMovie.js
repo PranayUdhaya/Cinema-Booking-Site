@@ -8,7 +8,7 @@ class ScheduleMovie extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            movie: props.title,
+            movie: props.movie,
             start: "",
             end: "",
             room: "",

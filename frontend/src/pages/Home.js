@@ -194,7 +194,7 @@ class Home extends React.Component {
                 <div class="homeSection">
                     <h2>Now Showing</h2>
                     <div class="movieStrip">
-                        <button class="arrowButton">Previous</button>
+                        <button hidden class="arrowButton">Previous</button>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now1Pic}></img>
                             <a>Book Now</a>
@@ -220,13 +220,13 @@ class Home extends React.Component {
                             <a>Book Now</a>
                             <a>View Details</a>
                         </div>
-                    <button class="arrowButton">Next</button>
+                    <button hidden class="arrowButton">Next</button>
                     </div>
                 </div>
                 <div class="homeSection">
                     <h2>Coming Soon</h2>
                     <div class="movieStrip">
-                        <button class="arrowButton">Previous</button>
+                        <button hidden class="arrowButton">Previous</button>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.future1Pic}></img>
                             <a>View Details</a>
@@ -247,7 +247,7 @@ class Home extends React.Component {
                             <img class="promoHome" src={this.state.future2Pic}></img>
                             <a>View Details</a>
                         </div>
-                    <button class="arrowButton" onClick={this.handleFutureNext}>Next</button>
+                        <button hidden class="arrowButton" onClick={this.handleFutureNext}>Next</button>
                     </div>
                 </div>
             </div>

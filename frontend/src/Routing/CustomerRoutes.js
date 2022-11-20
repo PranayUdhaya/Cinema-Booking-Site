@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "../App";
 import { Outlet, Route, Navigate, BrowserRouter, NavLink } from "react-router-dom";
 import Home from "../pages/Home"
+import CreateConfirmation from "../pages/CreateConfirmation"
 
 const useAuth = () => {
     if (sessionStorage.getItem("loggedIn") == "true" && sessionStorage.getItem("status") == "active") {
@@ -22,10 +23,10 @@ const inactiveCheck = () => {
 
 const CustomerRoutes = () => {
     const isInactive = inactiveCheck()
+    const isAuth = useAuth()
     if (isInactive) {
         return <CreateConfirmation />
     }
-    const isAuth = useAuth()
     return isAuth ? <Outlet /> : <Home /> 
 }
 

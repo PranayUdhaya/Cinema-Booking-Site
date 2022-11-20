@@ -60,26 +60,37 @@ class Search extends React.Component {
     render() {
       return (
             <div>
-            <div class="search">
-                <div class="searchLine">
-                    <form class="form" onSubmit={this.handleSubmit}>
-                        <input class="searchBar" type="search"  id="titleQuery" name="titleQuery" placeholder="Enter a Movie Title" value={this.state.titleQuery} onChange={this.handleInputChange}></input>
-                        <input class="searchBar" type="search" id="genreQuery" name="genreQuery" placeholder="Enter a Movie Genre" value={this.state.genreQuery} onChange={this.handleInputChange}></input>
-                        <label htmlFor="ctype">Select Filter</label>
-                        <select class="textfield" name="availability" id="availability" value={this.state.availability} onChange={this.handleInputChange}>
-                            <option value="All">All</option>
-                            <option value="Currently Showing">Currently Showing</option>
-                            <option value="Coming Soon">Coming Soon</option>
-                        </select>
-                        <input class="submit" type="submit" value="Search"></input>
-                    </form>
+                <div class="search">
+                    <div class="searchLine">
+                        <form class="form" onSubmit={this.handleSubmit}>
+                            <input class="searchBar" type="search"  id="titleQuery" name="titleQuery" placeholder="Enter a Movie Title" value={this.state.titleQuery} onChange={this.handleInputChange}></input>
+                            <input class="searchBar" type="search" id="genreQuery" name="genreQuery" placeholder="Enter a Movie Genre" value={this.state.genreQuery} onChange={this.handleInputChange}></input>
+                            <label htmlFor="ctype">Select Filter</label>
+                            <select class="textfield" name="availability" id="availability" value={this.state.availability} onChange={this.handleInputChange}>
+                                <option value="All">All</option>
+                                <option value="Currently Showing">Currently Showing</option>
+                                <option value="Coming Soon">Coming Soon</option>
+                            </select>
+                            <input class="submit" type="submit" value="Search"></input>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="movieList">
-               {this.state.results && this.state.results.map((result) => (
-                <p key={result._id}>{result.title}</p>
-               ))}
-            </div>
+                <div class="movieList">
+                {this.state.results && this.state.results.map((result) => (
+                    <div class="movieResult" key={result._id}>
+                        <img class="promoPoster" src="./images/womanKing.jpg"></img>
+                        <iframe class="homeTrailer" src={result.trailer} ></iframe>
+                        <div class="resultInfo">
+                            <h2>{result.title}</h2>
+                            <p>Rated: {result.rating}</p>
+                            <a to="">View Movie Details</a>
+                            <a>Book Tickets</a> 
+                        </div>
+
+                        <p>{result.title}</p>
+                    </div>
+                ))}
+                </div>
             </div>
         )
     }

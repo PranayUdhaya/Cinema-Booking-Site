@@ -99,14 +99,21 @@ class ManagePromos extends React.Component {
         console.log(this.state)
     }
 
-    async sendPromo(event) {
+    async sendPromo(promoId) {
         console.log("sendPromo function")
+
+        console.log("Promo id = " + promoId)
+
+        const promoToSend = {
+            id: promoId 
+        }
 
         const response = await fetch("http://localhost:5000/sendpromo", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify(promoToSend),
         })
         .catch(error => {
             window.alert(error);
@@ -159,7 +166,7 @@ class ManagePromos extends React.Component {
                                 <p>{result.descriptor}</p>
                                 {result.adminEdit && <button onClick={this.goToEdit}>Edit</button>}
                                 {result.sentEmail && <p>Email has been sent</p>}
-                                {!result.setEmail && <button onClick={this.sendPromo}>Send Out</button>}
+                                {!result.setEmail && <button onClick={(e) => this.sendPromo(result._id, e)}>Send Out</button>}
                             </div>
                         ))}
                     </div>

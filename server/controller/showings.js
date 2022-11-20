@@ -6,12 +6,16 @@ const Showing = require("../models/showings");
 
 // export createShowing function
 exports.createShowing = async (req, res) => {
+    const seatsArray = []
+    for (var i = 0; i < 100; i++) {
+        seatsArray[i] = "available";
+    }
     let newShowing = new Showing({
         movie: req.body.movie,
         start: req.body.start,
         end: req.body.end,
-        seats: req.body.seats,
-        room: req.body.room
+        seats: seatsArray,
+        room: req.body.room,
     });
 
     try  {

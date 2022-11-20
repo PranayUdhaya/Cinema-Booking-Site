@@ -9,6 +9,7 @@ class CreateConfirmation extends React.Component {
     this.state = {
       confCode: ""
     };
+    sessionStorage.setItem("empty", true);
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,12 +41,22 @@ class CreateConfirmation extends React.Component {
     });
     //console.log(response.ok);
     console.log(response);
+    console.log(response.message)
 
     const record = await response.json();
-    console.log(record.password);
     console.log(record);
+    console.log(record.message);
 
-    window.location.href = "/home";
+    if (record.message == "Failure") {
+        window.alert("Failed to verify your account")
+    } else if (record.message == "Success") {
+        sessionStorage.setItem("status", "active");
+        sessionStorage.setItem("empty", "false");
+        window.location.href = "/home";
+    } else {
+        window.alert("Message error")
+    }
+    
   }
 
   displayFailure(event) {

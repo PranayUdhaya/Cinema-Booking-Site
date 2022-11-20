@@ -42,8 +42,11 @@ import ScheduleMovie from "./admin/ScheduleMovie.js"
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
     let admin = sessionStorage.getItem("admin");
-	let Component;
+    let empty = sessionStorage.getItem("empty");
 	let CurrentNav = Navbar;
+    if (empty == "true") {
+		CurrentNav = EmptyNavbar;
+	}
 	if (logged == "true") {
 		CurrentNav = CustomerNavbar;
 	}
