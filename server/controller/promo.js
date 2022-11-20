@@ -65,7 +65,7 @@ exports.sendPromo = async (req, res) => {
         if (promoUsers.length > 0) {
             promoUsers.forEach(async (result) => {
                 try {
-                    await sendEmail(result.email, "Promotional Email", "Check out our new promotion!");
+                    await sendEmail(result, "Promotional Email", "Check out our new promotion!");
                 } catch (e) {
                     console.log(`Promotional email could not be sent to ${result.email}`);
                 }
