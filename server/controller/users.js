@@ -107,18 +107,21 @@ exports.updatePassword = async (req, res) => {
 
 // exports verifyAccount function
 exports.verifyAccount = async (req, res) => {
-    let checkEmail = {email: req.body.email};
+    let checkEmail = req.body.email;
     let code = { token: req.body.token }
+    console.log(checkEmail)
 
     // finds logged in user
-    let user = User.findOne(checkEmail);
+    let user = await User.findOne({email: checkEmail});
+    console.log(user.email)
+    console.log(user._id)
     // checks if verification code matches the one in the database
     const tokenDb = await Token.findOne({
         userId: user._id,
         token: code.token
     })
 
-    // if verification codes match, set account status to active
+    console.log(tokenDb)   // if verification codes match, set account status to active
     if (tokenDb) {
         let statusUpdate = {status: "active"};
         User.updateOne(checkEmail, {$set: statusUpdate});

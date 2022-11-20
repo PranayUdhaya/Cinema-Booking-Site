@@ -25,6 +25,7 @@ class CreateConfirmation extends React.Component {
       token: this.state.confCode,
     }
   
+    console.log(potentialUser)
     
     const response = await fetch("http://localhost:5000/users/verify", {
       method: "POST",
