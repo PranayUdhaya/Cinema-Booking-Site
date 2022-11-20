@@ -10,12 +10,33 @@ export default function Movie() {
     
     const [fetched, setFetched] = useState("false");
 
+
     useEffect(() => {
         if (this.state.fetched == "false") {
-            // Data fetch call
-            
-        }
-    })
+            const fetchData = async () => {
+                const movie = {
+                    movieId: id
+                }
+                const response = await fetch("http://localhost:5000/findMovie", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(movie),
+                })
+                .catch(error => {
+                window.alert(error);
+                    return;
+                });
+            }
+        
+            fetchData()
+        }        
+    }, [])
+
+
+
+    
 
     return (
         <div>
