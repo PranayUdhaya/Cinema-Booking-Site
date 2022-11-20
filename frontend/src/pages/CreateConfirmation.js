@@ -40,13 +40,12 @@ class CreateConfirmation extends React.Component {
     });
     //console.log(response.ok);
     console.log(response);
-    if (!response.ok) {
-      window.alert("Incorrect email");
-      return;
-    }
-      const record = await response.json();
-      console.log(record);
-      console.log(record.password);
+
+    const record = await response.json();
+    console.log(record.password);
+    console.log(record);
+
+    window.location.href = "/home";
   }
 
   displayFailure(event) {
@@ -72,10 +71,10 @@ class CreateConfirmation extends React.Component {
               <h2>Verify Email</h2><br></br>
               <p>A verification code has been sent to {sessionStorage.getItem("email")}</p><br></br>
               <form onSubmit={this.handleSubmit}>
-                  <label for="confCode">Enter code:</label>
+                  <label htmlFor="confCode">Enter code:</label>
                   <input class="smalltextfield" type="text" id="confCode" name="confCode" value={this.state.confCode} onChange={this.handleInputChange}></input>
                   <input class="submit" type="submit" value="Enter"></input>
-              </form> 
+              </form>
               <button>Resend Code</button>
           </div>
       </div>
