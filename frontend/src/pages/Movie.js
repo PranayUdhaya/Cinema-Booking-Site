@@ -13,7 +13,7 @@ export default function Movie() {
     useEffect(() => {
         if (this.state.fetched == "false") {
             // Data fetch call
-
+            
         }
     })
 

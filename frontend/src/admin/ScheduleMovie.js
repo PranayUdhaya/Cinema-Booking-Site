@@ -8,7 +8,8 @@ class ScheduleMovie extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            movie: props.movie,
+            //Avengers: Age of Ultron id
+            movie: "637943af32163191b903752d",
             start: "",
             end: "",
             room: "",
