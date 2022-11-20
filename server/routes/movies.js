@@ -23,6 +23,6 @@
  
  router.post("/movies/find30future", movieController.find30FutureMovies);
 
- router.post("/movies/findById", movieController.findById);
+ router.post("/movies/findMovie", movieController.findMovie);
  
  module.exports = router;
