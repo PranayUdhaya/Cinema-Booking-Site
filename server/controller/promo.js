@@ -17,7 +17,6 @@ exports.addPromo = async (req, res) => {
             descriptor: req.body.descriptor,
             discount: req.body.discount,
             code: req.body.code,
-            adminEdit: true,
             sentEmail: false,
         })
         try {
@@ -59,7 +58,6 @@ exports.sendPromo = async (req, res) => {
             })
         }
         
-        promotion.adminEdit = false;
         promotion.sentEmail = true;
         await promotion.save();
     

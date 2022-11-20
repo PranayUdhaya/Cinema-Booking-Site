@@ -11,7 +11,6 @@
     descriptor: String,
     discount: Number,
     code: String,
-    adminEdit: Boolean,
     sentEmail: Boolean,
 });
 
