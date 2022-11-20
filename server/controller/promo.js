@@ -59,12 +59,11 @@ exports.sendPromo = async (req, res) => {
             promoUsers.push(result.email)
         }*/
 
-        console.log(promoUsers)
-
         //sends each email in the array a promotional email
         if (promoUsers.length > 0) {
             promoUsers.forEach(async (result) => {
                 try {
+                    console.log(result)
                     await sendEmail(result.email, "Promotional Email", "Check out our new promotion!");
                 } catch (e) {
                     console.log(`Promotional email could not be sent to ${result.email}`);
