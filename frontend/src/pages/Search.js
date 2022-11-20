@@ -52,6 +52,7 @@ class Search extends React.Component {
         console.log(response);
 
         const queryResults = await response.json();
+
         this.setState({results: queryResults})
 
         console.log(queryResults)
@@ -78,16 +79,14 @@ class Search extends React.Component {
                 <div class="movieList">
                 {this.state.results && this.state.results.map((result) => (
                     <div class="movieResult" key={result._id}>
-                        <img class="promoPoster" src="./images/womanKing.jpg"></img>
-                        <iframe class="homeTrailer" src={result.trailer} ></iframe>
-                        <div class="resultInfo">
+                        <img class="promoPoster" src={result.picture}></img>
+                        <iframe class="homeTrailer" src={result.trailer}></iframe>
+                        <div class="resultInfo" key={result._id}>
                             <h2>{result.title}</h2>
-                            <p>Rated: {result.rating}</p>
-                            <a to="">View Movie Details</a>
+                            <p>Rated: {result.ageRating}</p>
+                            <a href={"/movie/" + result._id}>View Movie Details</a>
                             <a>Book Tickets</a> 
                         </div>
-
-                        <p>{result.title}</p>
                     </div>
                 ))}
                 </div>
