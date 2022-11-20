@@ -114,7 +114,7 @@ exports.find30FutureMovies = async (req, res) => {
 };
 
 // find one movie by id
-exports.findMovie = async (req, res) => {
+exports.findById = async (req, res) => {
     let id = req.body.id;
     let movie = await Movie.find({_id: id});
     if (!movie) {
