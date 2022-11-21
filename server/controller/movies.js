@@ -19,7 +19,7 @@ exports.addMovie = async (req, res) => {
             synopsis: req.body.synopsis,
             picture: req.body.picture,
             trailer: req.body.trailer,
-            availability: req.body.availability,
+            availability: "Coming Soon",
             showings: req.body.showings,
             runtime: req.body.runtime
         })

@@ -18,7 +18,6 @@ exports.createShowing = async (req, res) => {
     const startD = new Date(start);
     const endD = new Date(end);
 
-
     try {
         const cursor = Showing.find({room: room}).cursor();
 
