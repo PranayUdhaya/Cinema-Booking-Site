@@ -58,6 +58,45 @@ class Search extends React.Component {
         console.log(queryResults)
     }
 
+    componentDidMount() {
+        this.defaultSearch();
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    async defaultSearch() {
+        const query = {
+            title: this.state.titleQuery,
+            category: this.state.genreQuery,
+            availability: this.state.availability,
+
+        }
+
+        //console.log(this.state)
+        const response = await fetch("http://localhost:5000/search", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+          })
+          .catch(error => {
+           window.alert(error);
+            return;
+          });
+
+        //console.log(response);
+
+        const queryResults = await response.json();
+
+        this.setState({results: queryResults})
+
+        //console.log(queryResults)
+    }
+
+
     render() {
       return (
             <div>

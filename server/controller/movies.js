@@ -147,3 +147,14 @@ exports.findById = async (req, res) => {
         return res.json(e);
     }
 };
+
+exports.updateAvailability = async (req, res) => {
+
+    try {
+        let movie = await Movie.findOneAndUpdate({_id: req.body.movieId}, {availability: req.body.availability});
+        return res.json(movie);
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
+    }
+};

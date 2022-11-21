@@ -14,7 +14,6 @@ export default function Navbar() {
         </div>
         <nav>
             <ul class="nav_links">
-                <li><NavLink to="./browse">Browse</NavLink></li>
                 <li><NavLink to="./search">Search</NavLink></li>
                 <li><NavLink to="./login">Login</NavLink></li>
             </ul>

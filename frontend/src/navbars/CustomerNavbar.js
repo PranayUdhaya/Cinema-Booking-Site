@@ -14,7 +14,6 @@ export default function CustomerNavbar() {
         </div>
         <nav>
             <ul class="nav_links">
-                <li><NavLink to="./browse">Browse</NavLink></li>
                 <li><NavLink to="./search">Search</NavLink></li>
                 <li><NavLink to="./editprofile">Profile</NavLink></li>
             </ul>

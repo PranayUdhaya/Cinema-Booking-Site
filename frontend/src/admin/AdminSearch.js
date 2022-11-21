@@ -84,7 +84,7 @@ class AdminSearch extends React.Component {
                         <div class="resultInfo" key={result._id}>
                             <h2>{result.title}</h2>
                             <p>Rated: {result.ageRating}</p>
-                            <a href={"/movie/" + result._id}>View Movie Details</a>
+                            <a href={"/admin/movie/" + result._id}>View Movie Details</a>
                             <a href={"/admin/schedulemovie/" + result._id}>Schedule This Movie</a>
                         </div>
                     </div>

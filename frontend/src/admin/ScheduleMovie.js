@@ -81,12 +81,36 @@ export default function ScheduleMovie() {
         });
 
         console.log(response)
+        window.alert("Movie has been scheduled")
         //sessionStorage.setItem("")
     }
 
-    function handleAvailabilitySubmit(event) {
+    async function handleAvailabilitySubmit(event) {
         event.preventDefault()
-        
+
+        const query = {
+            availability: newAvailability,
+            movieId: movie,
+        }
+
+        const response = await fetch("http://localhost:5000/movies/availability", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(query),
+        })
+        .catch(error => {
+         window.alert(error);
+          return;
+        });
+
+
+
+        console.log(response)
+        window.location.reload(true);
+        //sessionStorage.setItem("")
+
     }
 
     function handleDateChange(event) {

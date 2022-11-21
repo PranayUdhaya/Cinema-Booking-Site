@@ -25,4 +25,6 @@
 
  router.post("/movies/findMovie", movieController.findById);
  
+ router.post("/movies/availability", movieController.updateAvailability);
+
  module.exports = router;
