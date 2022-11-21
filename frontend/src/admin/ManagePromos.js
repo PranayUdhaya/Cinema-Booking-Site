@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter } from "react-router-dom";
-import ExistingPromos from "./ExistingPromos.js"
 
 class ManagePromos extends React.Component {
 
@@ -170,7 +169,6 @@ class ManagePromos extends React.Component {
                                 <p>{result.code}</p>
                                 <p>{result.discount}</p>
                                 <p>{result.descriptor}</p>
-                                {!result.sentEmail && <button onClick={this.goToEdit}>Edit</button>}
                                 {result.sentEmail && <p>Email has been sent</p>}
                                 {!result.sentEmail && <button onClick={(e) => this.sendPromo(result._id, e)}>Send Out</button>}
                             </div>
