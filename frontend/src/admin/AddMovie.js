@@ -119,7 +119,7 @@ class AddMovie extends React.Component {
                     <textarea class="textfield" id="synopsis" name="synopsis" rows="8" cols="30" required value={this.state.synopsis} onChange={this.handleInputChange}></textarea><br></br>
                     
                     <label htmlFor="runtime">Enter Runtime:</label><br></br>
-                    <input class="textfield" type="number" id="runtime" name="runtime" required value={this.state.runtime} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="number" id="runtime" name="runtime" value={this.state.runtime} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="picture">Add Promo Picture:</label><br></br>
                     <input class="textfield" type="url" id="picture" name="picture" required value={this.state.picture} onChange={this.handleInputChange}></input><br></br>
