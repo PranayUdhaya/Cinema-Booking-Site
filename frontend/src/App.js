@@ -43,6 +43,7 @@ import ScheduleMovie from "./admin/ScheduleMovie.js"
 import ManageUsers from "./admin/ManageUsers.js"
 import AdminSearch from "./admin/AdminSearch.js"
 import AdminMovie from "./admin/AdminMovie.js"
+import AdminEditProfile from "./admin/AdminEditProfile";
 
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
@@ -92,6 +93,7 @@ const App = () => {
                 <Route path="/admin/schedulemovie/:id" element=<ScheduleMovie /> />
                 <Route path="/admin/manageusers" element=<ManageUsers /> />
                 <Route path="/admin/search" element=<AdminSearch /> />
+                <Route path="/admin/profile" element=<AdminEditProfile /> />
             </Route>
             <Route element = { <PasswordRoutes /> }>
                 <Route path="/changepassword" element=<ChangePassword /> />
