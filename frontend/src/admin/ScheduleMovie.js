@@ -56,8 +56,8 @@ export default function ScheduleMovie() {
         console.log(date)
         console.log(start)
         console.log(end)
-        const startDate = new Date(date + "T" + start);
-        const endDate = new Date(date + "T" + end);
+        const startDate = date + "T" + start;
+        const endDate = date + "T" + end;
         console.log(startDate)
         console.log(endDate)
 
