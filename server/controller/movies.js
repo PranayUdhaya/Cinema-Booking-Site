@@ -116,8 +116,11 @@ exports.find30FutureMovies = async (req, res) => {
 // find one movie by id
 exports.findById = async (req, res) => {
     let id = req.body.movieId;
-    let movie = await Movie.find({_id: id});
+    console.log(id)
+    let movie = await Movie.findOne({_id: id});
+    console.log(movie)
     if (!movie) {
+        console.log("Couldn't find movie")
         return res.json({ message: "Internal Error", status: 404 });
     }
     return res.json(movie);

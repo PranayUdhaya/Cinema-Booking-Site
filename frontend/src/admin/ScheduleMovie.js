@@ -2,46 +2,69 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter } from "react-router-dom";
+import { useParams } from "react-router-dom"
+import { useState, useEffect } from 'react';
 
-class ScheduleMovie extends React.Component {
+export default function ScheduleMovie() {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            //Avengers: Age of Ultron id
-            movie: "637943af32163191b903752d",
-            start: "",
-            end: "",
-            room: "",
-            availability: props.availability,
-        }
-
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleInputChange(event) {
-        const name = event.target.name;
-        const value = event.target.value;
+    const {id} = useParams()
     
-        this.setState({
-          [name]: value
-        });
-    }
+    const [fetched, setFetched] = useState(false);
+    const [movie, setMovie] = useState("");
+    const [date, setDate] = useState("");
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+    const [room, setRoom] = useState("A");
+    const [newAvailability, setNewAvailability] = useState("Not Available");
 
-    async handleSubmit(e) {
-        e.preventDefault();
-      
-      
-        // When a post request is sent to the create url, we'll add a new record to the database.
-        //const newPerson = { ...form };
+    useEffect(() => {
+        console.log("In useEffect")
+        if (!fetched) {
+            const fetchData = async () => {
+                const movieQuery = {
+                    movieId: id
+                }
+                console.log(movieQuery)
+                const response = await fetch("http://localhost:5000/movies/findMovie", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(movieQuery),
+                })
+                .catch(error => {
+                window.alert(error);
+                    return;
+                });
+                if (response.ok) {
+                    const movieObject = await response.json()
+                    console.log(movieObject)
+                    setMovie(movieObject)
+                    setFetched(true)
+                }
+
+
+            }
+        
+            fetchData()
+        }        
+    }, [])
+
+    async function handleSubmit(event) {
+        event.preventDefault()
+        console.log(date)
+        const startDate = new Date(date + "T" + start);
+        const endDate = new Date(date + "T" + end);
+        console.log(startDate)
+        console.log(endDate)
+
         const newShowing = {
-            movie: this.state.movie,
-            start: this.state.start,
-            end: this.state.end,
-            room: this.state.room,
-
+            movie: movie,
+            start: startDate,
+            end: endDate,
+            room: room,
         }
+        console.log(newShowing);
       
       
         const response = await fetch("http://localhost:5000/showings/add", {
@@ -55,38 +78,71 @@ class ScheduleMovie extends React.Component {
          window.alert(error);
           return;
         });
-        window.alert(JSON.stringify(newShowing));
+
+        console.log(response)
         //sessionStorage.setItem("")
-      }
-
-    render() {
-        return (
-            <div class="manageMoviesDetails">
-                <h4>Schedule {this.state.movie}</h4>
-                <form onSubmit={this.handleAvailability}>
-                <label htmlFor="availability">Set Availability: </label><br></br>
-                <select class="textfield" name="availability" id="availability" value={this.state.availability} onChange={this.handleInputChange}>
-                      <option value="Not Available">Not Available</option>
-                      <option value="Currently Showing">Currently Showing</option>
-                      <option value="Coming Soon">Coming Soon</option>
-                  </select><br></br>
-                </form>
-                <form onSubmit={this.handleSumbit}>
-                    <label htmlFor="date">Enter Start Time and Date: </label><br></br>
-                    <input class="textfield" type="datetime-local" id="start" name="start"></input><br></br>
-
-                    <label htmlFor="date">Enter End Time and Date: </label><br></br>
-                    <input class="textfield" type="datetime-local" id="end" name="end"></input><br></br>
-                
-                    <label htmlFor="showrooms">Select Showroom: </label><br></br>
-                    <select class="textfield" name="showrooms" id="showrooms" value={this.state.room} onChange={this.handleInputChange}>
-                      <option value="A">Showroom A</option>
-                      <option value="B">Showroom B</option>
-                    </select><br></br>
-                </form>
-            </div>
-        )
     }
-}
 
-export default ScheduleMovie;
+    function handleAvailabilitySubmit(event) {
+        event.preventDefault()
+
+    }
+
+    function handleDateChange(event) {
+        setDate(event.target.value)
+    }
+
+    function handleStartChange(event) {
+        //const date1 = new Date('December 17, 1995 03:24:00');
+        console.log(start)
+        console.log(event.target.value)
+        setStart(event.target.value)
+    }
+
+    function handleEndChange(event) {
+        setEnd(event.target.value)
+    }
+
+    function handleAvailabilityChange(event) {
+        setNewAvailability(event.target.value)
+    }
+
+    function handleRoomChange(event) {
+        setRoom(event.target.value)
+    }
+        return (
+            <div>
+                {movie && <div class="manageMoviesDetails">
+                    <h4>Schedule "{movie.title}"</h4>
+                    <form onSubmit={handleAvailabilitySubmit}>
+                    <p>This movie is: {movie.availability}</p>
+                    <label htmlFor="availability">Set Availability: </label><br></br>
+                    <select class="textfield" name="availability" id="availability" value={newAvailability} onChange={handleAvailabilityChange}>
+                        <option value="Not Available">Not Available</option>
+                        <option value="Currently Showing">Currently Showing</option>
+                        <option value="Coming Soon">Coming Soon</option>
+                    </select><br></br>
+                    <input class="submit" type="submit" value="Update Availability"></input>
+                    </form>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="date">Enter Date: </label><br></br>
+                        <input class="textfield" type="date" id="date" name="date" value={date} onChange={handleDateChange}></input><br></br>
+
+                        <label htmlFor="startTime">Enter Start Time: </label><br></br>
+                        <input class="textfield" type="time" id="startTime" name="startTime" value={start} onChange={handleStartChange}></input><br></br>
+
+                        <label htmlFor="endTime">Enter End Time: </label><br></br>
+                        <input class="textfield" type="time" id="endTime" name="endTime" value={end} onChange={handleEndChange}></input><br></br>
+                    
+                        <label htmlFor="showroom">Select Showroom: </label><br></br>
+                        <select class="textfield" name="showroom" id="showroom" value={room} onChange={handleRoomChange}>
+                        <option value="A">Showroom A</option>
+                        <option value="B">Showroom B</option>
+                        </select><br></br>
+                        <input class="submit" type="submit" value="Create Showing"></input>
+                    </form>
+                </div>}
+                </div>
+        )
+    
+}

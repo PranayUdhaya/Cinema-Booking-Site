@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
-class AdminHome extends React.Component {
+class Home extends React.Component {
     
     constructor(props) {
         super(props);
@@ -185,9 +185,9 @@ class AdminHome extends React.Component {
                     <h2>Featured Trailers</h2>
                     <div class="trailerStrip">
                         <button hidden class="arrowButton">&lt</button>
-                        <iframe class="homeTrailer" src={this.state.trailer1} ></iframe>
-                        <iframe class="homeTrailer" src={this.state.trailer2}></iframe>
-                        <iframe class="homeTrailer" src={this.state.trailer3}></iframe>
+                        <iframe class="homeTrailer" src={this.state.trailer1} allowFullScreen></iframe>
+                        <iframe class="homeTrailer" src={this.state.trailer2} allowFullScreen></iframe>
+                        <iframe class="homeTrailer" src={this.state.trailer3} allowFullScreen></iframe>
                         <button hidden class="arrowButton">&gt</button>
                     </div>
                 </div>
@@ -197,27 +197,27 @@ class AdminHome extends React.Component {
                         <button hidden class="arrowButton">Previous</button>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now1Pic}></img>
-                            <a>Book Now</a>
+                            <a href={"/admin/schedulemovie/" + this.state.now}>Schedule Movie</a>
                             <a>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now2Pic}></img>
-                            <a>Book Now</a>
+                            <a>Schedule Movie</a>
                             <a>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now3Pic}></img>
-                            <a>Book Now</a>
+                            <a>Schedule Movie</a>
                             <a>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now4Pic}></img>
-                            <a>Book Now</a>
+                            <a>Schedule Movie</a>
                             <a>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now5Pic}></img>
-                            <a>Book Now</a>
+                            <a>Schedule Movie</a>
                             <a>View Details</a>
                         </div>
                     <button hidden class="arrowButton">Next</button>
@@ -255,4 +255,4 @@ class AdminHome extends React.Component {
     }
 }
 
-export default AdminHome;
+export default Home;

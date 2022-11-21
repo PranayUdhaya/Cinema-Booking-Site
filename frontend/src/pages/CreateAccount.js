@@ -71,7 +71,7 @@ class CreateAccount extends React.Component{
    window.alert(error);
     return;
   });
-  window.alert(JSON.stringify(newAccount));
+  //window.alert(JSON.stringify(newAccount));
   //sessionStorage.setItem("")
 
     const record = await response.json();

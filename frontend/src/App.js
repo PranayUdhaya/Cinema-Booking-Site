@@ -39,6 +39,7 @@ import EditPromo from "./admin/EditPromo.js"
 import ManagePromos from "./admin/ManagePromos.js"
 import ScheduleMovie from "./admin/ScheduleMovie.js"
 import ManageUsers from "./admin/ManageUsers.js"
+import AdminSearch from "./admin/AdminSearch.js"
 
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
@@ -79,12 +80,15 @@ const App = () => {
                 <Route path="/createconfirmation" element=<CreateConfirmation/> />
             </Route>
             <Route element = { <AdminRoutes /> }>
+                <Route path="/admin/" element=<AdminHome /> />
                 <Route path="/admin/home" element=<AdminHome /> />
+                <Route path="/admin/movie/:id" element=<Movie/> />
                 <Route path="/admin/addmovie" element=<AddMovie /> />
                 <Route path="/admin/editpromo" element=<EditPromo /> />
                 <Route path="/admin/managepromos" element=<ManagePromos /> />
-                <Route path="/admin/schedulemovie" element=<ScheduleMovie /> />
+                <Route path="/admin/schedulemovie/:id" element=<ScheduleMovie /> />
                 <Route path="/admin/manageusers" element=<ManageUsers /> />
+                <Route path="/admin/search" element=<AdminSearch /> />
             </Route>
             <Route element = { <PasswordRoutes /> }>
                 <Route path="/changepassword" element=<ChangePassword /> />

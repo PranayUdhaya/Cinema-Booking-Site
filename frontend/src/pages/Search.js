@@ -85,7 +85,6 @@ class Search extends React.Component {
                             <h2>{result.title}</h2>
                             <p>Rated: {result.ageRating}</p>
                             <a href={"/movie/" + result._id}>View Movie Details</a>
-                            <a>Book Tickets</a> 
                         </div>
                     </div>
                 ))}

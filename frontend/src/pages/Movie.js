@@ -8,16 +8,17 @@ import { useState, useEffect } from 'react';
 export default function Movie() {
     const {id} = useParams()
     
-    const [fetched, setFetched] = useState("false");
+    const [fetched, setFetched] = useState(false);
+    const [movie, setMovie] = useState(null);
 
 
     useEffect(() => {
-        if (this.state.fetched == "false") {
+        if (!fetched) {
             const fetchData = async () => {
                 const movie = {
                     movieId: id
                 }
-                const response = await fetch("http://localhost:5000/findMovie", {
+                const response = await fetch("http://localhost:5000/movies/findMovie", {
                     method: "POST",
                     headers: {
                     "Content-Type": "application/json",
@@ -28,6 +29,14 @@ export default function Movie() {
                 window.alert(error);
                     return;
                 });
+                if (response.ok) {
+                    const movieObject = await response.json()
+                    console.log(movieObject)
+                    setMovie(movieObject)
+                    setFetched(true)
+                }
+
+
             }
         
             fetchData()
@@ -39,37 +48,28 @@ export default function Movie() {
     
 
     return (
-        <div>
-        <div class="movieDetails">
-            <h1 class="detailsTitle">Solo: A Star Wars Story {id}</h1>
+        <div class="movieDetails" key={movie._id}>
+            <h1 class="detailsTitle">{movie.title}</h1>
             <div class="detailsTop">
-                <img class="detailsPoster" src="../images/solo.jpg"></img>
-                <iframe class="detailsTrailer" src="https://www.youtube.com/embed/jPEYpryMp2s"></iframe>
+                <img class="detailsPoster" src={movie.picture}></img>
+                <iframe class="detailsTrailer" src={movie.trailer} allowFullScreen></iframe>
             </div>
             <div class="detailsBottom">
                 <div class="infoStrip">
-                    <h3 class="detailHeading">Category: Sci-Fi</h3>
+                    <h3 class="detailHeading">Category: {movie.category}</h3>
 
-                    <h3 class="detailHeading">Rated: PG-13</h3>
-                    <h3 class="detailHeading">Director: Ron Howard</h3>
-                    <h3 class="detailHeading">Producer: Kathleen Kennedy</h3>
-                    <h3 class="detailHeading">Cast: Alden Ehrenreich, Woody Harrelson, Emilia Clarke</h3>
-                    <h3 class="detailHeading">Reviews: 6.9/10</h3>
+                    <h3 class="detailHeading">Rated: {movie.ageRating}</h3>
+                    <h3 class="detailHeading">Director: {movie.director}</h3>
+                    <h3 class="detailHeading">Producer: {movie.producer}</h3>
+                    <h3 class="detailHeading">Cast: {movie.cast}</h3>
+                    <h3 hidden class="detailHeading">Reviews: 6.9/10</h3>
                 </div>
                 <h3 class="detailHeading">Synopsis: </h3>
                 <p class="synopsis">
-                    Board the Millennium Falcon and journey to a galaxy far, 
-                    far away in Solo: A Star Wars Story, an all-new adventure 
-                    with the most beloved scoundrel in the galaxy. 
-                    Through a series of daring escapades deep within a dark and 
-                    dangerous criminal underworld, Han Solo meets his mighty 
-                    future copilot Chewbacca and encounters the notorious gambler 
-                    Lando Calrissian, in a journey that will set the course of 
-                    one of the Star Wars saga's most unlikely heroes.
+                    {movie.synopsis}
                 </p><br></br>
-                <a>Book Tickets</a>
+                <a href="/book">Book Tickets</a>
             </div>
-        </div>
         </div>
     )
 }
