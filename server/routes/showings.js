@@ -15,5 +15,8 @@
 
  // This request will delete an existing showing
  router.post("/showings/delete", showingsController.deleteShowing);
+
+ // This request will find all showings associated with a movie ID
+ router.post("/showings/delete", showingsController.findShowings);
  
  module.exports = router;
