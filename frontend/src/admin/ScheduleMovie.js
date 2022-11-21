@@ -54,6 +54,8 @@ export default function ScheduleMovie() {
     async function handleSubmit(event) {
         event.preventDefault()
         console.log(date)
+        console.log(start)
+        console.log(end)
         const startDate = new Date(date + "T" + start);
         const endDate = new Date(date + "T" + end);
         console.log(startDate)
@@ -88,8 +90,6 @@ export default function ScheduleMovie() {
         if (!response.ok) {
             window.alert("Time conflict! Enter another time.")
         }
-        console.log(response)
-        window.alert("Movie has been scheduled")
         //sessionStorage.setItem("")
     }
 
