@@ -56,6 +56,7 @@ header {
     cursor: pointer;
     width: 4%;
     border-radius: 50%;
+    margin-right: 8px;
     /*margin-right: auto;*/
 }
 
