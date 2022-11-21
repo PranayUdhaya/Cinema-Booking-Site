@@ -24,6 +24,8 @@ import CustomerNavbar from "./navbars/CustomerNavbar";
 import AdminNavbar from "./navbars/AdminNavbar";
 import './styles.css';
 import EmailVerify from "./EmailVerify";
+import PageNotFound from "./pages/PageNotFound";
+
 import EmptyNavbar from "./navbars/EmptyNavbar.js";
 import CustomerRoutes from "./Routing/CustomerRoutes.js";
 //import LoginRoutes from "./Routing/LoginRoutes.js" 
@@ -40,6 +42,7 @@ import ManagePromos from "./admin/ManagePromos.js"
 import ScheduleMovie from "./admin/ScheduleMovie.js"
 import ManageUsers from "./admin/ManageUsers.js"
 import AdminSearch from "./admin/AdminSearch.js"
+import AdminMovie from "./admin/AdminMovie.js"
 
 const App = () => {
 	let logged = sessionStorage.getItem("loggedIn");
@@ -82,7 +85,7 @@ const App = () => {
             <Route element = { <AdminRoutes /> }>
                 <Route path="/admin/" element=<AdminHome /> />
                 <Route path="/admin/home" element=<AdminHome /> />
-                <Route path="/admin/movie/:id" element=<Movie/> />
+                <Route path="/admin/movie/:id" element=<AdminMovie/> />
                 <Route path="/admin/addmovie" element=<AddMovie /> />
                 <Route path="/admin/editpromo" element=<EditPromo /> />
                 <Route path="/admin/managepromos" element=<ManagePromos /> />

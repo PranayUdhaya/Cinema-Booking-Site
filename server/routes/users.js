@@ -22,7 +22,7 @@ router.post("/users/updateinfo", userController.updateInfo);
 // this api request will verify the user's account
 router.post("/users/verify", userController.verifyAccount);
 
-router.post("/user/findusers", userController.findAllUsers);
+router.post("/users/findusers", userController.findAllUsers);
 
 module.exports = router;
 

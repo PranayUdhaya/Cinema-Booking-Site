@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
-class EditProfile extends React.Component {
+class AdminEditProfile extends React.Component {
 
     constructor(props) {
         super(props);
@@ -207,4 +207,4 @@ class EditProfile extends React.Component {
     }
 }
 
-export default EditProfile;
+export default AdminEditProfile;

@@ -109,6 +109,7 @@ export default function Movie() {
                     <p class="synopsis">
                         {movie.synopsis}
                     </p><br></br>
+                    <a href={"/admin/schedulemovie/" + movie}>Schedule This Movie</a><br></br>
                     <h3 class="detailHeading">Showtimes:</h3>
                         {showings && showings.map((showing) => (
                             <div class="showing" key={showing._id}>

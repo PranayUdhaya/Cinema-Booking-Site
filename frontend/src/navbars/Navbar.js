@@ -7,7 +7,7 @@ export default function Navbar() {
     return (
     <header>
         <img class="logo" src={require("../images/logo.png")} alt="logo"></img>
-        <NavLink class="siteName" href="./home">C7 Cinemas</NavLink>
+        <NavLink class="siteName" to="./home">C7 Cinemas</NavLink>
         <div hidden class="searchLineHome">
             <input hidden class="searchBar" type="search" placeholder="Enter a Movie Title"></input>
             <button hidden class="searchButton">Search</button>

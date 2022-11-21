@@ -14,9 +14,10 @@ exports.createShowing = async (req, res) => {
     let room = req.body.room;
     let start = req.body.start;
     let end = req.body.end;
-    let roomShowings = await Showing.find({room: room}).json();
+    let roomShowings = await Showing.find({room: room});
 
     for (var s in roomShowings) {
+        console.log(roomShowings[s])
         if (start >= s.start & start <= s.end) {
             return res.json({message: "Conflicting showings", status: 500})
         } else if (end >= s.start & end <= s.end) {
@@ -24,12 +25,19 @@ exports.createShowing = async (req, res) => {
         }
     }
 
+    //console.log("Start date: " + req.body.start)
+    const startDate = new Date(req.body.start)
+    console.log(startDate)
+    const readable = startDate.toLocaleString()
+    console.log(readable)
+
     let newShowing = new Showing({
         movie: req.body.movie,
         start: req.body.start,
         end: req.body.end,
         seats: seatsArray,
         room: req.body.room,
+        startReadable: readable
     });    
 
     try  {
@@ -76,10 +84,14 @@ exports.deleteShowing = async (req, res) => {
 
 // export a find showings by movie id function
 exports.findShowings = async (req, res) => {
-    let movieID = req.body.movieID;
+    let movieID = req.body.movieId;
     
     try {
         let showings = await Showing.find({ movie: movieID });
+        //console.log(showings)
+        if (showings.length == 0) {
+            return res.status(500).json(showings);
+        }
         return res.json(showings);
     } catch (e) {
         console.log(e);

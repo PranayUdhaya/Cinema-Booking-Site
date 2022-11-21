@@ -136,7 +136,7 @@ exports.findById = async (req, res) => {
     let id = req.body.movieId;
     try {
         let movie = await Movie.findOne({_id: id});
-        console.log(movie)
+        //console.log(movie)
         if (!movie) {
             console.log("Couldn't find movie")
             return res.json({ message: "Internal Error", status: 404 });

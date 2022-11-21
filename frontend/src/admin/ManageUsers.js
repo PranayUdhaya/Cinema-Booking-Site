@@ -25,7 +25,7 @@ class ManagePromos extends React.Component {
         // Find all users fetch request
         console.log("gatherUsers function")
 
-        const response = await fetch("http://localhost:5000/findusers", {
+        const response = await fetch("http://localhost:5000/users/findusers", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -36,13 +36,13 @@ class ManagePromos extends React.Component {
             return;
         });
         const currentUsers = await response.json();
+        if (response.ok) {
+            console.log(currentUsers)
         
-
-        console.log(currentUsers)
-        
-        this.setState({usersArray: currentUsers});
-        
-        console.log(this.state)
+            this.setState({usersArray: currentUsers});
+            
+            console.log(this.state)
+        }
         
     }
 
@@ -53,7 +53,7 @@ class ManagePromos extends React.Component {
                 <h2>All Users</h2>
                 {this.state.usersArray && this.state.usersArray.map((result) => (
                             <div class="promoResult" key={result._id}>
-                                
+                                <p>{result.firstName} {result.lastName}</p>
                             </div>
                     ))}
             </div>

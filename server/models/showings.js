@@ -11,7 +11,8 @@ const mongoose = require("mongoose");
     start: Date, // contains time
     end: Date,
     seats: [String],
-    room: String
+    room: String,
+    startReadable: String,
  });
 
  module.exports = mongoose.model("Showing", ShowingsSchema);

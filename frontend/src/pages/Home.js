@@ -20,13 +20,13 @@ class Home extends React.Component {
             now1Id: "",
             now2Id: "",
             now3Id: "",
-            now4id: "",
-            now5id: "",
+            now4Id: "",
+            now5Id: "",
             future1Id: "",
             future2Id: "",
             future3Id: "",
-            future4id: "",
-            future5id: "",
+            future4Id: "",
+            future5Id: "",
             now1Pic: "",
             now2Pic: "",
             now3Pic: "",
@@ -55,10 +55,6 @@ class Home extends React.Component {
             return;
         });
         const currentMovies = await response.json();
-        const testArray = currentMovies.map((movie) => (
-            movie = movie
-            )
-      );
 
         //console.log(currentMovies)
         //console.log("currentMovies: " + currentMovies)
@@ -152,8 +148,8 @@ class Home extends React.Component {
     }
 
     handleInputChange(event) {
-        const name = event.target.name;
-        const value = event.target.value;
+        const name = event.target.name
+        const value = event.target.value
     
         this.setState({
           [name]: value
@@ -197,28 +193,28 @@ class Home extends React.Component {
                         <button hidden class="arrowButton">Previous</button>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now1Pic}></img>
-                            <a>Book Now</a>
-                            <a>View Details</a>
+                            <a hidden>Book Now</a>
+                            <a href={"/movie/" + this.state.now1Id}>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now2Pic}></img>
-                            <a>Book Now</a>
-                            <a>View Details</a>
+                            <a hidden>Book Now</a>
+                            <a href={"/movie/" + this.state.now2Id}>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now3Pic}></img>
-                            <a>Book Now</a>
-                            <a>View Details</a>
+                            <a hidden>Book Now</a>
+                            <a href={"/movie/" + this.state.now3Id}>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now4Pic}></img>
-                            <a>Book Now</a>
-                            <a>View Details</a>
+                            <a hidden>Book Now</a>
+                            <a href={"/movie/" + this.state.now4Id}>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.now5Pic}></img>
-                            <a>Book Now</a>
-                            <a>View Details</a>
+                            <a hidden>Book Now</a>
+                            <a href={"/movie/" + this.state.now5Id}>View Details</a>
                         </div>
                     <button hidden class="arrowButton">Next</button>
                     </div>
@@ -229,23 +225,23 @@ class Home extends React.Component {
                         <button hidden class="arrowButton">Previous</button>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.future1Pic}></img>
-                            <a>View Details</a>
+                            <a href={"/movie/" + this.state.future1Id}>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.future2Pic}></img>
-                            <a>View Details</a>
+                            <a href={"/movie/" + this.state.future2Id}>View Details</a>
                         </div>
                         <div class="movieElement">
                             <img class="promoHome" src={this.state.future3Pic}></img>
-                            <a>View Details</a>
+                            <a href={"/movie/" + this.state.future3Id}>View Details</a>
                         </div>
                         <div class="movieElement">
-                            <img class="promoHome" src={this.state.future2Pic}></img>
-                            <a>View Details</a>
+                            <img class="promoHome" src={this.state.future4Pic}></img>
+                            <a href={"/movie/" + this.state.future4Id}>View Details</a>
                         </div>
                         <div class="movieElement">
-                            <img class="promoHome" src={this.state.future2Pic}></img>
-                            <a>View Details</a>
+                            <img class="promoHome" src={this.state.future5Pic}></img>
+                            <a href={"/movie/" + this.state.future5Id}>View Details</a>
                         </div>
                         <button hidden class="arrowButton" onClick={this.handleFutureNext}>Next</button>
                     </div>
