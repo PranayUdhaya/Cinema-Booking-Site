@@ -80,6 +80,14 @@ export default function ScheduleMovie() {
           return;
         });
 
+        if (response.ok) {
+            console.log(response)
+            window.alert("Movie has been scheduled")
+            return
+        }
+        if (!response.ok) {
+            window.alert("Time conflict! Enter another time.")
+        }
         console.log(response)
         window.alert("Movie has been scheduled")
         //sessionStorage.setItem("")
