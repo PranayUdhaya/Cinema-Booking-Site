@@ -92,40 +92,40 @@ class AddMovie extends React.Component {
                 <h4>Add New Movie</h4>
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="title">Enter Movie Title:</label><br></br>
-                    <input class="textfield" type="text" id="title" name="title" value={this.state.title} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="text" id="title" name="title" required value={this.state.title} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="category">Enter Movie Category:</label><br></br>
-                    <input class="textfield" type="text" id="category" name="category" value={this.state.category} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="text" id="category" name="category" required value={this.state.category} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="cast1">Enter Cast Member 1:</label><br></br>
-                    <input class="textfield" type="text" id="cast1" name="cast1" value={this.state.cast1} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="text" id="cast1" name="cast1" required value={this.state.cast1} onChange={this.handleInputChange}></input><br></br>
 
                     <label htmlFor="cast2">Enter Cast Member 2:</label><br></br>
                     <input class="textfield" type="text" id="cast2" name="cast2" value={this.state.cast2} onChange={this.handleInputChange}></input><br></br>
 
                     <label htmlFor="cast3">Enter Cast Member 3:</label><br></br>
-                    <input class="textfield" type="text" id="cast3" name="cast3" value={this.state.cast3} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="text" id="cast3" name="cast3" required value={this.state.cast3} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="director">Enter Director:</label><br></br>
-                    <input class="textfield" type="text" id="director" name="director" value={this.state.director} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="text" id="director" name="director" required value={this.state.director} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="producer">Enter Producer:</label><br></br>
-                    <input class="textfield" type="text" id="producer" name="producer" value={this.state.producer} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="text" id="producer" name="producer" required value={this.state.producer} onChange={this.handleInputChange}></input><br></br>
         
                     <label htmlFor="rating">Enter MPAA-US Rating Code:</label><br></br>
-                    <input class="textfield" type="text" id="rating" name="rating" value={this.state.rating} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="text" id="rating" name="rating" required value={this.state.rating} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="synopsis">Enter Synopsis:</label><br></br>
-                    <textarea class="textfield" id="synopsis" name="synopsis" rows="8" cols="30" value={this.state.synopsis} onChange={this.handleInputChange}></textarea><br></br>
+                    <textarea class="textfield" id="synopsis" name="synopsis" rows="8" cols="30" required value={this.state.synopsis} onChange={this.handleInputChange}></textarea><br></br>
                     
                     <label htmlFor="runtime">Enter Runtime:</label><br></br>
-                    <input class="textfield" type="number" id="runtime" name="runtime" value={this.state.runtime} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="number" id="runtime" name="runtime" required value={this.state.runtime} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="picture">Add Promo Picture:</label><br></br>
-                    <input class="textfield" type="url" id="picture" name="picture" value={this.state.picture} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="url" id="picture" name="picture" required value={this.state.picture} onChange={this.handleInputChange}></input><br></br>
                     
                     <label htmlFor="trailer">Enter Trailer Link:</label><br></br>
-                    <input class="textfield" type="url" id="trailer" name="trailer" value={this.state.trailer} onChange={this.handleInputChange}></input><br></br>
+                    <input class="textfield" type="url" id="trailer" name="trailer" required value={this.state.trailer} onChange={this.handleInputChange}></input><br></br>
 
                     <input class="textfield" type="submit" value="Submit" ></input><br></br>
                 </form>
