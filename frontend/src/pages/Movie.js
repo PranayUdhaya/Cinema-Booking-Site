@@ -108,14 +108,14 @@ export default function Movie() {
                     <h3 class="detailHeading">Synopsis: </h3>
                     <p class="synopsis">
                         {movie.synopsis}
-                    </p><br></br>
+                    </p><br></br><br></br>
                     <h3 class="detailHeading">Showtimes:</h3>
                         {showings && showings.map((showing) => (
                             <div class="showing" key={showing._id}>
                                 <h4>Showing</h4>
                                 <p>Time: {showing.startReadable}</p>
                                 <p>Showroom: {showing.room}</p>
-                                <a href="/book">Book This Showing</a><br></br>
+                                <a href="/book">Book This Showing</a><br></br><br></br>
                             </div>
                         ))
                         
