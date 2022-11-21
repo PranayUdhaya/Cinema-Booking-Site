@@ -16,13 +16,13 @@ exports.createShowing = async (req, res) => {
     let end = req.body.end;
     let roomShowings = await Showing.find({room: room});
 
+    let timeConflict = false
     for (var s in roomShowings) {
         console.log(roomShowings[s])
-        if (start >= s.start & start <= s.end) {
+        if (!(start <= s.start && end <= s.start) || !(start >= s.end && end >= s.end)) {
+            timeConflict = true
             return res.json({message: "Conflicting showings", status: 500})
-        } else if (end >= s.start & end <= s.end) {
-            return res.json({message: "Conflicting showings", status: 500})
-        }
+        } 
     }
 
     //console.log("Start date: " + req.body.start)
@@ -41,7 +41,9 @@ exports.createShowing = async (req, res) => {
     });    
 
     try  {
-        await newShowing.save();
+        if (!timeConflict) {
+            await newShowing.save();
+        }
     } catch (e) {
         console.log(e);
         return res.json(e);
