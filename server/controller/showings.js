@@ -2,6 +2,7 @@
  *  Defining the CRUD functions that will be called in routes/showings.js
  */
 // importing model
+const { json } = require("express");
 const Showing = require("../models/showings");
 
 // export createShowing function
@@ -14,22 +15,33 @@ exports.createShowing = async (req, res) => {
     let room = req.body.room;
     let start = req.body.start;
     let end = req.body.end;
-    let roomShowings = await Showing.find({room: room});
+    const startD = new Date(start);
+    const endD = new Date(end);
 
-    let timeConflict = false
-    for (var s in roomShowings) {
-        console.log(roomShowings[s])
-        if (!(start <= s.start && end <= s.start) || !(start >= s.end && end >= s.end)) {
-            timeConflict = true
-            return res.json({message: "Conflicting showings", status: 500})
-        } 
+
+    try {
+        const cursor = Showing.find({room: room}).cursor();
+
+        for (let doc = await cursor.next(); doc != null; doc = await cursor.next()) {
+            console.log(startD);
+            console.log(endD);
+            console.log("start: " + doc.start);
+            console.log("end: " + doc.end);
+            if ((startD >= doc.start && startD <= doc.end) || (endD >= doc.start && endD <= doc.end) || (startD <= doc.start && endD >= doc.end)){
+                console.log("error")
+                return res.status(400).json();
+            }
+        }
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
     }
 
     //console.log("Start date: " + req.body.start)
     const startDate = new Date(req.body.start)
-    console.log(startDate)
+    //console.log(startDate);
     const readable = startDate.toLocaleString()
-    console.log(readable)
+    console.log(readable);
 
     let newShowing = new Showing({
         movie: req.body.movie,
@@ -41,14 +53,12 @@ exports.createShowing = async (req, res) => {
     });    
 
     try  {
-        if (!timeConflict) {
-            await newShowing.save();
-        }
+        await newShowing.save();
     } catch (e) {
         console.log(e);
         return res.json(e);
     }
-    return res.json(newShowing)
+    return res.json(newShowing);
 };
 
 // export editShowing
