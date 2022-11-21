@@ -18,6 +18,7 @@ export default function ScheduleMovie() {
     const [newAvailability, setNewAvailability] = useState("Not Available");
 
     useEffect(() => {
+        //console.log(Date())
         console.log("In useEffect")
         if (!fetched) {
             const fetchData = async () => {
@@ -85,7 +86,7 @@ export default function ScheduleMovie() {
 
     function handleAvailabilitySubmit(event) {
         event.preventDefault()
-
+        
     }
 
     function handleDateChange(event) {
@@ -93,7 +94,6 @@ export default function ScheduleMovie() {
     }
 
     function handleStartChange(event) {
-        //const date1 = new Date('December 17, 1995 03:24:00');
         console.log(start)
         console.log(event.target.value)
         setStart(event.target.value)
@@ -126,7 +126,7 @@ export default function ScheduleMovie() {
                     </form>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="date">Enter Date: </label><br></br>
-                        <input class="textfield" type="date" id="date" name="date" value={date} onChange={handleDateChange}></input><br></br>
+                        <input class="textfield" type="date" id="date" name="date" min="2022-11-21" value={date} onChange={handleDateChange}></input><br></br>
 
                         <label htmlFor="startTime">Enter Start Time: </label><br></br>
                         <input class="textfield" type="time" id="startTime" name="startTime" value={start} onChange={handleStartChange}></input><br></br>
