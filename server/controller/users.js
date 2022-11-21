@@ -53,21 +53,25 @@ exports.login = async (req, res) => {
     if (!email || !password) {
         return res.json({ message: "Incomplete Request", status: 400 });
     }
-    console.log(password)
-    let user = await User.findOne({ email: email });
-    if (!user) {
-        return res.json({ message: "Email not found", status: 404 });
-    }
-    user.comparePassword(password, async function(matchError, isMatch) {
-        if (matchError) {
-            return res.json({ message: "Error", status: 404 });
-        } else if (!isMatch) {
-            return res.json({ message: "Incorrect Password", status: 404 });
-        } else {
-            return res.json(user);
+    try{
+        let user = await User.findOne({ email: email });
+        if (!user) {
+            return res.json({ message: "Email not found", status: 404 });
         }
-    });
-}
+        user.comparePassword(password, async function(matchError, isMatch) {
+            if (matchError) {
+                return res.json({ message: "Error", status: 404 });
+            } else if (!isMatch) {
+                return res.json({ message: "Incorrect Password", status: 404 });
+            } else {
+                return res.json(user);
+            }
+        });
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
+    }
+};
 
 // export updateInfo function
 exports.updateInfo = async (req, res) => {
@@ -85,12 +89,12 @@ exports.updateInfo = async (req, res) => {
         console.log(e);
         return res.json(e);
     }
-    
-}
+};
 
 // export updatePassword function
 exports.updatePassword = async (req, res) => {
     let { email, password, updatedPassword } = req.body;
+    try {
     let user = await User.findOne({ email });
     user.comparePassword(password, async function(matchError, isMatch) {
         if (matchError) {
@@ -103,40 +107,54 @@ exports.updatePassword = async (req, res) => {
             return res.json(user);
         }
     });
-}
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
+    }
+};
 
 // exports verifyAccount function
 exports.verifyAccount = async (req, res) => {
     let checkEmail = {email: req.body.email};
     let code = { token: req.body.token }
-    console.log(checkEmail)
 
-    // finds logged in user
-    let user = await User.findOne(checkEmail);
-    console.log(user.email)
-    console.log(user._id)
-    // checks if verification code matches the one in the database
-    const tokenDb = await Token.findOne({
-        userId: user._id,
-        token: code.token
-    })
+    try {        
+        // finds logged in user
+        let user = await User.findOne(checkEmail);
+        console.log(user.email)
+        console.log(user._id)
+        // checks if verification code matches the one in the database
+        const tokenDb = await Token.findOne({
+            userId: user._id,
+            token: code.token
+        })
 
-    console.log(tokenDb)   // if verification codes match, set account status to active
-    if (tokenDb) {
-        user.status = "active";
-        await user.save();
-        return res.json({message: "Success"});
-        await Token.deleteOne(tokenDb);
-    } else {
-        return res.json({message: "Failure"});
+        console.log(tokenDb)   // if verification codes match, set account status to active
+        if (tokenDb) {
+            user.status = "active";
+            await user.save();
+            return res.json({message: "Success", status: 500});
+            await Token.deleteOne(tokenDb);
+        } else {
+            return res.json({message: "Failure", status: 500});
+        }
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
     }
-}
+};
 
+
+// export the find all users function
 exports.findAllUsers = async (req, res) => {
-    let allUsers = await User.find({});
-    if (!allUsers) {
-        return res.json({ message: "Internal Error", status: 404 });
+    try {
+        let allUsers = await User.find({});
+        if (!allUsers) {
+            return res.json({ message: "Internal Error", status: 500 });
+        }
+        return res.json(allUsers);
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
     }
-
-    return res.json(allUsers);
-}
+};

@@ -10,32 +10,32 @@ const sendEmail = require("../utils/sendEmail");
 
 // export addMovie function
 exports.addPromo = async (req, res) => {
-    let promo = await Promo.findOne({code: req.body.code});
-    
-    if (!promo) {
-        let newPromo = new Promo({
-            descriptor: req.body.descriptor,
-            discount: req.body.discount,
-            code: req.body.code,
-            sentEmail: false,
-        })
-        try {
-            await newPromo.save();
-            return res.json(newPromo);
-        } catch (e) {
-            console.log(e);
-            return res.json(e);
+    try {
+        let promo = await Promo.findOne({code: req.body.code});
+        if (!promo) {
+            let newPromo = new Promo({
+                descriptor: req.body.descriptor,
+                discount: req.body.discount,
+                code: req.body.code,
+                sentEmail: false,
+            })
+                await newPromo.save();
+                return res.json(newPromo);
+        } else {
+            return res.json({ message: "Promotion already exists", status: 400 })
         }
-    } else {
-        return res.json({ message: "Promotion already exists", status: 400 })
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
     }
 };
 
 exports.sendPromo = async (req, res) => {
     let promoId = req.body.id;
-    let promotion = await Promo.findOne({_id: promoId});
 
     try {
+
+        let promotion = await Promo.findOne({_id: promoId});
         //finds users who want promotional emails and puts them in an array
         const promoUsers = [];
         const cursor = User.find({promo: true});

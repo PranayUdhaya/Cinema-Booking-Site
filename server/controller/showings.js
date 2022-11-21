@@ -18,9 +18,9 @@ exports.createShowing = async (req, res) => {
 
     for (var s in roomShowings) {
         if (start >= s.start & start <= s.end) {
-            return res.json({message: "Conflicting showings"})
+            return res.json({message: "Conflicting showings", status: 500})
         } else if (end >= s.start & end <= s.end) {
-            return res.json({message: "Conflicting showings"})
+            return res.json({message: "Conflicting showings", status: 500})
         }
     }
 
@@ -30,9 +30,7 @@ exports.createShowing = async (req, res) => {
         end: req.body.end,
         seats: seatsArray,
         room: req.body.room,
-    });
-
-    
+    });    
 
     try  {
         await newShowing.save();

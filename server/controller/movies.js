@@ -62,7 +62,6 @@ exports.editMovie = async (req, res) => {
 // export deleteMovie function
 exports.deleteMovie = async (req, res) => {
     let title = req.body.title;
-
     try {
         let movie = await Movie.findOneAndRemove({title: title});
         return res.json({ message: "Movie deleted" });
@@ -76,52 +75,75 @@ exports.deleteMovie = async (req, res) => {
 // find currently showing movies
 exports.findCurrentMovies = async (req, res) => {
     let filter = "Currently Showing";
-    let currentMovies = await Movie.find( {availability: filter} );
-    if (!currentMovies) {
-        return res.json({ message: "Internal Error", status: 404 });
+    try {
+        let currentMovies = await Movie.find( {availability: filter} );
+        if (!currentMovies) {
+            return res.json({ message: "Internal Error", status: 404 });
+        }
+        return res.json(currentMovies);
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
     }
-    return res.json(currentMovies);
 };
 
 exports.find30CurrentMovies = async (req, res) => {
-    //console.log("In find30Current")
     let filter = "Currently Showing";
-    let currentMovies = await Movie.find( {availability: filter} ).limit(30);
-    if (!currentMovies) {
-        return res.json({ message: "Internal Error", status: 404 });
+    try {
+        let currentMovies = await Movie.find( {availability: filter} ).limit(30);
+        if (!currentMovies) {
+            return res.json({ message: "Internal Error", status: 404 });
+        }
+        return res.json(currentMovies);
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
     }
-    return res.json(currentMovies);
 };
 
 // find movies that are coming soon
 exports.findFutureMovies = async (req, res) => {
     let filter = "Coming Soon";
-    let futureMovies = await Movie.find( {availability: filter} );
-    if (!futureMovies) {
-        return res.json({ message: "Internal Error", status: 404 });
+    try {
+        let futureMovies = await Movie.find( {availability: filter} );
+        if (!futureMovies) {
+            return res.json({ message: "Internal Error", status: 404 });
+        }
+        return res.json(futureMovies);
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
     }
-    return res.json(futureMovies);
 };
 
 // find 30 movies that are coming soon
 exports.find30FutureMovies = async (req, res) => {
     let filter = "Coming Soon";
-    let futureMovies = await Movie.find( {availability: filter} ).limit(30);
-    if (!futureMovies) {
-        return res.json({ message: "Internal Error", status: 404 });
-    }
-    return res.json(futureMovies);
+    try {
+        let futureMovies = await Movie.find( {availability: filter} ).limit(30);
+        if (!futureMovies) {
+            return res.json({ message: "Internal Error", status: 404 });
+        }
+        return res.json(futureMovies);
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
+    } 
 };
 
 // find one movie by id
 exports.findById = async (req, res) => {
     let id = req.body.movieId;
-    console.log(id)
-    let movie = await Movie.findOne({_id: id});
-    console.log(movie)
-    if (!movie) {
-        console.log("Couldn't find movie")
-        return res.json({ message: "Internal Error", status: 404 });
+    try {
+        let movie = await Movie.findOne({_id: id});
+        console.log(movie)
+        if (!movie) {
+            console.log("Couldn't find movie")
+            return res.json({ message: "Internal Error", status: 404 });
+        }
+        return res.json(movie);
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
     }
-    return res.json(movie);
 };
