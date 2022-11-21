@@ -80,6 +80,7 @@ class AddMovie extends React.Component {
               window.alert("Wrong password");
               return;
           } else {  
+            window.location.href = "/admin/schedulemovie/" + record._id
             //window.location.href = "/admin/addmovie";
           }
   
