@@ -11,6 +11,7 @@ class Search extends React.Component {
             genreQuery: "",
             availability: "",
             results: "",
+            noResult: "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -56,6 +57,11 @@ class Search extends React.Component {
         this.setState({results: queryResults})
 
         console.log(queryResults)
+        if (queryResults.length == 0) {
+            this.setState({noResult: true})
+        } else {
+            this.setState({noResult: false})
+        }
     }
 
     componentDidMount() {
@@ -92,6 +98,11 @@ class Search extends React.Component {
         const queryResults = await response.json();
 
         this.setState({results: queryResults})
+        if (queryResults.length == 0) {
+            this.setState({noResult: true})
+        } else {
+            this.setState({noResult: false})
+        }
 
         //console.log(queryResults)
     }
@@ -127,6 +138,7 @@ class Search extends React.Component {
                         </div>
                     </div>
                 ))}
+                {this.state.noResult && <h2>Movie does not exist. Please try another.</h2>}
                 </div>
             </div>
         )
