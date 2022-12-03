@@ -119,7 +119,7 @@ exports.forgetPassword = async (req, res) => {
 
     try {
         let user = await User.findOne(checkEmail);
-        console.log(user);
+
         const token = await new Token({
             userId: user._id,
             userEmail: user.email,
@@ -127,7 +127,7 @@ exports.forgetPassword = async (req, res) => {
         }).save()
 
         await sendEmail(user.email, "Reset Password Request", `A request has been made to reset your password. If you did not request a password change, please ignore this email. Otherwise, please enter this verification code on the website to confirm that it is you.\n${token.token}`);
-        console.log("Success");
+
         return res.json();
 
     } catch (e) {
