@@ -14,6 +14,6 @@ export default function IndividualSeat(props) {
                 <input type="checkbox" id={props.index}></input>
             </label>
         )
-    }
+    } else if (active === true)
 
 }

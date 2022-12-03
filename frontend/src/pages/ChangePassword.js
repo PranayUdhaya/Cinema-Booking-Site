@@ -74,9 +74,9 @@ class ChangePassword extends React.Component {
               <h1>Create a New Password</h1>
               <form onSubmit={this.handleSubmit}>
                   <label for="newPass">Enter new password: </label><br></br>
-                  <input class="textfield" type="text" id="newPass" name="newPass" required value={this.state.newPass} onChange={this.handleInputChange}></input><br></br>
+                  <input class="textfield" type="password" id="newPass" name="newPass" required value={this.state.newPass} onChange={this.handleInputChange}></input><br></br>
                   <label for="newConfirm">Confirm new password: </label><br></br>
-                  <input class="textfield" type="text" id="newConfirm" name="newConfirm" required value={this.state.newConfirm} onChange={this.handleInputChange}></input><br></br>
+                  <input class="textfield" type="password" id="newConfirm" name="newConfirm" required value={this.state.newConfirm} onChange={this.handleInputChange}></input><br></br>
                   <input class="submit" type="submit" value="Enter"></input>
               </form> 
           </div>
