@@ -84,7 +84,16 @@ export default function Movie() {
     }, [])
 
 
+    function handleBook(showing, e) {
+        e.preventDefault()
+        console.log("Showing: " + showing)
+        console.log("Showing: " + showing._id)
+        console.log("Showing: " + showing.movie)
 
+        window.sessionStorage.setItem("currentShowing", JSON.stringify(showing))
+
+        window.location.href = "/seat/" + showing._id
+    }
     
 
     return (
@@ -115,7 +124,8 @@ export default function Movie() {
                                 <h4>Showing</h4>
                                 <p>Time: {showing.startReadable}</p>
                                 <p>Showroom: {showing.room}</p>
-                                <a href="/book">Book This Showing</a><br></br><br></br>
+                                <button onClick={(e) => handleBook(showing, e)}>Book This Showing</button><br></br><br></br>
+                                {/*<a href={"/seat/" + showing._id}>Book This Showing</a><br></br><br></br>*/}
                             </div>
                         ))
                         

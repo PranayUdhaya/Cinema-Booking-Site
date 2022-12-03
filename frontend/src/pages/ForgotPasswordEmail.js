@@ -36,7 +36,7 @@ async handleSubmit(e) {
     email: this.state.email,
   }
 
-  const response = await fetch("http://localhost:5000/users/forgot", {
+  const response = await fetch("http://localhost:5000/users/forgetPassword", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -48,12 +48,14 @@ async handleSubmit(e) {
     return;
   });
   //console.log(response.ok);
+  const showingsObject = await response.json()
   console.log(response);
-  if (!response.ok) {
-    window.alert("Incorrect email");
-    return;
+    if (!response.ok) {
+        window.alert("Incorrect email");
+        return;
     } else {
-      window.location.href = "/forgotpassword";
+        window.sessionStorage.setItem("email", this.state.email)
+        window.location.href = "/forgotpassword";
     }
 
     const record = await response.json();

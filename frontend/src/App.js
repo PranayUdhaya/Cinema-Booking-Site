@@ -1,5 +1,4 @@
 import React from "react";
-import Book from "./pages/Book";
 import Browse from "./pages/Browse";
 import ChangePassword from "./pages/ChangePassword";
 import Checkout from "./pages/Checkout";
@@ -70,15 +69,15 @@ const App = () => {
             <Route path="/browse" element=<Browse/> />
             <Route path="/movie/:id" element=<Movie/> />
             <Route path="/search" element=<Search/> />
+            {/*<Route path="/book" element=<Book/> />*/}
+            <Route path="/seat/:id" element=<Seat/> />
             <Route element = { <CustomerRoutes /> }>
-                <Route path="/book" element=<Book/> />
                 <Route path="/editprofile" element=<EditProfile/> />
                 <Route path="/checkout" element=<Checkout /> />
                 <Route path="/enterpayment" element=<EnterPayment/> />
                 <Route path="/orderconfirmation" element=<OrderConfirmation /> />
                 <Route path="/orderhistory" element=<OrderHistory/> />
                 <Route path="/ordersummary" element=<OrderSummary/> />
-                <Route path="/seat" element=<Seat/> />
             </Route>
             <Route element = { <InactiveCustomerRoutes />} >
                 <Route path="/createconfirmation" element=<CreateConfirmation/> />
