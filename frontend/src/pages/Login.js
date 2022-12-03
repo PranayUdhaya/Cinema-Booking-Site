@@ -50,15 +50,15 @@ class Login extends React.Component{
       });
       //console.log(response.ok);
       console.log(response);
-      if (!response.ok) {
-        window.alert("Incorrect email");
-        return;
-      }
+      const record = await response.json();
       if (response.status == 404) {
         window.alert("Incorrect username or password");
         return;
       }
-        const record = await response.json();
+      if (response.status == 400) {
+        window.alert("Invalid format of either email or password");
+        return;
+      }
         console.log(record);
         
         console.log(record.lastName )
@@ -71,23 +71,9 @@ class Login extends React.Component{
         this.setState({admin: record.admin});
         this.setState({status: record.status});
         this.createSession();
-        if (sessionStorage.getItem("status") == "inactive") {
-            window.location.href = "/createconfirmation";
-        } else if (sessionStorage.getItem("admin") == "true") {
-            window.location.href = "/admin/home";
-        } else {
-            window.location.href = "/home";
-        }
-        
 
-      // window.alert(JSON.stringify(potentialUser));
-    
-        //setForm({ name: "", position: "", level: "" });
-    
-        //navigate("/");
-        //this.pullData();
         console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
-        //window.location.href = "/home";
+        window.location.href = "/home";
     }
 
         // const [records, setRecords] = useState([]);

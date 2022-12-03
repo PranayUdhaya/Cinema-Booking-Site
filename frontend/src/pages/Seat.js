@@ -1,9 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "../App";
-import { BrowserRouter } from "react-router-dom";
-import { useParams } from "react-router-dom"
-import { useState, useEffect } from 'react';
+import IndividualSeat from "./IndividualSeat";
 
 class Seat extends React.Component {
 
@@ -35,10 +31,6 @@ class Seat extends React.Component {
         });
     }
 
-    individualSeat(props) {
-        
-    }
-
      render() {   
         return (
             <div>
@@ -50,7 +42,7 @@ class Seat extends React.Component {
                             <div class="row">
                                 <h6 class="rowTitle">Row 1</h6>
                                 <label class="seatContainer">
-                                    <input type="checkbox" id="1A"></input>
+                                    <IndividualSeat index={0}/>
                                 </label>
                                 <label class="seatContainer">
                                     <input type="checkbox" id="1B"></input>
