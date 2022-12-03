@@ -5,6 +5,7 @@
  const User = require("../models/users");
  const Token = require("../models/token");
  const sendEmail = require("../utils/sendEmail");
+const { use } = require("../routes/users");
 
 // export createUser function
 exports.createUser = async (req, res) => {
@@ -118,14 +119,17 @@ exports.forgetPassword = async (req, res) => {
     let checkEmail = {email: req.body.email};
 
     try {
+        //finds user in database with given email
         let user = await User.findOne(checkEmail);
 
+        //creates 5 digit verification code to reset password and saves it in the database
         const token = await new Token({
             userId: user._id,
             userEmail: user.email,
             token: Math.floor(10000 + Math.random() * 89999)
         }).save()
 
+        //sends user an email with instructions and the password reset verification code
         await sendEmail(user.email, "Reset Password Request", `A request has been made to reset your password. If you did not request a password change, please ignore this email. Otherwise, please enter this verification code on the website to confirm that it is you.\n${token.token}`);
 
         return res.json();
@@ -136,6 +140,32 @@ exports.forgetPassword = async (req, res) => {
     }
 };
 
+exports.verifyForgetPassword = async (req, res) => {
+    let checkEmail = {email: req.body.email};
+    let code = { token: req.body.token }
+
+    try {
+        //finds user in database with given email
+        let user = await user.findOne(checkEmail)
+
+        // checks if the verification code matches to one in the database associated to this user
+        const tokenDb = await Token.findOne({
+            usedId: user._id,
+            token: code.token
+        })
+    } catch(e) {
+        console.log(e);
+        return res.json({status: 404});
+    }
+
+    //if password reset verification code matches, return message to frontend telling it to reroute to change password page.
+    if (tokenDb) {
+        return res.json();
+    } else {
+        return res.json({status: 404});
+    }
+}
+
 // exports verifyAccount function
 exports.verifyAccount = async (req, res) => {
     let checkEmail = {email: req.body.email};
@@ -144,15 +174,14 @@ exports.verifyAccount = async (req, res) => {
     try {        
         // finds logged in user
         let user = await User.findOne(checkEmail);
-        console.log(user.email)
-        console.log(user._id)
-        // checks if verification code matches the one in the database
+
+        // checks if verification code matches the one in the database associated to this user
         const tokenDb = await Token.findOne({
             userId: user._id,
             token: code.token
         })
 
-        console.log(tokenDb)   // if verification codes match, set account status to active
+        // if verification codes match, set account status to active
         if (tokenDb) {
             user.status = "active";
             await user.save();

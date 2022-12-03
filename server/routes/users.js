@@ -22,9 +22,14 @@ router.post("/users/updateinfo", userController.updateInfo);
 // this api request will verify the user's account
 router.post("/users/verify", userController.verifyAccount);
 
+// this api request will find all the user's in the database
 router.post("/users/findusers", userController.findAllUsers);
 
-router.post("/users/forgetPassword", userController.forgetPassword);
+// this api request will send the user an email with a password reset code
+router.post("/users/forgetpassword", userController.forgetPassword);
+
+// this api will verify if the password reset code and user match with one in the database
+router.post("/users/verifyforgetpassword", userController.verifyForgetPassword)
 
 module.exports = router;
 

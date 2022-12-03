@@ -36,7 +36,7 @@ async handleSubmit(e) {
     email: this.state.email,
   }
 
-  const response = await fetch("http://localhost:5000/users/forgetPassword", {
+  const response = await fetch("http://localhost:5000/users/forgetpassword", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
