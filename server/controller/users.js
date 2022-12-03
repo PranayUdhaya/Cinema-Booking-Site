@@ -2,9 +2,9 @@
  *  Defining the CRUD functions that will be called in routes/users.js 
  */
 // importing model
- const User = require("../models/users");
- const Token = require("../models/token");
- const sendEmail = require("../utils/sendEmail");
+const User = require("../models/users");
+const Token = require("../models/token");
+const sendEmail = require("../utils/sendEmail");
 const { use } = require("../routes/users");
 
 // export createUser function
@@ -35,8 +35,6 @@ exports.createUser = async (req, res) => {
             userEmail: user.email,
             token: Math.floor(1000 + Math.random() * 8999)
         }).save()
-        //creates a url using the user id and token string
-        const url = "localhost:3000/createconfirmation";
             
         //sends an email with the verification url
         await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}`);
