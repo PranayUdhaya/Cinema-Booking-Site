@@ -9,8 +9,8 @@ class ChangePassword extends React.Component {
     super(props);
     this.state = {
       email: "",
-      pass: "",
-      failure: ""
+      newPass: "",
+      newConfirm: ""
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -38,11 +38,11 @@ class ChangePassword extends React.Component {
       <div>
           <div class="login">
               <h1>Create a New Password</h1>
-              <form method="post">
+              <form onSubmit={this.handleSubmit}>
                   <label for="newPass">Enter new password: </label><br></br>
-                  <input class="textfield" type="text" id="newPass" name="newPass"></input><br></br>
+                  <input class="textfield" type="text" id="newPass" name="newPass" required value={this.state.newPass} onChange={this.handleInputChange}></input><br></br>
                   <label for="newConfirm">Confirm new password: </label><br></br>
-                  <input class="textfield" type="text" id="newConfirm" name="newConfirm"></input><br></br>
+                  <input class="textfield" type="text" id="newConfirm" name="newConfirm" required value={this.state.newConfirm} onChange={this.handleInputChange}></input><br></br>
                   <input class="submit" type="submit" value="Enter"></input>
               </form> 
           </div>

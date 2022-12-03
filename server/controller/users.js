@@ -146,11 +146,11 @@ exports.verifyForgetPassword = async (req, res) => {
 
     try {
         //finds user in database with given email
-        let user = await user.findOne(checkEmail)
+        let user = await User.findOne(checkEmail)
 
         // checks if the verification code matches to one in the database associated to this user
         const tokenDb = await Token.findOne({
-            usedId: user._id,
+            userId: user._id,
             token: code.token
         })
     } catch(e) {

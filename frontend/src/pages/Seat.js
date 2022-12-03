@@ -12,7 +12,6 @@ class Seat extends React.Component {
         this.state = {
             showing: window.sessionStorage.getItem("currentShowing"),
             movie: window.sessionStorage.getItem("currentMovie"),
-            
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,6 +35,7 @@ class Seat extends React.Component {
                 <form>
                     <div class="seatSelector">
                         <div class="screen"></div>
+                        <div test></div>
                         <div class="row">
                             <h6 class="rowTitle">Row 1</h6>
                             <label class="seatContainer">
