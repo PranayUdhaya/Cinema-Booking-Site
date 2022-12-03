@@ -38,7 +38,7 @@ exports.createUser = async (req, res) => {
         const url = "localhost:3000/createconfirmation";
             
         //sends an email with the verification url
-        await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}\nat the following link:\n${url}`);
+        await sendEmail(user.email, "Verification Code", `Please enter the verifcation code\n${token.token}`);
         return res.json({message: "A verification email has been sent to your account"});
 
     } catch (e) {
@@ -110,6 +110,29 @@ exports.updatePassword = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.json(e);
+    }
+};
+
+// exports forgetPasswaord function
+exports.forgetPassword = async (req, res) => {
+    let checkEmail = {email: req.body.email};
+
+    try {
+        let user = await User.findOne(checkEmail);
+        
+        const token = await new Token({
+            userId: user._id,
+            userEmail: user.email,
+            token: Math.floor(10000 + Math.random() * 89999)
+        }).save()
+
+        await sendEmail(user.email, "Reset Password Request", `A request has been made to reset your password. If you did not request a password change, please ignore this email. Otherwise, please enter this verification code on the website to confirm that it is you.\n${token.token}`);
+        
+        return res.json();
+
+    } catch (e) {
+        console.log(e);
+        return res.json({status: 404});
     }
 };
 

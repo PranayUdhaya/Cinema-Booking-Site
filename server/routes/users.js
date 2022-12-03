@@ -24,6 +24,8 @@ router.post("/users/verify", userController.verifyAccount);
 
 router.post("/users/findusers", userController.findAllUsers);
 
+router.post("user/forgetPassword", userController.forgetPassword);
+
 module.exports = router;
 
 
