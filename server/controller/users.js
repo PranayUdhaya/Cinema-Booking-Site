@@ -12,7 +12,7 @@ exports.createUser = async (req, res) => {
     let email = req.body.email;
     let user = await User.findOne({ email });
     if (user) {
-        return res.json({ message: "Email already in use", status: 400 });
+        return res.status(400).json({ message: "Email already in use"});
     }
     let newUser = new User({
         firstName: req.body.firstName,
@@ -50,20 +50,20 @@ exports.createUser = async (req, res) => {
 exports.login = async (req, res) => {
     let { email, password } = req.body;
     if (!email || !password) {
-        return res.json({ message: "Incomplete Request", status: 400 });
+        return res.status(400).json({ message: "Incomplete Request"});
     }
     try{
         let user = await User.findOne({ email: email });
         if (!user) {
-            return res.json({ message: "Email not found", status: 404 });
+            return res.status(404).json({ message: "Email not found"});
         }
         user.comparePassword(password, async function(matchError, isMatch) {
             if (matchError) {
-                return res.json({ message: "Error", status: 404 });
+                return res.status(404).json({ message: "Error"});
             } else if (!isMatch) {
-                return res.json({ message: "Incorrect Password", status: 404 });
+                return res.status(404).json({ message: "Incorrect Password"});
             } else {
-                return res.json(user);
+                return res.status(200).json(user);
             }
         });
     } catch(e) {
@@ -97,9 +97,9 @@ exports.updatePassword = async (req, res) => {
     let user = await User.findOne({ email });
     user.comparePassword(password, async function(matchError, isMatch) {
         if (matchError) {
-            return res.json({ message: "Error", status: 404 });
+            return res.status(404).json({ message: "Error"});
         } else if (!isMatch) {
-            return res.json({ message: "Incorrect Password", status: 404 });
+            return res.status(404).json({ message: "Incorrect Password"});
         } else if (isMatch) {
             user.password = updatedPassword;
             await user.save();
@@ -134,7 +134,7 @@ exports.forgetPassword = async (req, res) => {
 
     } catch (e) {
         console.log(e);
-        return res.json({status: 404});
+        return res.status(404).json();
     }
 };
 
@@ -157,12 +157,12 @@ exports.verifyForgetPassword = async (req, res) => {
             await Token.deleteOne(tokenDb);
             return res.json();
         } else {
-            return res.json({status: 404});
+            return res.status(404).json();
         }
 
     } catch(e) {
         console.log(e);
-        return res.json({status: 404});
+        return res.status(404).json();
     }
 }
 
@@ -185,10 +185,10 @@ exports.verifyAccount = async (req, res) => {
         if (tokenDb) {
             user.status = "active";
             await user.save();
-            return res.json({message: "Success", status: 500});
+            return res.json({message: "Success"});
             await Token.deleteOne(tokenDb);
         } else {
-            return res.json({message: "Failure", status: 500});
+            return res.status(404).json({message: "Failure"});
         }
     } catch(e) {
         console.log(e);
@@ -214,7 +214,7 @@ exports.changeForgetPassword = async (req, res) => {
         
     } catch(e) {
         console.log(e);
-        res.json({status: 404});
+        res.status(404).json();
     }
 }
 
@@ -223,7 +223,7 @@ exports.findAllUsers = async (req, res) => {
     try {
         let allUsers = await User.find({});
         if (!allUsers) {
-            return res.json({ message: "Internal Error", status: 500 });
+            return res.status(404).json({ message: "Internal Error"});
         }
         return res.json(allUsers);
     } catch(e) {
