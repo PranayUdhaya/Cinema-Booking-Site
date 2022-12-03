@@ -202,8 +202,9 @@ exports.changeForgetPassword = async (req, res) => {
     let checkEmail = {email: req.body.email};
     let newPass = {password: req.body.password};
     
+    
     // finds user with given email and updates their password with the new password
-    let user = User.findOneAndUpdate(checkEmail, newPass);
+    let user = await User.findOneAndUpdate(checkEmail, newPass);
     
     // saves the information in the database
     user.save();
