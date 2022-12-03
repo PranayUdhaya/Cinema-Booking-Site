@@ -55,12 +55,15 @@ exports.login = async (req, res) => {
     try{
         let user = await User.findOne({ email: email });
         if (!user) {
+            console.log("one");
             return res.status(404).json({ message: "Email not found"});
         }
         user.comparePassword(password, async function(matchError, isMatch) {
             if (matchError) {
-                return res.status(404).json({ message: "Error"});
+                console.log("two")  
+                return res.status(404).json({ message: "Error"});              
             } else if (!isMatch) {
+                console.log("three")
                 return res.status(404).json({ message: "Incorrect Password"});
             } else {
                 return res.status(200).json(user);
@@ -201,20 +204,20 @@ exports.changeForgetPassword = async (req, res) => {
     // takes email and new password input from frontend
     let checkEmail = {email: req.body.email};
     let newPass = req.body.password;
-    
+
     try {
         // finds user with given email and updates their password with the new password
         let user = await User.findOne(checkEmail);
         user.password = newPass;
 
         // saves the information in the database
-        user.save();
+        await user.save();
 
-        res.json();
+        return res.json();
         
     } catch(e) {
         console.log(e);
-        res.status(404).json();
+        return res.status(404).json();
     }
 }
 
@@ -228,6 +231,6 @@ exports.findAllUsers = async (req, res) => {
         return res.json(allUsers);
     } catch(e) {
         console.log(e);
-        return res.json(e);
+        return res.status(404).json(e);
     }
 };
