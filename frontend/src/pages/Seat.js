@@ -17,8 +17,7 @@ class Seat extends React.Component {
     }
 
     componentDidMount() {
-        this.gatherMovies();
-        //this.setStates();
+        
     }
 
     componentWillUnmount() {

@@ -71,6 +71,9 @@ const App = () => {
             <Route path="/search" element=<Search/> />
             {/*<Route path="/book" element=<Book/> />*/}
             <Route path="/seat/:id" element=<Seat/> />
+            <Route path="/changepassword" element=<ChangePassword /> />
+            <Route path="/forgotpasswordemail" element=<ForgotPasswordEmail/> />
+            <Route path="/forgotpassword" element=<ForgotPassword /> />
             <Route element = { <CustomerRoutes /> }>
                 <Route path="/editprofile" element=<EditProfile/> />
                 <Route path="/checkout" element=<Checkout /> />
@@ -95,9 +98,6 @@ const App = () => {
                 <Route path="/admin/profile" element=<AdminEditProfile /> />
             </Route>
             <Route element = { <PasswordRoutes /> }>
-                <Route path="/changepassword" element=<ChangePassword /> />
-                <Route path="/forgotpasswordemail" element=<ForgotPasswordEmail/> />
-                <Route path="/forgotpassword" element=<ForgotPassword /> />
             </Route>
             <Route element = { <GuestRoutes /> }>
                 <Route path="/createaccount" element=<CreateAccount/> />
