@@ -8,7 +8,7 @@ const Ticket = require("../models/tickets");
 exports.createTicket = async (req, res) => {
 
     let newTicket = new Ticket({
-        showingID: req.body.shwoingID,
+        showingID: req.body.showingID,
         email: req.body.email,
         seat: req.body.seat,
         status: req.body.status

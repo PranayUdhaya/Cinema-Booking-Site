@@ -34,6 +34,8 @@ router.post("/users/verifyforgetpassword", userController.verifyForgetPassword)
 // this api will update the user's password in the database after going through the forgot password process
 router.post("/users/changeforgetpassword", userController.changeForgetPassword)
 
+// this api will send the user a confirmation email of their order
+router.post("/users/confirmationemail", userController.confirmationEmail)
 module.exports = router;
 
 
