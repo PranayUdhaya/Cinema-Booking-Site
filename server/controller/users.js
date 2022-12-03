@@ -153,15 +153,16 @@ exports.verifyForgetPassword = async (req, res) => {
             userId: user._id,
             token: code.token
         })
+
+        //if password reset verification code matches, return message to frontend telling it to reroute to change password page.
+        if (tokenDb) {
+            return res.json();
+        } else {
+            return res.json({status: 404});
+        }
+
     } catch(e) {
         console.log(e);
-        return res.json({status: 404});
-    }
-
-    //if password reset verification code matches, return message to frontend telling it to reroute to change password page.
-    if (tokenDb) {
-        return res.json();
-    } else {
         return res.json({status: 404});
     }
 }
