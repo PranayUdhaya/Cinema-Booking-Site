@@ -51,7 +51,7 @@ class Seat extends React.Component {
                             <div class="row">
                                 <h6 class="rowTitle">Row 1</h6>
                                 <label class="seatContainer">
-                                    <IndividualSeat index={0} active={this.state.activeArray[0]}/>
+                                    <input type="checkbox" id="1A" name="promo" value={this.state.promo} onChange={this.handleSeatUpdate} checked={this.state.activeArray[0]}></input>
                                 </label>
                                 <label class="seatContainer">
                                     <input type="checkbox" id="1B"></input>

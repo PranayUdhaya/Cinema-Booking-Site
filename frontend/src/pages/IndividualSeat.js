@@ -11,9 +11,11 @@ export default function IndividualSeat(props) {
     if (showing.seats[props.index] === "available") {
         return (
             <label class="seatContainer">
-                <input type="checkbox" id={props.index}></input>
+                <input type="checkbox" id={props.index} value={props.active}></input>
             </label>
         )
-    } else if (active === true)
+    } else {
+
+    }
 
 }
