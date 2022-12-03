@@ -6,6 +6,7 @@ const User = require("../models/users");
 const Token = require("../models/token");
 const sendEmail = require("../utils/sendEmail");
 const { use } = require("../routes/users");
+const tickets = require("../models/tickets");
 
 // export createUser function
 exports.createUser = async (req, res) => {
@@ -224,11 +225,17 @@ exports.changeForgetPassword = async (req, res) => {
 // exports the find all users function
 exports.findAllUsers = async (req, res) => {
     try {
+        //finds all objects in User database
         let allUsers = await User.find({});
+        
+        //if not are found return error message
         if (!allUsers) {
             return res.status(404).json({ message: "Internal Error"});
         }
+
+        //other return allUsers
         return res.json(allUsers);
+
     } catch(e) {
         console.log(e);
         return res.status(404).json(e);
@@ -237,7 +244,7 @@ exports.findAllUsers = async (req, res) => {
 
 exports.confirmationEmail = async (req, res) => {
     //confirmation number, price, tickets, theater, date/time, movie
-    let email = req.body.email
+    let email = req.body.email;
     //add other variables here
 
     try {
@@ -245,12 +252,32 @@ exports.confirmationEmail = async (req, res) => {
         //add in order detail information here later
         await sendEmail(email, `Order Confirmation ${"confirmation number"}`, `Order details`);
 
+        return res.json();
+
     } catch(e) {
         console.log(e);
-        res.status(404).json({message: `Email could not be sent to ${user.email}`})
+        return res.status(404).json({message: `Email could not be sent to ${user.email}`})
     }
-    
+};
 
-    
+exports.orderHistory = async (req, res) => {
+    let checkEmail = {email: req.body.email};
 
+    try {
+        //find user's orders using user._id
+        let user = User.findOne(checkEmail);
+        let allOrders = await Orders.find({_id: user._id});
+
+        //if no others are found return error message
+        if (!allOrders) {
+            return res.status(404).json({ message: "Internal Error"});
+        }
+
+        //otherwise return allOrders
+        return res.json(allOrders);
+
+    } catch(e) {
+        console.log(e);
+        return res.status(404).json(e);
+    }
 }

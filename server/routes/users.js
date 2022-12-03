@@ -36,8 +36,11 @@ router.post("/users/changeforgetpassword", userController.changeForgetPassword)
 
 // this api will send the user a confirmation email of their order
 router.post("/users/confirmationemail", userController.confirmationEmail)
-module.exports = router;
 
+// this api will retrieve the user's order history
+router.post("/users/orderhistory", userController.orderHistory)
+
+module.exports = router;
 
 
 // const express = require('express');
