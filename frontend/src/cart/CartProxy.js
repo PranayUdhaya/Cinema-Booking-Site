@@ -1,22 +1,26 @@
-class Cart {
+class CartProxy {
+    
     constructor() {
-        var tickets = []
+        var cart = null
     }
 
 
-    async function addTicket(ticket) {
-        tickets.push(ticket)
-    }
-
-    async function deleteTicket(ticket) {
-        tickets.forEach(deleteItem(index, ticket))
-    }
-
-    async function deleteItem(index, ticket) {
-        if (tickets[index] == ticket) {
-            delete tickets[index]
+    addTicket(ticket) {
+        if (cart == null) {
+            cart = new Cart()
+        } else {
+            cart.addTicket(ticket)
         }
     }
+
+    deleteTicket(ticket) {
+        if (cart == null) {
+            cart = new Cart()
+        } else {
+            cart.addTicket(ticket)
+        }
+    }
+
 
     
 }

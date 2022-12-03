@@ -10,10 +10,10 @@ class Cart {
     }
 
     deleteTicket(ticket) {
-        tickets.forEach(deleteItem(index, ticket))
+        tickets.forEach(this.#deleteItem(index, ticket))
     }
 
-    deleteItem(index, ticket) {
+    #deleteItem(index, ticket) {
         if (tickets[index] == ticket) {
             delete tickets[index]
         }
