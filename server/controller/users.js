@@ -156,6 +156,7 @@ exports.verifyForgetPassword = async (req, res) => {
 
         //if password reset verification code matches, return message to frontend telling it to reroute to change password page.
         if (tokenDb) {
+            await Token.deleteOne(tokenDb);
             return res.json();
         } else {
             return res.json({status: 404});
@@ -197,9 +198,20 @@ exports.verifyAccount = async (req, res) => {
     }
 };
 
+// exports the changePassword function
+exports.changeForgetPassword = async (req, res) => {
+    // takes email and new password input from frontend
+    let checkEmail = {email: req.body.email};
+    let newPass = {password: req.body.password};
+    
+    // finds user with given email and updates their password with the new password
+    let user = User.findOneAndUpdate(checkEmail, newPass);
+    
+    // saves the information in the database
+    user.save();
+}
 
-
-// export the find all users function
+// exports the find all users function
 exports.findAllUsers = async (req, res) => {
     try {
         let allUsers = await User.find({});
