@@ -200,14 +200,22 @@ exports.verifyAccount = async (req, res) => {
 exports.changeForgetPassword = async (req, res) => {
     // takes email and new password input from frontend
     let checkEmail = {email: req.body.email};
-    let newPass = {password: req.body.password};
+    let newPass = req.body.password;
     
-    
-    // finds user with given email and updates their password with the new password
-    let user = await User.findOneAndUpdate(checkEmail, newPass);
-    
-    // saves the information in the database
-    user.save();
+    try {
+        // finds user with given email and updates their password with the new password
+        let user = await User.findOne(checkEmail);
+        user.password = newPass;
+
+        // saves the information in the database
+        user.save();
+
+        res.json();
+        
+    } catch(e) {
+        console.log(e);
+        res.json({status: 404});
+    }
 }
 
 // exports the find all users function
