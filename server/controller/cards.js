@@ -1,5 +1,5 @@
 /**
- *  Defining the CRUD functions that will be called in routes/tickets.js
+ *  Defining the CRUD functions that will be called in routes/cards.js
  */
 // importing model
 const Card = require("../models/cards");
