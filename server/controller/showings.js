@@ -2,7 +2,6 @@
  *  Defining the CRUD functions that will be called in routes/showings.js
  */
 // importing model
-const { json } = require("express");
 const Showing = require("../models/showings");
 
 // export createShowing function
