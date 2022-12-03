@@ -32,6 +32,7 @@ app.use(require("./routes/search"));
 app.use(require("./routes/showings"));
 app.use(require("./routes/promo"));
 app.use(require("./routes/tickets"));
+app.use(require("./routes/cards"));
 
 
 // once connection is established and server has been hosted at port 5000, set app to listen at the port
