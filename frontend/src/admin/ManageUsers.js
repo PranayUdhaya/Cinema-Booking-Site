@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
-class ManagePromos extends React.Component {
+class ManageUsers extends React.Component {
 
     constructor(props) {
         super(props);
@@ -60,4 +60,4 @@ class ManagePromos extends React.Component {
     }
 }
 
-export default ManagePromos;
+export default ManageUsers;

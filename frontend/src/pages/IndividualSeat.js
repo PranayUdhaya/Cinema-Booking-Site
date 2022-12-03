@@ -8,8 +8,12 @@ import { useState, useEffect } from 'react';
 export default function IndividualSeat(props) {
     
     const showing = JSON.parse(window.sessionStorage.getItem("currentShowing"))
-    if (showing.seats[props.index] == "available") {
-
+    if (showing.seats[props.index] === "available") {
+        return (
+            <label class="seatContainer">
+                <input type="checkbox" id={props.index}></input>
+            </label>
+        )
     }
 
 }

@@ -8,7 +8,7 @@ class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      email: window.sessionStorage.getItem("email"),
       newPass: "",
       newConfirm: ""
     };

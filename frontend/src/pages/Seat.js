@@ -8,9 +8,11 @@ class Seat extends React.Component {
         this.state = {
             showing: JSON.parse(window.sessionStorage.getItem("currentShowing")),
             movie: JSON.parse(window.sessionStorage.getItem("currentMovie")),
+            activeArray: JSON.parse(window.sessionStorage.getItem("currentShowing")).seats,
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSeatFlip = this.handleSeatFlip.bind(this);
     }
 
     componentDidMount() {
@@ -31,6 +33,13 @@ class Seat extends React.Component {
         });
     }
 
+    handleSeatFlip(event) {
+        const flip = !this.state.activeArray[event.target.value];
+        console.log(flip)
+        this.setState({promo: flip});
+        console.log(this.state.promo)
+    }
+
      render() {   
         return (
             <div>
@@ -42,7 +51,7 @@ class Seat extends React.Component {
                             <div class="row">
                                 <h6 class="rowTitle">Row 1</h6>
                                 <label class="seatContainer">
-                                    <IndividualSeat index={0}/>
+                                    <IndividualSeat index={0} active={this.state.activeArray[0]}/>
                                 </label>
                                 <label class="seatContainer">
                                     <input type="checkbox" id="1B"></input>
