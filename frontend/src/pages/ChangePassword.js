@@ -17,11 +17,45 @@ class ChangePassword extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-    handleSubmit(event) {
-      // Call backend methed to verify login and return success of failure
-      // call displayFailure if failed
-      // call createSession if sucess
-      this.displayFailure(event);
+    async handleSubmit(event) {
+      event.preventDefault()
+      if (this.state.newPass.localeCompare(this.state.newConfirm) != 0) {
+        window.alert("Passwords do not match")
+        return
+      }
+
+      const query = {
+        email: this.state.email,
+        password: this.state.newPass,
+        }
+        console.log(query)
+
+        const response = await fetch("http://localhost:5000/users/changeforgetpassword", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+        if (!response.ok) {
+            window.alert("Response error");
+            return;
+        } else {
+            window.alert("Password changed. Please log in with your new password.");
+            window.sessionStorage.clear()
+            window.location.href = "/login";
+        }
+
+        const record = await response.json();
+        console.log(record);
+        console.log(record.password);
+        window.location.href = "/forgotpassword";
+
+
     }
 
     handleInputChange(event) {
