@@ -47,8 +47,6 @@ async handleSubmit(e) {
     window.alert(error);
     return;
   });
-  //console.log(response.ok);
-  const showingsObject = await response.json()
   console.log(response);
     if (!response.ok) {
         window.alert("Incorrect email");
@@ -57,11 +55,6 @@ async handleSubmit(e) {
         window.sessionStorage.setItem("email", this.state.email)
         window.location.href = "/forgotpassword";
     }
-
-    const record = await response.json();
-    console.log(record);
-    console.log(record.password);
-    window.location.href = "/forgotpassword";
   }
 
   displayFailure(event) {

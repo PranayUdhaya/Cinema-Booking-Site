@@ -35,24 +35,22 @@ class ForgotPassword extends React.Component {
     //this.displayFailure(event);
     // When a post request is sent to the create url, we'll add a new record to the database.
   //const newPerson = { ...form };
-  const potentialUser = {
+  const query = {
     email: this.state.email,
+    code: this.state.code,
   }
 
-  const response = await fetch("http://localhost:5000/users/forgetPassword", {
+  const response = await fetch("http://localhost:5000/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(potentialUser),
+    body: JSON.stringify(query),
   })
   .catch(error => {
     window.alert(error);
     return;
   });
-  //console.log(response.ok);
-  const showingsObject = await response.json()
-  console.log(response);
     if (!response.ok) {
         window.alert("Incorrect email");
         return;

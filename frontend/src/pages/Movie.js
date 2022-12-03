@@ -39,6 +39,7 @@ export default function Movie() {
                     console.log(movieObject)
                     setMovie(movieObject)
                     setFetched(true)
+                    window.sessionStorage.setItem("currentMovie", JSON.stringify(movieObject))
                 } else {
                     window.location.href = "/home"
 
