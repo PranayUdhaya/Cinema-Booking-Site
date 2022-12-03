@@ -31,7 +31,7 @@ router.post("/users/forgetpassword", userController.forgetPassword);
 // this api will verify if the password reset code and user match with one in the database
 router.post("/users/verifyforgetpassword", userController.verifyForgetPassword)
 
-// this api will update the user's password in the database after going through the forget password process
+// this api will update the user's password in the database after going through the forgot password process
 router.post("/users/changeforgetpassword", userController.changeForgetPassword)
 
 module.exports = router;
