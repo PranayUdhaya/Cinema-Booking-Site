@@ -2,7 +2,6 @@ import Cart from "./Cart.js"
 
 class CartProxy {
     
-    
     constructor() {
         this.cart = null
     }
@@ -33,6 +32,6 @@ class CartProxy {
         }
     }
 
-
-    
 }
+
+export default CartProxy;

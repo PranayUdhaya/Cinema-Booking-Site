@@ -14,10 +14,6 @@ class CreateAccount extends React.Component{
       pass: "",
       pass2: "",
       phone: "",
-      pAddress: "",
-      pCity: "",
-      pState: "",
-      pZip: "",
       ctype: "",
       cardNum: "",
       cvc: "",
@@ -28,6 +24,7 @@ class CreateAccount extends React.Component{
       bZip: "",
       promo: false,
       status: "",
+      id: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -71,8 +68,10 @@ class CreateAccount extends React.Component{
    window.alert(error);
     return;
   });
-  //window.alert(JSON.stringify(newAccount));
-  //sessionStorage.setItem("")
+
+  const newCard = {
+    
+  }
 
     const record = await response.json();
     this.setState({fname: record.firstName});
@@ -81,10 +80,11 @@ class CreateAccount extends React.Component{
     this.setState({isAdmin: record.admin});
     this.setState({status: record.status});
     this.setState({promo: record.promo});
+    this.setState({id: record.id});
+
 
     this.createSession();
-    window.location.href = "/createconfirmation";
-    console.log("here");
+    window.location.href = "/addcardca";
 }
 
 
@@ -97,6 +97,7 @@ handlePromo(event) {
 
 createSession(event) {
     sessionStorage.setItem("loggedIn", "true");
+    sessionStorage.setItem("id", this.state.id);
     sessionStorage.setItem("email", this.state.email);
     sessionStorage.setItem("fname", this.state.fname);
     sessionStorage.setItem("lname", this.state.lname);
@@ -120,19 +121,6 @@ createSession(event) {
     });
   }
 
-  createPaymentObject() {
-    const paymentObject = {
-      ctype: this.state.ctype,
-      cardNum: this.state.cardNum,
-      cvc: this.state.cvc,
-      expiration: this.state.expiration,
-      bAddress: this.state.bAddress,
-      bCity: this.state.bCity,
-      bState: this.state.bState,
-      bZip: this.state.bZip
-    }
-  }  
-
   render() {
     return (
       <div>
@@ -153,20 +141,8 @@ createSession(event) {
                   <input class="textfield" type="text" id="lname" name="lname" required value={this.state.lname} onChange={this.handleInputChange}></input><br></br>
                   <label htmlFor="phone">Enter Phone Number</label><br></br>
                   <input class="textfield" type="tel" id="phone" name="phone" required value={this.state.phone} onChange={this.handleInputChange}></input><br></br><br></br>
-                  
-                  <div hidden>
-                  <h3>Enter Personal Address Info (optional)</h3>
-                  <label htmlFor="pAddress">Street Address</label><br></br>
-                  <input class="textfield" type="text" id="pAddress" name="pAddress" value={this.state.pAddress} onChange={this.handleInputChange}></input><br></br>
-                  <label htmlFor="pCity">City</label><br></br>
-                  <input class="textfield" type="text" id="pCity" name="pCity" value={this.state.pCity} onChange={this.handleInputChange}></input><br></br>
-                  <label htmlFor="pState">State</label><br></br>
-                  <input class="textfield" type="text" id="pState" name="pState" value={this.state.pState} onChange={this.handleInputChange}></input><br></br>
-                  <label htmlFor="pZip">Zipcode</label><br></br>
-                  <input class="textfield" type="text" id="pZip" name="pZip" value={this.state.pZip} onChange={this.handleInputChange}></input><br></br><br></br>
-                    </div>
 
-                  <h3>Enter Payment Details (optional)</h3>
+                  {/*<h3>Enter Payment Details (optional)</h3>
                   <label htmlFor="ctype">Enter Card Type</label><br></br>
                   <select class="textfield" name="ctype" id="ctype" value={this.state.ctype} onChange={this.handleInputChange}>
                       <option value="Visa">Visa</option>
@@ -190,7 +166,7 @@ createSession(event) {
                   <label htmlFor="bState">State</label><br></br>
                   <input class="textfield" type="text" id="bState" name="bState" value={this.state.bState} onChange={this.handleInputChange}></input><br></br>
                   <label htmlFor="bZip">Zipcode</label><br></br>
-                  <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.promoTrue} onChange={this.handleInputChange}></input><br></br><br></br>
+                  <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.bZip} onChange={this.handleInputChange}></input><br></br><br></br>*/}
 
                     <label htmlFor="promo">Opt in for Promotion Emails</label>
                     <input class="textfield" type="checkbox" id="promo" name="promo" value={this.state.promo} onChange={this.handlePromo} checked={this.state.promo}></input><br></br>
