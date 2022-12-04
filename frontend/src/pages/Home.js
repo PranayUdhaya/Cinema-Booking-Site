@@ -39,6 +39,7 @@ class Home extends React.Component {
             future5Pic: "",
         }
 
+        
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 

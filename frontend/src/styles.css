@@ -392,6 +392,7 @@ button {
 
 .seatContainer input[type=checkbox] {
     /*opacity: 0;*/
+
   }
 
 .youthLabel {
@@ -576,4 +577,10 @@ form {
     display: flex;
     justify-content: space-between;
 
+}
+
+.square {
+    height: 13px;
+    width: 13px;
+    background-color: rgb(0, 0, 0);
 }
