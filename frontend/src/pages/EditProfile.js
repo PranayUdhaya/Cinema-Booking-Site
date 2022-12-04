@@ -28,6 +28,7 @@ class EditProfile extends React.Component {
             pState: "",
             pZip: "",
             promo: promoBool,
+            cardsArray: "",
         };
         console.log(this.state.promo)
 
@@ -132,13 +133,37 @@ class EditProfile extends React.Component {
 
     logout(event) {
         sessionStorage.clear()
-        /*sessionStorage.setItem("loggedIn", "false");
-        sessionStorage.setItem("fname", "");
-        sessionStorage.setItem("lname", "")
-        sessionStorage.setItem("phone", "")
-        sessionStorage.setItem("promo", false)
-        sessionStorage.setItem("email", "")*/
         window.location.href = "/home";
+    }
+
+    componentDidMount() {
+        this.fetchCards()
+    }
+
+    async fetchCards() {
+        console.log("in fetchCards")
+        const query = {
+            userId: sessionStorage.getItem("id")
+          }
+          console.log(query)
+          const response = await fetch("http://localhost:5000/cards/find", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+        })
+        .catch(error => {
+        window.alert(error);
+            return;
+        });
+        if (!response.ok) {
+            console.log("Card fetch error")
+            return
+        }
+        const record = await response.json();
+        console.log(record)
+        this.setState({cardsArray: record})
     }
 
     render() {
@@ -191,14 +216,18 @@ class EditProfile extends React.Component {
 
                         <div class="paymentDetails">
                             <h3>Payment Details</h3>
-                            <h5 hidden>Saved Card</h5>
-                            <h6 hidden class="ticketItemInfo">Card Type: Visa</h6>
-                            <h6 hidden class="ticketItemInfo">Card Number: **** **** **** 5848</h6>
-                            <a hidden>Remove Card</a><br></br>
-                            <a>Add New Card</a>
+                            {this.state.cardsArray && this.state.cardsArray.map((card) => (
+                                <div key={card._id}>
+                                    <h5>Saved Card</h5>
+                                    <h6 class="ticketItemInfo">Card Type: {card.type}</h6>
+                                    <h6 class="ticketItemInfo">Card Number: **** **** **** {"Insert last 4 card num here"}</h6>
+                                    <a>Remove Card</a><br></br>
+                                </div>)
+                            )} 
+                            <a href="/addcard">Add New Card</a>
                         </div>
 
-                        <a>View Order History</a>
+                        <a href="/orderhistory">View Order History</a>
                         <button class="logoutButton" onClick={this.logout}>logout</button>
                 </div>
                 

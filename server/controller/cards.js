@@ -44,7 +44,7 @@ exports.deleteCard = async (req, res) => {
 exports.findCards = async (req, res) => {
 
     try {
-        let cards = await Ticket.find({ userID: req.body.userId });
+        let cards = await Card.find({ userID: req.body.userId });
         return res.json(cards);
     } catch (e) {
         console.log(e);
