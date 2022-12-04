@@ -1,38 +1,36 @@
 /**
- *  Defining the CRUD functions that will be called in routes/cards.js
+ *  Defining the CRUD functions that will be called in routes/orders.js
  */
 // importing model
-const Card = require("../models/cards");
+const Order = require("../models/orders");
 
-// export createCard function
-exports.createCard = async (req, res) => {
+// export createOrder function
+exports.createOrder = async (req, res) => {
 
-    let newCard = new Card({
-        userID: req.body.userID,
-        cardNumber: req.body.cardNumber,
-        expDate: req.body.expDate,
-        securityCode: req.body.securityCode,
-        address: req.body.address,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip
+    let newOrder = new Order({
+        email: req.body.email,
+        showingID: req.body.showingId,
+        seats: req.body.seats,
+        numOfYouth: req.body.numOfYouth,
+        numOfSenior: req.body.numOfSenior, 
+        totalPrice: req.body.totalPrice
     });    
 
     try  {
-        await newCard.save();
+        await newOrder.save();
     } catch (e) {
         console.log(e);
         return res.json(e);
     }
-    return res.json(newCard);
+    return res.json(newOrder);
 };
 
-// export deleteCard function
-exports.deleteCard = async (req, res) => {
+// export deleteOrder function
+exports.deleteOrder = async (req, res) => {
 
     try {
-        let card = await Card.findByIdAndRemove({ _id: req.body.cardID });
-        return res.json(card);
+        let order = await Order.findByIdAndRemove({ _id: req.body.orderId });
+        return res.json(order);
     } catch (e) {
         console.log(e);
         return res.json(e);
@@ -40,11 +38,11 @@ exports.deleteCard = async (req, res) => {
 };
 
 // export findCards function
-exports.findCards = async (req, res) => {
+exports.findOrders = async (req, res) => {
 
     try {
-        let cards = await Ticket.find({userID: req.body.userID});
-        return res.json(cards);
+        let orders = await Ticket.find({email: req.body.email});
+        return res.json(orders);
     } catch (e) {
         console.log(e);
         return res.json(e);

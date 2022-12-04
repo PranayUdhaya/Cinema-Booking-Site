@@ -14,7 +14,8 @@ const CardSchema = mongoose.Schema({
     address: String,
     city: String,
     state: String,
-    zip: Number
+    zip: Number,
+    type: String
 });
  
 module.exports = mongoose.model("Card", CardSchema);

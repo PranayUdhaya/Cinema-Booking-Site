@@ -7,7 +7,7 @@ const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
  
 const OrderSchema = mongoose.Schema({
-    user: String,
+    email: String,
     showingID: ObjectId,
     seats: [String],
     numOfYouth: Number,

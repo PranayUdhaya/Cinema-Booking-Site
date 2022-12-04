@@ -15,7 +15,8 @@ exports.createCard = async (req, res) => {
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
-        zip: req.body.zip
+        zip: req.body.zip,
+        type: req.body.type
     });    
 
     try  {
