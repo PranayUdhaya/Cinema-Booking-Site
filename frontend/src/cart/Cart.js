@@ -1,21 +1,21 @@
 class Cart {
     
     constructor() {
-        var tickets = []
+        this.tickets = []
     }
 
 
     addTicket(ticket) {
-        tickets.push(ticket)
+        this.tickets.push(ticket)
     }
 
     deleteTicket(ticket) {
-        tickets.forEach(this.#deleteItem(index, ticket))
+        this.tickets.forEach(this.#deleteItem(index, ticket))
     }
 
     #deleteItem(index, ticket) {
-        if (tickets[index] == ticket) {
-            delete tickets[index]
+        if (this.tickets[index] == ticket) {
+            delete this.tickets[index]
         }
     }
 

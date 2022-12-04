@@ -1,31 +1,35 @@
+import Cart from "./Cart.js"
+
 class CartProxy {
     
+    
     constructor() {
-        var cart = null
+        this.cart = null
     }
 
 
     addTicket(ticket) {
-        if (cart == null) {
-            cart = new Cart()
+        if (this.cart == null) {
+            this.cart = new Cart()
+            this.cart.addTicket(ticket)
         } else {
-            cart.addTicket(ticket)
+            this.cart.addTicket(ticket)
         }
     }
 
     deleteTicket(ticket) {
-        if (cart == null) {
+        if (this.cart == null) {
             console.log("No cart available")
         } else {
-            cart.deleteTicket(ticket)
+            this.cart.deleteTicket(ticket)
         }
     }
     
     getTickets() {
-        if (cart == null) {
+        if (this.cart == null) {
             console.log("No cart available")
         } else {
-            return cart.getTickets()
+            return this.cart.getTickets()
         }
     }
 
