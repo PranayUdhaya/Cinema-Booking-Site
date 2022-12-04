@@ -6,7 +6,6 @@ const User = require("../models/users");
 const Token = require("../models/token");
 const sendEmail = require("../utils/sendEmail");
 const { use } = require("../routes/users");
-const tickets = require("../models/tickets");
 
 // export createUser function
 exports.createUser = async (req, res) => {
