@@ -19,5 +19,8 @@ class Cart {
         }
     }
 
+    getTickets() {
+        return tickets
+    }
     
 }

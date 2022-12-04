@@ -15,9 +15,17 @@ class CartProxy {
 
     deleteTicket(ticket) {
         if (cart == null) {
-            cart = new Cart()
+            console.log("No cart available")
         } else {
-            cart.addTicket(ticket)
+            cart.deleteTicket(ticket)
+        }
+    }
+    
+    getTickets() {
+        if (cart == null) {
+            console.log("No cart available")
+        } else {
+            return cart.getTickets()
         }
     }
 
