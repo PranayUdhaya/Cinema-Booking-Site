@@ -69,9 +69,6 @@ class CreateAccount extends React.Component{
     return;
   });
 
-  const newCard = {
-    
-  }
 
     const record = await response.json();
     this.setState({fname: record.firstName});
@@ -80,7 +77,7 @@ class CreateAccount extends React.Component{
     this.setState({isAdmin: record.admin});
     this.setState({status: record.status});
     this.setState({promo: record.promo});
-    this.setState({id: record.id});
+    this.setState({id: record._id});
 
 
     this.createSession();

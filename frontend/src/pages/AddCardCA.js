@@ -8,7 +8,7 @@ class AddCardCA extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      ctype: "",
+      ctype: "visa",
       cardNum: "",
       cvc: "",
       expiration: "",
@@ -29,7 +29,7 @@ class AddCardCA extends React.Component{
   const newCard = {
     userId: window.sessionStorage.getItem("id"),
     type: this.state.ctype,
-    cardNumber: this.state.ctype,
+    cardNumber: this.state.cardNum,
     expDate: this.state.expiration,
     address: this.state.bAddress,
     city: this.state.bCity,
@@ -39,6 +39,9 @@ class AddCardCA extends React.Component{
 
   }
 
+  console.log(window.sessionStorage.getItem("id"))
+  console.log(window.sessionStorage.getItem("email"))
+  console.log(newCard)
 
   const response = await fetch("http://localhost:5000/cards/add", {
     method: "POST",
@@ -97,11 +100,11 @@ class AddCardCA extends React.Component{
                   <h3>Enter Payment Details</h3>
                   <label htmlFor="ctype">Enter Card Type</label><br></br>
                   <select class="textfield" name="ctype" id="ctype" value={this.state.ctype} onChange={this.handleInputChange} required>
-                      <option value="Visa">Visa</option>
-                      <option value="Mastercard">Mastercard</option>
-                      <option value="American Express">American Express</option>
-                      <option value="Discover">Discover</option>
-                      <option value="Other">Other</option>
+                      <option value="visa">Visa</option>
+                      <option value="mastercard">Mastercard</option>
+                      <option value="americanexpress">American Express</option>
+                      <option value="discover">Discover</option>
+                      <option value="other">Other</option>
                   </select><br></br>
                   <label htmlFor="cardNum">Enter Card Number</label><br></br>
                   <input class="textfield" type="number" id="cardNum" name="cardNum" value={this.state.cardNum} onChange={this.handleInputChange} required></input><br></br>

@@ -71,39 +71,13 @@ class Login extends React.Component{
         this.setState({promo: record.promo});
         this.setState({admin: record.admin});
         this.setState({status: record.status});
+        this.setState({id: record._id});
         this.createSession();
 
         console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
         window.location.href = "/home";
     }
 
-        // const [records, setRecords] = useState([]);
-            
-       /* // This method fetches the records from the database.
-            async getUserInfo() {
-                const userEmail = { email: this.state.email };
-                const response = await fetch("http://localhost:5000/users/session", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userEmail);
-                });
-            
-                if (!response.ok) {
-                    const message = `An error occurred: ${response.statusText}`;
-                    window.alert(message);                        
-                    return;
-                }
-                
-                const userInfo = await response.json();
-                setRecords(records);
-            }   
-            
-            getUserInfo();            
-            return;
-        }
-*/
 
     createSession(event) {
         sessionStorage.setItem("loggedIn", "true");
@@ -114,7 +88,7 @@ class Login extends React.Component{
         sessionStorage.setItem("promo", this.state.promo);
         sessionStorage.setItem("admin", this.state.admin);
         sessionStorage.setItem("status", this.state.status);
-        //sessionStorage.setItem("status", "active");
+        sessionStorage.setItem("id", this.state.id);
         console.log(this.state.fname)
         console.log(this.state.lname)
         console.log(this.state.phone)
