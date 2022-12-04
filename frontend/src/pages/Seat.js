@@ -22,6 +22,7 @@ class Seat extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSeatUpdate = this.handleSeatUpdate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        
     }
 
     componentDidMount() {

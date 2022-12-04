@@ -14,7 +14,7 @@ const CardSchema = mongoose.Schema({
     address: String,
     city: String,
     state: String,
-    zip: Number,
+    zip: String,
     type: String
 });
  
