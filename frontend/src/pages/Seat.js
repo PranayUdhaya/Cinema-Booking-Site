@@ -113,7 +113,7 @@ class Seat extends React.Component {
             }
             if (this.state.elderCount > 0) {
                 const ticket = new Ticket(i, "elder", this.state.seatNames[i])
-                numEdler--
+                numElder--
                 seatTotal--
                 continue
             }
