@@ -23,7 +23,9 @@ import CustomerNavbar from "./navbars/CustomerNavbar";
 import AdminNavbar from "./navbars/AdminNavbar";
 import './styles.css';
 import EmailVerify from "./EmailVerify";
-import PageNotFound from "./pages/PageNotFound";
+import AddCardCA from "./pages/AddCardCA"
+import AddCard from "./pages/AddCard"
+
 
 import EmptyNavbar from "./navbars/EmptyNavbar.js";
 import CustomerRoutes from "./Routing/CustomerRoutes.js";
@@ -81,8 +83,10 @@ const App = () => {
                 <Route path="/orderconfirmation" element=<OrderConfirmation /> />
                 <Route path="/orderhistory" element=<OrderHistory/> />
                 <Route path="/ordersummary" element=<OrderSummary/> />
+                <Route path="/addcard" element=<AddCard/> />
             </Route>
             <Route element = { <InactiveCustomerRoutes />} >
+                <Route path="/addcardca" element=<AddCardCA/> />
                 <Route path="/createconfirmation" element=<CreateConfirmation/> />
             </Route>
             <Route element = { <AdminRoutes /> }>

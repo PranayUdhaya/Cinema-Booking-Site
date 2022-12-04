@@ -19,6 +19,7 @@ class Login extends React.Component{
       promo: false,
       admin: false,
       status: "",
+      id: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);

@@ -1,5 +1,6 @@
 import React from "react";
-import IndividualSeat from "./IndividualSeat";
+import CartProxy from "../cart/CartProxy"
+import Ticket from "../cart/Ticket"
 
 class Seat extends React.Component {
 
@@ -87,11 +88,39 @@ class Seat extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        console.log("In handleSubmit")
+        //console.log("In handleSubmit")
         if (this.state.numSeatsSelected < 1) {
             window.alert("Please select at least one seat.")
             return
         }
+
+        const cart = new CartProxy()
+
+        let seatTotal = this.state.numSeatsSelected
+        let numYouth = this.state.youthCount
+        let numElder = this.state.elderCount
+
+        for (let i in this.state.boolArray) {
+            if (this.state.boolArray[i] = false) {
+                continue
+            }
+            if (this.state.youthCount > 0) {
+                const ticket = new Ticket(i, "youth", this.state.seatNames[i])
+                
+                numYouth--
+                seatTotal--
+                continue
+            }
+            if (this.state.elderCount > 0) {
+                const ticket = new Ticket(i, "elder", this.state.seatNames[i])
+                numEdler--
+                seatTotal--
+                continue
+            }
+            const ticket = new Ticket(i, "adult", this.state.seatNames[i])
+        }
+
+
         if (window.sessionStorage.getItem("loggedIn") == "true") {
             window.location.href = "/checkout"
         } else {
