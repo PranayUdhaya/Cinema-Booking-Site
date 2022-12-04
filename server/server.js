@@ -31,7 +31,6 @@ app.use(require("./routes/movies"));
 app.use(require("./routes/search"));
 app.use(require("./routes/showings"));
 app.use(require("./routes/promo"));
-app.use(require("./routes/tickets"));
 app.use(require("./routes/cards"));
 
 

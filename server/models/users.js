@@ -5,7 +5,8 @@
  */
 
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+const { ObjectId } = require("mongodb");
 
 const UserSchema = mongoose.Schema({
     firstName: String,
@@ -16,7 +17,8 @@ const UserSchema = mongoose.Schema({
     status: String,
     rememberMe: Boolean,
     promo: Boolean,
-    admin: Boolean
+    admin: Boolean,
+    cards: [ObjectId]
 });
 
 // utilizing bcrypt to hash the user password before it is stored in the database

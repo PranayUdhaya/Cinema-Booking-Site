@@ -108,3 +108,14 @@ exports.findShowings = async (req, res) => {
         return res.json(e);
     }
 };
+
+// export a find showings by showing id function
+exports.findShowingsById = async (req, res) => {
+    try {
+        let showing = await Shwoing.find({ _id: req.body.showingID });
+        return res.json(showing);
+    } catch(e) {
+        console.log(e);
+        return res.json(e);
+    }
+};

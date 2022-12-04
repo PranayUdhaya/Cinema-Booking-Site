@@ -8,7 +8,7 @@ const Card = require("../models/cards");
 exports.createCard = async (req, res) => {
 
     let newCard = new Card({
-        userID: req.body.userID,
+        userID: req.body.userId,
         cardNumber: req.body.cardNumber,
         expDate: req.body.expDate,
         securityCode: req.body.securityCode,
@@ -31,7 +31,7 @@ exports.createCard = async (req, res) => {
 exports.deleteCard = async (req, res) => {
 
     try {
-        let card = await Card.findByIdAndRemove({ _id: req.body.cardID });
+        let card = await Card.findByIdAndRemove({ _id: req.body.cardId });
         return res.json(card);
     } catch (e) {
         console.log(e);
@@ -43,7 +43,7 @@ exports.deleteCard = async (req, res) => {
 exports.findCards = async (req, res) => {
 
     try {
-        let cards = await Ticket.find({userID: req.body.userID});
+        let cards = await Ticket.find({ userID: req.body.userId });
         return res.json(cards);
     } catch (e) {
         console.log(e);

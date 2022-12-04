@@ -7,13 +7,13 @@ const express = require("express");
 const cardsController = require("../controller/cards");
 const router = express.Router();
  
-// This request will add a new ticket to the cards collection
+// This request will add a new card to the cards collection
 router.post("/cards/add", cardsController.createCard);
 
 // This request will delete an existing card
 router.post("/cards/delete", cardsController.deleteCard);
 
-// This request will find all cards that are associated with a userID
+// This request will find all cards that are associated with a userId
 router.post("/cards/find", cardsController.findCards);
  
 module.exports = router;
