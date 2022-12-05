@@ -39,7 +39,7 @@ class Cart {
 
     calSubtotal() {
         let subtotal = 0
-        for (let ticket in tickets) {
+        for (let ticket in this.tickets) {
             subtotal += ticket.price
         }
         return subtotal
