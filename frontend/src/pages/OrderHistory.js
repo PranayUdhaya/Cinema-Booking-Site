@@ -3,18 +3,44 @@ import ReactDOM from "react-dom";
 import App from "../App";
 import { BrowserRouter } from "react-router-dom";
 
-class OrderHistory extends React.Component() {
+class OrderHistory extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          
+          orderArray: "",
         }
     
     }
 
     componentDidMount() {
+        this.gatherOrders()
+    }
+
+    async gatherOrders() {
+        const query = {
+            userId: sessionStorage.getItem("id")
+        }
         
+        const response = await fetch("http://localhost:5000/orders/find", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+        
+        console.log(response)
+        const record = await response.json();
+        console.log(response)
+        if (!response.ok) {
+            window.alert("Response error")
+            return
+        }
     }
 
     render() {
