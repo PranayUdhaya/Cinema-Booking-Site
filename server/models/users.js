@@ -18,7 +18,6 @@ const UserSchema = mongoose.Schema({
     rememberMe: Boolean,
     promo: Boolean,
     admin: Boolean,
-    cards: [ObjectId]
 });
 
 // utilizing bcrypt to hash the user password before it is stored in the database

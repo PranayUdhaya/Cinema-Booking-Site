@@ -14,7 +14,18 @@ const hashVal = async function(val) {
 
 
 // export createCard function
-exports.createCard = async (req, res) => {   
+exports.createCard = async (req, res) => {
+    
+    var query = Card.find({ userID: req.body.userId });
+    query.count(function (err, count) {
+        if (err) {
+            return res.json.status(200);
+        }
+        else if (count >= 3) {
+            return res.json({ message: "You already have three cards"});
+        }
+    });
+
     const hashedCard = await hashVal(req.body.cardNumber);
     const hashedcvc = await hashVal(req.body.securityCode);
     console.log("card: " + hashedCard);
