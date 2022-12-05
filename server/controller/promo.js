@@ -78,10 +78,9 @@ exports.findPromos = async (req, res) => {
 }
 
 exports.checkPromo = async (req, res) => {
-    let checkCode = {code: req.body.code};
 
     try {
-        let promo = await Promo.findOne(checkCode)
+        let promo = await Promo.findOne({code: req.body.code})
         if (!promo) {
             return res.status(400).json({message: "No promo code found"});
         }

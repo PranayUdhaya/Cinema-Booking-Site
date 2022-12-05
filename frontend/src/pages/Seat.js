@@ -108,18 +108,13 @@ class Seat extends React.Component {
 
 
         for (let i in this.state.boolArray) {
-            console.log(i)
             if (this.state.boolArray[i] === false) {
                 continue
             }
-            console.log(numYouth)
-            console.log(numYouth > 0)
             if (numYouth > 0) {
                 cart.addTicket(new Ticket(i, "youth", this.state.seatNames[i]))
                 numYouth--
                 seatTotal--
-                console.log(numYouth)
-                console.log(cart)
                 continue
             }
             if (numElder > 0) {
@@ -127,13 +122,11 @@ class Seat extends React.Component {
                 cart.addTicket(ticket2)
                 numElder--
                 seatTotal--
-                console.log(cart)
                 continue
             }
             let ticket3 = new Ticket(i, "adult", this.state.seatNames[i])
             cart.addTicket(ticket3)
             seatTotal--
-            console.log(cart)
         }
         console.log(cart)
         JSON.stringify(cart)
@@ -146,7 +139,7 @@ class Seat extends React.Component {
 
         if (window.sessionStorage.getItem("loggedIn") === "true") {
             const showing = JSON.parse(sessionStorage.getItem("currentShowing"))
-            //window.location.href = "/checkout/" + showing._id
+            window.location.href = "/ordersummary"
         } else {
             window.location.href = "/login"
         }

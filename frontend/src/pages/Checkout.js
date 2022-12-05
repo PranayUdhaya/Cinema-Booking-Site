@@ -14,7 +14,6 @@ class Checkout extends React.Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.checkPromo = this.checkPromo.bind(this);
         this.handleContinue = this.handleContinue.bind(this);
     }
 
@@ -55,35 +54,9 @@ class Checkout extends React.Component {
           this.setState({cardsArray: record})
     }
 
-    async checkPromo(event) {
-        const promoQuery = {
-            code: event.target.value
-          }
-        
-          const response = await fetch("http://localhost:5000/promos/checkpromo", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(promoQuery),
-          })
-          .catch(error => {
-           window.alert(error);
-            return;
-          });
-
-        console.log(response)
-        const record = await response.json();
-        console.log(response)
-        if (!response.ok) {
-            window.alert("Response error")
-            return
-        }
-
-    }
 
     handleContinue() {
-        window.location.href = "/ordersummary"
+        window.location.href = "/orderconfirmation"
     }
 
     render() {
@@ -111,12 +84,7 @@ class Checkout extends React.Component {
                             )) 
                         */}
                     </div>
-                    <div class="checkoutPromo">
-                        <label htmlFor="promo">Enter Promo: </label>
-                        <input class="textfield" type="text" name="promo" id="promo"  value={this.state.promo} onChange={this.handleInputChange}></input>
-                        <button onClick={this.checkPromo}>Apply</button>
-                    </div>
-                    <button onClick={this.handleContinue}>Continue</button>
+                    <button onClick={this.handleContinue}>Place Order</button>
                     <a>Cancel Transaction</a>
                 </div>
             </div>

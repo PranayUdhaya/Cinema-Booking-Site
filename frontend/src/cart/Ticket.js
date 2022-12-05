@@ -10,9 +10,9 @@ class Ticket {
     }
 
     setPrice() {
-        if (this.type = "youth") {
+        if (this.type == "youth") {
             this.price = 8
-        } else if (this.type = "elder"){
+        } else if (this.type == "elder"){
             this.price = 9
         } else {
             this.price = 12
