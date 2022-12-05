@@ -7,12 +7,13 @@ const Card = require("../models/cards");
 // export createCard function
 exports.createCard = async (req, res) => {
 
-    let cardLastFour
-    //Parse req.body.cardNumber to get last four digits
+    let lastFour
+    //Parse req.body.cardNumber to get last four digits. Assign to lastFour
 
     let newCard = new Card({
         userID: req.body.userId,
         cardNumber: req.body.cardNumber,
+        cardLastFour: lastFour,
         expDate: req.body.expDate,
         securityCode: req.body.securityCode,
         address: req.body.address,
