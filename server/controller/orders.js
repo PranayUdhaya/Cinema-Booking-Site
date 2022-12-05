@@ -41,7 +41,7 @@ exports.deleteOrder = async (req, res) => {
 exports.findOrders = async (req, res) => {
 
     try {
-        let orders = await Ticket.find({email: req.body.email});
+        let orders = await Order.find({email: req.body.email});
         return res.json(orders);
     } catch (e) {
         console.log(e);
