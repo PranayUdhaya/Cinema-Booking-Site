@@ -49,8 +49,24 @@ exports.deleteCard = async (req, res) => {
 exports.findCards = async (req, res) => {
 
     try {
-        let cards = await Card.find({ userID: req.body.userId });
-        return res.json(cards);
+        const cards = Card.find({ userID: req.body.userId }).cursor();
+        let arr = [];
+        for (let doc = await cursor.next(); doc != null; doc  = await cursor.next()) {
+            var decryptedCard = doc.decryptCard();
+            var decryptedAddress = doc.decryptedAddress();
+            let obj = {
+                userID: doc.userID,
+                cardNumber: doc.cardNumber,
+                cardLastFour: decryptedCard,
+                expDate: doc.expDate,
+                securityCode: doc.securityCode,
+                address: decryptedAddress,
+                type: doc.type
+            }
+            arr.push(obj);
+        }
+        
+        return res.json(arr);
     } catch (e) {
         console.log(e);
         return res.json(e);
