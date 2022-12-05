@@ -22,6 +22,7 @@ exports.createCard = async (req, res) => {
     try  {
         await newCard.save();
     } catch (e) {
+        console.log("here")
         console.log(e);
         return res.json(e);
     }
