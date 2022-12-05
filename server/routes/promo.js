@@ -9,4 +9,6 @@ router.post("/sendpromo", promoController.sendPromo);
 
 router.post("/findpromos", promoController.findPromos);
 
+router.post("/checkpromo", promoController.checkPromo);
+
 module.exports = router;

@@ -10,9 +10,21 @@ class Checkout extends React.Component {
         this.state = {
             chosenCard: "",
             cardsArray: "",
+            promo: "",
         }
 
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.checkPromo = this.checkPromo.bind(this);
     }
+
+    handleInputChange(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        this.setState({
+          [name]: value
+        });
+      }
 
     componentDidMount() {
         this.fetchCards()
@@ -42,29 +54,62 @@ class Checkout extends React.Component {
           this.setState({cardsArray: record})
     }
 
+    async checkPromo(event) {
+        const promoQuery = {
+            code: event.target.value
+          }
+        
+          const response = await fetch("http://localhost:5000/promos/checkpromo", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(promoQuery),
+          })
+          .catch(error => {
+           window.alert(error);
+            return;
+          });
+
+        console.log(response)
+        const record = await response.json();
+        console.log(response)
+        if (!response.ok) {
+            window.alert("Response error")
+            return
+        }
+
+    }
+
     render() {
         return (
             <div>
                 <div class="checkout">
                     <h1 class="checkoutTitle">Checkout</h1>
                     <div class="checkoutPay">
-                        <h2 class="checkoutPayTitle">Payment Card</h2>
-                        <div class="selectedCard">
-                            <h6 class="defaultCard">Visa<br></br>**** **** **** 5848</h6>
-                        </div>
+                        <h2 class="checkoutPayTitle">Selected Payment Card</h2>
+                        {this.state.chosenCard && <div class="selectedCard">
+                        <div key={this.state.chosenCard._id}>
+                                <p>{this.state.chosenCard.type}</p>
+                                <p>**** **** **** {this.state.chosenCard.cardLastFour}</p>
+                                <p>{this.state.chosenCard.address}</p>
+                            </div>
+                        </div>}
                         {this.state.cardsArray && this.state.cardsArray.map((card) => (
                             <div key={card._id}>
                                 <p>{card.type}</p>
                                 <p>**** **** **** {card.cardLastFour}</p>
-
+                                <p>{card.address}</p>
                                 <a>Choose this card</a>
+                                <br></br>
                             </div>
                             )) 
                         }
                     </div>
                     <div class="checkoutPromo">
                         <label htmlFor="promo">Enter Promo: </label>
-                        <input class="textfield" type="text" name="promo" id="promo"></input><br></br><br></br>
+                        <input class="textfield" type="text" name="promo" id="promo"  value={this.state.promo} onChange={this.handleInputChange}></input>
+                        <button onClick={this.checkPromo}>Apply</button>
                     </div>
                     <a>Continue</a>
                     <a>Cancel Transaction</a>

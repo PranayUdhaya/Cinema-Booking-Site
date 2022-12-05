@@ -124,6 +124,7 @@ class AddCardCA extends React.Component{
                   <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.bZip} onChange={this.handleInputChange} required></input><br></br><br></br>
 
                   <input class="submit" type="submit" value="Submit"></input>
+                  
               </form>
               <a href="/createconfirmation">Skip for Now</a>
           </div>

@@ -1,7 +1,10 @@
 class Cart {
     
-    constructor(id) {
+    constructor() {
         this.tickets = []
+        this.promo = 0
+        this.subtotal = ""
+        this.total = ""
     }
 
 
@@ -20,6 +23,14 @@ class Cart {
     
     getTickets() {
         return this.tickets
+    }
+
+    setPromo(amount) {
+        this.promo = amount
+    }
+
+    calcTotal() {
+
     }
     
 }

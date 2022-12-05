@@ -75,3 +75,8 @@ exports.findPromos = async (req, res) => {
 
     return res.json(currentPromos);
 }
+
+exports.checkPromo = async (req, res) => {
+    console.log("In checkPromo function")
+    return res.json()
+}
