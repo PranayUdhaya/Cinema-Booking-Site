@@ -32,6 +32,22 @@ class CartProxy {
         }
     }
 
+    calTotal() {
+        if (this.cart == null) {
+            return 0
+        } else {
+            return this.cart.calTotal()
+        }
+    }
+
+    calTotal() {
+        if (this.cart == null) {
+            return 0
+        } else {
+            return this.cart.calSubtotal()
+        }
+    }
+
 }
 
 export default CartProxy;
