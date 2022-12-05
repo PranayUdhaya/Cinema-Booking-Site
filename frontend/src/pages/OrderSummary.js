@@ -13,12 +13,29 @@ class OrderSummary extends React.Component {
           numAdult: "",
           numYouth: "",
           numElder: "",
+          subtotal: "",
+          total: "",
+          ticketsArray: JSON.parse(sessionStorage.getItem("cart")).cart.tickets,
+          promoCode: "",
+          foundPromo: "",
         };
 
 
     
-        //this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.calcSubtotal = this.calcSubtotal.bind(this);
+        this.calcTotal = this.calcTotal.bind(this);
+        this.checkPromo = this.checkPromo.bind(this);
+      }
+
+      handleInputChange(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        this.setState({
+          [name]: value
+        });
       }
 
       componentDidMount() {
@@ -26,10 +43,15 @@ class OrderSummary extends React.Component {
       }
 
       calcNums() {
-        let a, y, e = 0
+
+        let a = 0
+        let y = 0
+        let e = 0
+
         console.log(this.state.cart)
-        const ticketsArray = this.state.cart.tickets
+        const ticketsArray = this.state.ticketsArray
         for (let i in ticketsArray) {
+            console.log(ticketsArray[i].type)
             switch(ticketsArray[i].type) {
                 case "adult":
                     a++
@@ -47,11 +69,70 @@ class OrderSummary extends React.Component {
         this.setState({numYouth: y})
         this.setState({numElder: e})
 
+        this.calcTotal()
+      }
+
+      calcSubtotal() {
+        let sub = 0
+        for (let ticket in this.state.ticketsArray) {
+            sub += this.state.ticketsArray[ticket].price
+        }
+        console.log(sub)
+        this.setState({subtotal: sub})
+        return sub
+      }
+
+      calcTotal() {
+        console.log(this.state.total)
+        let tot = this.calcSubtotal()
+        if (this.state.foundPromo && this.state.foundPromo <= 100) {
+            tot = tot * (1 - (this.state.foundPromo/100))
+            Math.round(tot * 100) / 100
+        }
+        console.log(tot)
+        tot = tot * 1.06
+        this.setState({total: tot})
       }
 
       handleSubmit() {
-
+        window.location.href="/checkout"
       }
+
+      async checkPromo(event) {
+        event.preventDefault()
+
+        const promoQuery = {
+            code: this.state.promo
+          }
+        
+          console.log(promoQuery)
+          const response = await fetch("http://localhost:5000/checkpromo", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(promoQuery),
+          })
+          .catch(error => {
+           window.alert(error);
+            return;
+          });
+
+        console.log(response)
+        const record = await response.json();
+        console.log(record)
+        if (response.status == 404) {
+            window.alert("Response error")
+            return
+        }
+        if (response.status == 400) {
+            window.alert("Promo code not valid")
+            return
+        }
+        this.setState({foundPromo: record.discount})
+        this.calcTotal()
+
+    }
     
     render() {
     return (
@@ -63,9 +144,9 @@ class OrderSummary extends React.Component {
                 <h2>Showing</h2>
                 <p>{this.state.showing._id}</p>
 
-                {this.state.cart.tickets &&
+                {this.state.ticketsArray &&
                     <div>
-                        <p>Seats: {this.state.cart.tickets.map((ticket) => (
+                        <p>Seats: {this.state.ticketsArray.map((ticket) => (
                             ticket.identifier+ "  "
                         ))}</p>
                         {this.state.numAdult > 0 && <div>
@@ -85,16 +166,20 @@ class OrderSummary extends React.Component {
                         </div>}
                     </div>
                 }
-
-                {this.state.cart && <div>
-                    {/*this.state.cart.promo !== 0 && <p>Discount: -{this.state.cart.promo}%</p>*/}
-                    <p>Subtotal: {this.state.cart.subtotal}</p>
-                    <p>Total: {this.state.cart.total}</p>
-                </div>}
             </div>
             <div class="orderBottom">
                 <div class="orderTotal">
-                    <h6 class="ticketPrice">Order Total: 74$</h6>
+                    {this.state.cart && <div>
+                        {/*this.state.cart.promo !== 0 && <p>Discount: -{this.state.cart.promo}%</p>*/}
+                        <p>Subtotal: ${this.state.subtotal}</p>
+                        <p>Total: ${this.state.total}</p>
+                    </div>}
+                </div>
+                <div>
+                    <label htmlFor="promo">Enter Promo: </label>
+                    <input class="textfield" type="text" name="promo" id="promo"  value={this.state.promo} onChange={this.handleInputChange}></input>
+                    <button onClick={this.checkPromo}>Apply</button>
+                    <br></br><br></br>
                 </div>
                 <button>Cancel</button>
                 <input class="textfield" type="submit" value="Continue to Checkout"></input>

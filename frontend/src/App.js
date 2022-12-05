@@ -78,7 +78,7 @@ const App = () => {
             <Route path="/forgotpassword" element=<ForgotPassword /> />
             <Route element = { <CustomerRoutes /> }>
                 <Route path="/editprofile" element=<EditProfile/> />
-                <Route path="/checkout/:id" element=<Checkout /> />
+                <Route path="/checkout" element=<Checkout /> />
                 <Route path="/enterpayment" element=<EnterPayment/> />
                 <Route path="/orderconfirmation" element=<OrderConfirmation /> />
                 <Route path="/orderhistory" element=<OrderHistory/> />
