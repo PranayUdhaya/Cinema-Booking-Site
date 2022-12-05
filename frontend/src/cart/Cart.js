@@ -29,9 +29,22 @@ class Cart {
         this.promo = amount
     }
 
-    calcTotal() {
-
+    calTotal() {
+        let total = this.calSubtotal()
+        if (this.promo <= 100) {
+            total = total * (100 - (this.promo/100))
+        }
+        return total
     }
+
+    calSubtotal() {
+        let subtotal = 0
+        for (let ticket in tickets) {
+            subtotal += ticket.price
+        }
+        return subtotal
+    }
+    
     
 }
 
