@@ -73,7 +73,7 @@ class Checkout extends React.Component {
                                 <p>{this.state.chosenCard.address}</p>
                             </div>
                         </div>}
-                        {/*this.state.cardsArray && this.state.cardsArray.map((card) => (
+                        {this.state.cardsArray && this.state.cardsArray.map((card) => (
                             <div key={card._id}>
                                 <p>{card.type}</p>
                                 <p>**** **** **** {card.cardLastFour}</p>
@@ -82,7 +82,7 @@ class Checkout extends React.Component {
                                 <br></br>
                             </div>
                             )) 
-                        */}
+                        }
                     </div>
                     <button onClick={this.handleContinue}>Place Order</button>
                     <a>Cancel Transaction</a>

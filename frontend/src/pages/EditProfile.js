@@ -220,7 +220,9 @@ class EditProfile extends React.Component {
                                 <div key={card._id}>
                                     <h5>Saved Card</h5>
                                     <h6 class="ticketItemInfo">Card Type: {card.type}</h6>
-                                    <h6 class="ticketItemInfo">Card Number: **** **** **** {"Insert last 4 card num here"}</h6>
+                                    <h6 class="ticketItemInfo">Card Number: **** **** **** {card.cardLastFour}</h6>
+                                    <h6 class="ticketItemInfo">{card.address}</h6>
+
                                     <a>Remove Card</a><br></br>
                                 </div>)
                             )} 
