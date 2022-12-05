@@ -56,10 +56,8 @@ exports.findCards = async (req, res) => {
             var decryptedAddress = doc.decryptedAddress();
             let obj = {
                 userID: doc.userID,
-                cardNumber: doc.cardNumber,
                 cardLastFour: decryptedCard,
                 expDate: doc.expDate,
-                securityCode: doc.securityCode,
                 address: decryptedAddress,
                 type: doc.type
             }
