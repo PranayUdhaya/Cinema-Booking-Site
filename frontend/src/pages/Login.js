@@ -75,6 +75,12 @@ class Login extends React.Component{
         this.createSession();
 
         console.log(this.state.email + this.state.pass + this.state.fname + this.state.lname + this.state.phone)
+        if (sessionStorage.getItem("checkout") === "true") {
+            const showing = JSON.parse(sessionStorage.getItem("currentShowing"))
+            console.log(showing._id)
+            window.location.href = "/checkout/" + showing._id
+            return
+        }
         window.location.href = "/home";
     }
 

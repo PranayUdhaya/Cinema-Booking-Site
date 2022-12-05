@@ -101,28 +101,41 @@ class Seat extends React.Component {
         let numYouth = this.state.youthCount
         let numElder = this.state.elderCount
 
+        console.log(seatTotal)
+        console.log(numYouth)
+        console.log(numElder)
+        console.log(this.state.boolArray)
+    
         for (let i in this.state.boolArray) {
-            if (this.state.boolArray[i] = false) {
+            if (this.state.boolArray[i] === false) {
                 continue
             }
-            if (this.state.youthCount > 0) {
+            if (numYouth > 0) {
                 const ticket = new Ticket(i, "youth", this.state.seatNames[i])
-                
+                cart.addTicket(ticket)
                 numYouth--
                 seatTotal--
                 continue
             }
-            if (this.state.elderCount > 0) {
+            if (numElder > 0) {
                 const ticket = new Ticket(i, "elder", this.state.seatNames[i])
+                cart.addTicket(ticket)
                 numElder--
                 seatTotal--
                 continue
             }
             const ticket = new Ticket(i, "adult", this.state.seatNames[i])
+            cart.addTicket(ticket)
+            seatTotal--
         }
+        console.log(cart)
+        console.log("Total: " + seatTotal)
+        console.log("Elder: " + numElder)
+        console.log("Youth: " + numYouth)
 
+        sessionStorage.setItem("checkout", "true")
 
-        if (window.sessionStorage.getItem("loggedIn") == "true") {
+        if (window.sessionStorage.getItem("loggedIn") === "true") {
             window.location.href = "/checkout"
         } else {
             window.location.href = "/login"

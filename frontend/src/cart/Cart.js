@@ -1,8 +1,7 @@
 class Cart {
     
-    constructor() {
+    constructor(id) {
         this.tickets = []
-
     }
 
 
