@@ -62,7 +62,7 @@ class AddCardCA extends React.Component{
         return
     }
 
-    //window.location.href = "/createconfirmation";
+    window.location.href = "/createconfirmation";
 }
 
 
