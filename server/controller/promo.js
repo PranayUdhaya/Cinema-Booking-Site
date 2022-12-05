@@ -22,11 +22,11 @@ exports.addPromo = async (req, res) => {
                 await newPromo.save();
                 return res.json(newPromo);
         } else {
-            return res.json({ message: "Promotion already exists", status: 400 })
+            return res.status(400).json({ message: "Promotion already exists"})
         }
     } catch (e) {
         console.log(e);
-        return res.json(e);
+        return res.status(404).json(e);
     }
 };
 
@@ -53,7 +53,7 @@ exports.sendPromo = async (req, res) => {
                     await sendEmail(result, "Promotional Email", `Check out our new promotion!\n${promotion.descriptor}\nUse code ${promotion.code}`);
                 } catch (e) {
                     console.log(`Promotional email could not be sent to ${result}`);
-                    console.log(e);
+                    return res.status(400).json(e);
                 }
             })
         }
@@ -61,22 +61,35 @@ exports.sendPromo = async (req, res) => {
         promotion.sentEmail = true;
         await promotion.save();
         return res.json({message: "sent"});
+        
     } catch (e) {
         console.log(e);
-        return res.json(e);
+        return res.status(404).json(e);
     }
 };
 
 exports.findPromos = async (req, res) => {
     let currentPromos = await Promo.find({});
     if (!currentPromos) {
-        return res.json({ message: "Internal Error", status: 404 });
+        return res.status(404).json({ message: "Promo code not found"});
     }
 
     return res.json(currentPromos);
 }
 
 exports.checkPromo = async (req, res) => {
-    console.log("In checkPromo function")
-    return res.json()
+    let checkCode = {code: req.body.code};
+
+    try {
+        let promo = await Promo.findOne(checkCode)
+        if (!promo) {
+            return res.status(400).json({message: "No promo code found"});
+        }
+
+        return res.json(promo)
+
+    } catch(e) {
+        console.log(e);
+        return res.status(404).json(e);
+    }
 }
