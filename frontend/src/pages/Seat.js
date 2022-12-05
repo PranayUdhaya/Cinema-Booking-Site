@@ -105,15 +105,17 @@ class Seat extends React.Component {
         console.log(numYouth)
         console.log(numElder)
         console.log(this.state.boolArray)
-    
+
+
         for (let i in this.state.boolArray) {
+            console.log(i)
             if (this.state.boolArray[i] === false) {
                 continue
             }
+            console.log(numYouth)
+            console.log(numYouth > 0)
             if (numYouth > 0) {
-                const ticket = new Ticket(i, "youth", this.state.seatNames[i])
-                cart.addTicket(ticket)
-                console.log(ticket)
+                cart.addTicket(new Ticket(i, "youth", this.state.seatNames[i]))
                 numYouth--
                 seatTotal--
                 console.log(numYouth)
@@ -121,15 +123,15 @@ class Seat extends React.Component {
                 continue
             }
             if (numElder > 0) {
-                const ticket = new Ticket(i, "elder", this.state.seatNames[i])
-                cart.addTicket(ticket)
+                let ticket2 = new Ticket(i, "elder", this.state.seatNames[i])
+                cart.addTicket(ticket2)
                 numElder--
                 seatTotal--
                 console.log(cart)
                 continue
             }
-            const ticket = new Ticket(i, "adult", this.state.seatNames[i])
-            cart.addTicket(ticket)
+            let ticket3 = new Ticket(i, "adult", this.state.seatNames[i])
+            cart.addTicket(ticket3)
             seatTotal--
             console.log(cart)
         }
