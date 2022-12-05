@@ -15,6 +15,7 @@ class OrderHistory extends React.Component {
 
     componentDidMount() {
         this.gatherOrders()
+        
     }
 
     async gatherOrders() {
@@ -36,11 +37,12 @@ class OrderHistory extends React.Component {
         
         console.log(response)
         const record = await response.json();
-        console.log(response)
+        console.log(record)
         if (!response.ok) {
             window.alert("Response error")
             return
         }
+        this.setState({orderArray: record})
     }
 
     render() {

@@ -15,6 +15,7 @@ class Checkout extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.checkPromo = this.checkPromo.bind(this);
+        this.handleContinue = this.handleContinue.bind(this);
     }
 
     handleInputChange(event) {
@@ -81,6 +82,10 @@ class Checkout extends React.Component {
 
     }
 
+    handleContinue() {
+        window.location.href = "/ordersummary"
+    }
+
     render() {
         return (
             <div>
@@ -95,7 +100,7 @@ class Checkout extends React.Component {
                                 <p>{this.state.chosenCard.address}</p>
                             </div>
                         </div>}
-                        {this.state.cardsArray && this.state.cardsArray.map((card) => (
+                        {/*this.state.cardsArray && this.state.cardsArray.map((card) => (
                             <div key={card._id}>
                                 <p>{card.type}</p>
                                 <p>**** **** **** {card.cardLastFour}</p>
@@ -104,14 +109,14 @@ class Checkout extends React.Component {
                                 <br></br>
                             </div>
                             )) 
-                        }
+                        */}
                     </div>
                     <div class="checkoutPromo">
                         <label htmlFor="promo">Enter Promo: </label>
                         <input class="textfield" type="text" name="promo" id="promo"  value={this.state.promo} onChange={this.handleInputChange}></input>
                         <button onClick={this.checkPromo}>Apply</button>
                     </div>
-                    <a>Continue</a>
+                    <button onClick={this.handleContinue}>Continue</button>
                     <a>Cancel Transaction</a>
                 </div>
             </div>

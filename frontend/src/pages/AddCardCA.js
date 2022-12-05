@@ -36,7 +36,6 @@ class AddCardCA extends React.Component{
     state: this.state.bState,
     zip: this.state.bZip,
     securityCode: this.state.cvc,
-
   }
 
   console.log(window.sessionStorage.getItem("id"))
@@ -124,7 +123,7 @@ class AddCardCA extends React.Component{
                   <input class="textfield" type="text" id="bZip" name="bZip" value={this.state.bZip} onChange={this.handleInputChange} required></input><br></br><br></br>
 
                   <input class="submit" type="submit" value="Submit"></input>
-                  
+
               </form>
               <a href="/createconfirmation">Skip for Now</a>
           </div>

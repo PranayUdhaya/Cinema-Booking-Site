@@ -113,8 +113,11 @@ class Seat extends React.Component {
             if (numYouth > 0) {
                 const ticket = new Ticket(i, "youth", this.state.seatNames[i])
                 cart.addTicket(ticket)
+                console.log(ticket)
                 numYouth--
                 seatTotal--
+                console.log(numYouth)
+                console.log(cart)
                 continue
             }
             if (numElder > 0) {
@@ -122,13 +125,17 @@ class Seat extends React.Component {
                 cart.addTicket(ticket)
                 numElder--
                 seatTotal--
+                console.log(cart)
                 continue
             }
             const ticket = new Ticket(i, "adult", this.state.seatNames[i])
             cart.addTicket(ticket)
             seatTotal--
+            console.log(cart)
         }
         console.log(cart)
+        JSON.stringify(cart)
+        sessionStorage.setItem("cart", JSON.stringify(cart))
         console.log("Total: " + seatTotal)
         console.log("Elder: " + numElder)
         console.log("Youth: " + numYouth)
@@ -136,7 +143,8 @@ class Seat extends React.Component {
         sessionStorage.setItem("checkout", "true")
 
         if (window.sessionStorage.getItem("loggedIn") === "true") {
-            window.location.href = "/checkout"
+            const showing = JSON.parse(sessionStorage.getItem("currentShowing"))
+            //window.location.href = "/checkout/" + showing._id
         } else {
             window.location.href = "/login"
         }
