@@ -3,34 +3,52 @@
  */
 // importing model
 const Card = require("../models/cards");
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+
+// utilizing bcrypt to hash a passed in parameter val
+const hashVal = async function(val) {
+    const hashedval = await bcrypt.hash(val, 10)
+    return hashedval;
+}
+
 
 // export createCard function
-exports.createCard = async (req, res) => {
+exports.createCard = async (req, res) => {   
+    const hashedCard = await hashVal(req.body.cardNumber);
+    const hashedcvc = await hashVal(req.body.securityCode);
+    console.log("card: " + hashedCard);
+    console.log("cvc: " + hashedcvc);
+    let lastFour = req.body.cardNumber.substring(15);
 
-    let lastFour
-    //Parse req.body.cardNumber to get last four digits. Assign to lastFour
+    // generate 16 bytes of random data
+    const initVector = crypto.randomBytes(16);
+
+    // secret key generate 32 bytes of random data
+    const securityKey = crypto.randomBytes(32);
 
     let newCard = new Card({
         userID: req.body.userId,
-        cardNumber: req.body.cardNumber,
+        cardNumber: hashedCard,
         cardLastFour: lastFour,
         expDate: req.body.expDate,
-        securityCode: req.body.securityCode,
+        securityCode: hashedcvc,
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
         zip: req.body.zip,
-        type: req.body.type
-    });    
+        type: req.body.type,
+        vect: initVector,
+        key: securityKey
+    });
 
     try  {
         await newCard.save();
+        return res.json(newCard);
     } catch (e) {
-        console.log("here")
         console.log(e);
         return res.json(e);
     }
-    return res.json(newCard);
 };
 
 // export deleteCard function
@@ -51,9 +69,10 @@ exports.findCards = async (req, res) => {
     try {
         const cards = Card.find({ userID: req.body.userId }).cursor();
         let arr = [];
-        for (let doc = await cursor.next(); doc != null; doc  = await cursor.next()) {
+        for (let doc = await cards.next(); doc != null; doc  = await cards.next()) {
+            console.log(doc);
             var decryptedCard = doc.decryptCard();
-            var decryptedAddress = doc.decryptedAddress();
+            var decryptedAddress = doc.decryptAddress();
             let obj = {
                 userID: doc.userID,
                 cardLastFour: decryptedCard,

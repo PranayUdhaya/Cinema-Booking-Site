@@ -57,7 +57,7 @@ class AddCard extends React.Component{
 
     console.log(response)
     const record = await response.json();
-    console.log(response)
+    console.log(record)
     if (!response.ok) {
         window.alert("Response error")
         return
