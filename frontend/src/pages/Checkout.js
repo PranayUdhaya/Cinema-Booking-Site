@@ -55,8 +55,22 @@ class Checkout extends React.Component {
     }
 
 
-    handleContinue() {
+    handleContinue(event) {
+        event.preventDefault()
+        if (!this.state.chosenCard) {
+            window.alert("Please select or enter a payment card")
+            return
+        }
         window.location.href = "/orderconfirmation"
+    }
+
+    addCard(event) {
+        event.preventDefault()
+        window.location.href="/addcard"
+    }
+
+    chooseCard() {
+        
     }
 
     render() {
@@ -78,12 +92,13 @@ class Checkout extends React.Component {
                                 <p>{card.type}</p>
                                 <p>**** **** **** {card.cardLastFour}</p>
                                 <p>{card.address}</p>
-                                <a>Choose this card</a>
+                                <a onClick={this.chooseCard}>Select this card</a>
                                 <br></br>
                             </div>
                             )) 
                         }
                     </div>
+                    <button onClick={this.addCard}>Add new card</button>
                     <button onClick={this.handleContinue}>Place Order</button>
                     <a>Cancel Transaction</a>
                 </div>

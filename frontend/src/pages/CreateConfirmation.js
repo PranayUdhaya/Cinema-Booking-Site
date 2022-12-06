@@ -52,6 +52,10 @@ class CreateConfirmation extends React.Component {
     } else if (record.message == "Success") {
         sessionStorage.setItem("status", "active");
         sessionStorage.setItem("empty", "false");
+        if (sessionStorage.getItem("checkout") === "true") {
+            window.location.href = "/ordersummary"
+            return
+        }
         window.location.href = "/home";
     } else {
         window.alert("Message error")

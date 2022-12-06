@@ -62,7 +62,10 @@ class AddCard extends React.Component{
         window.alert("Response error")
         return
     }
-
+    if (sessionStorage.getItem("checkout") === "true") {
+        window.location.href = "/checkout";
+        return
+    }
     window.location.href = "/editprofile";
 }
 
