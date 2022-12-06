@@ -76,8 +76,31 @@ exports.deleteOrder = async (req, res) => {
 exports.findOrders = async (req, res) => {
 
     try {
-        let orders = await Order.find({email: req.body.email});
-        return res.json(orders);
+        let orders = Order.find({email: req.body.email}).cursor();
+        let orderHistory = [];
+        for (let doc = await orders.next(); doc != null; doc = await orders.next()) {
+            let showing = Showing.find({_id: doc.showingID}).cursor();
+            let s = await showing.next();
+            let movie = Movie.find({_id:s.movie}).cursor();
+            let m = await movie.next();
+        
+            let startTime = s.startReadable;
+            let movieName = m.title;
+            let orderedSeats = "";
+            for (var i in doc.seats) {
+                orderedSeats += doc.seats[i] + " ";
+            }
+
+            let order = {
+                movie: movieName,
+                time: startTime,
+                seats: orderedSeats,
+                price: doc.totalPrice
+            }
+            orderHistory.push(order);
+        }
+        
+        return res.json(orderHistory);
     } catch (e) {
         console.log(e);
         return res.json(e);
