@@ -30,7 +30,7 @@ class EditProfile extends React.Component {
             promo: promoBool,
             cardsArray: "",
         };
-        console.log(this.state.promo)
+        //console.log(this.state.promo)
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
@@ -53,9 +53,9 @@ class EditProfile extends React.Component {
     handlePromo(event) {
         //console.log(!this.state.promo)
         const flip = !this.state.promo;
-        console.log(flip)
+        //console.log(flip)
         this.setState({promo: flip});
-        console.log(this.state.promo)
+        //console.log(this.state.promo)
     }
     
     async updatePassword(event) {
@@ -77,8 +77,8 @@ class EditProfile extends React.Component {
         updatedPassword: this.state.newPass
       }
     
-      console.log("email is: " + sessionStorage.getItem("email"));
-      console.log("loggedIn is: " + sessionStorage.getItem("loggedIn"));
+      //console.log("email is: " + sessionStorage.getItem("email"));
+      //console.log("loggedIn is: " + sessionStorage.getItem("loggedIn"));
 
       await fetch("http://localhost:5000/users/updatepass", {
         method: "POST",
@@ -103,7 +103,7 @@ class EditProfile extends React.Component {
 
     async updatePersonalInfo(event) {
         event.preventDefault(event);
-        console.log(this.state.promo)
+        //console.log(this.state.promo)
 
         const personalInfo = {
             email: sessionStorage.getItem("email"),
@@ -164,12 +164,17 @@ class EditProfile extends React.Component {
         }
         const record = await response.json();
         console.log(record)
+        for (let i in record) {
+            console.log(record[i].userID)
+            console.log(record[i]._id)
+        }
         this.setState({cardsArray: record})
     }
 
     async removeCard(event) {
         event.preventDefault();
         console.log(event.target.value)
+
         const query = {
             cardId: event.target.value
         }
@@ -191,6 +196,7 @@ class EditProfile extends React.Component {
         }
         const deleted = await response.json();
         console.log(deleted)
+        window.location.reload();
     }
 
     render() {
@@ -250,8 +256,8 @@ class EditProfile extends React.Component {
                                     <h6 class="ticketItemInfo">Card Type: {card.type}</h6>
                                     <h6 class="ticketItemInfo">Card Number: **** **** **** {card.cardLastFour}</h6>
                                     <h6 class="ticketItemInfo">{card.address}</h6>
-                                    <button onClick={this.removeCard} value={card._id}>Remove Card</button>
-                                    <br></br><br></br><br></br>
+                                    <button onClick={this.removeCard} value={card._id} >Remove Card</button>
+                                    <br ></br><br ></br><br ></br>
                                 </div>)
                             )} 
                             <a href="/addcard">Add New Card</a>
