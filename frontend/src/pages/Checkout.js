@@ -15,6 +15,7 @@ class Checkout extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleContinue = this.handleContinue.bind(this);
+        this.chooseCard = this.chooseCard.bind(this)
     }
 
     handleInputChange(event) {
@@ -61,6 +62,7 @@ class Checkout extends React.Component {
             window.alert("Please select or enter a payment card")
             return
         }
+        sessionStorage.setItem("card", JSON.stringify(this.state.chosenCard))
         window.location.href = "/orderconfirmation"
     }
 
@@ -69,8 +71,12 @@ class Checkout extends React.Component {
         window.location.href="/addcard"
     }
 
-    chooseCard() {
-        
+    chooseCard(event) {
+        event.preventDefault()
+        const card = this.state.cardsArray[event.target.value]
+        console.log(card)
+        this.setState({chosenCard: card})
+        console.log(this.state.chosenCard)
     }
 
     render() {
@@ -79,20 +85,23 @@ class Checkout extends React.Component {
                 <div class="checkout">
                     <h1 class="checkoutTitle">Checkout</h1>
                     <div class="checkoutPay">
-                        <h2 class="checkoutPayTitle">Selected Payment Card</h2>
-                        {this.state.chosenCard && <div class="selectedCard">
-                        <div key={this.state.chosenCard._id}>
-                                <p>{this.state.chosenCard.type}</p>
-                                <p>**** **** **** {this.state.chosenCard.cardLastFour}</p>
-                                <p>{this.state.chosenCard.address}</p>
-                            </div>
+                        {this.state.chosenCard && <div class="selectedCard" key={this.state.chosenCard._id}>
+                            <h2 class="checkoutPayTitle">Selected Payment Card</h2>
+                            <br></br>
+                            <p>{this.state.chosenCard.type}</p>
+                            <p>**** **** **** {this.state.chosenCard.cardLastFour}</p>
+                            <p>{this.state.chosenCard.address}</p>
+                            <br></br>
+                            <hr></hr>
+                            <br></br>
                         </div>}
-                        {this.state.cardsArray && this.state.cardsArray.map((card) => (
+                        <h2>Saved Cards</h2>
+                        {this.state.cardsArray && this.state.cardsArray.map((card, index) => (
                             <div key={card._id}>
                                 <p>{card.type}</p>
                                 <p>**** **** **** {card.cardLastFour}</p>
                                 <p>{card.address}</p>
-                                <a onClick={this.chooseCard}>Select this card</a>
+                                <button onClick={this.chooseCard} value={index}>Select this card</button>
                                 <br></br>
                             </div>
                             )) 

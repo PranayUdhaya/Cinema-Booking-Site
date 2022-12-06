@@ -58,6 +58,15 @@ class AddCard extends React.Component{
     console.log(response)
     const record = await response.json();
     console.log(record)
+    if (response.status === 205) {
+        window.alert("Card limit reached. Please remove a card before adding a new one.")
+        if (sessionStorage.getItem("checkout") === "true") {
+            window.location.href = "/checkout";
+            return
+        }
+        window.location.href = "/editprofile";
+        return
+    }
     if (!response.ok) {
         window.alert("Response error")
         return

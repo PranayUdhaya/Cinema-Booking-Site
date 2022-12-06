@@ -141,7 +141,7 @@ class EditProfile extends React.Component {
     }
 
     async fetchCards() {
-        console.log("in fetchCards")
+        console.log("In fetchCards")
         const query = {
             userId: sessionStorage.getItem("id")
           }
@@ -164,6 +164,14 @@ class EditProfile extends React.Component {
         const record = await response.json();
         console.log(record)
         this.setState({cardsArray: record})
+    }
+
+    removeCard(event) {
+        query = {
+            cardId: event.target.value
+        }
+
+        //Fetch request here
     }
 
     render() {
@@ -216,14 +224,15 @@ class EditProfile extends React.Component {
 
                         <div class="paymentDetails">
                             <h3>Payment Details</h3>
+                            <br></br>
                             {this.state.cardsArray && this.state.cardsArray.map((card) => (
                                 <div key={card._id}>
                                     <h5>Saved Card</h5>
                                     <h6 class="ticketItemInfo">Card Type: {card.type}</h6>
                                     <h6 class="ticketItemInfo">Card Number: **** **** **** {card.cardLastFour}</h6>
                                     <h6 class="ticketItemInfo">{card.address}</h6>
-
-                                    <a>Remove Card</a><br></br>
+                                    <button onClick={this.removeCard} value={card._id}>Remove Card</button>
+                                    <br></br><br></br><br></br>
                                 </div>)
                             )} 
                             <a href="/addcard">Add New Card</a>

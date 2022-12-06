@@ -57,6 +57,11 @@ class AddCardCA extends React.Component{
     console.log(response)
     const record = await response.json();
     console.log(record)
+    if (response.status === 205) {
+        window.alert("Card limit reached. Please remove a card before adding a new one.")
+        window.location.href = "/createconfirmation";
+        return
+    }
     if (!response.ok) {
         window.alert("Response error")
         return
