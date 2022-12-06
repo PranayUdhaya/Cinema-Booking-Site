@@ -28,7 +28,7 @@ exports.createCard = async (req, res) => {
     });
 
     if (numDocs >= 3) {
-        return res.json({message: "You already have three cards!"});
+        return res.json.status(205);
     }
 
     const hashedCard = await hashVal(req.body.cardNumber);
