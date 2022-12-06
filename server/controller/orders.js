@@ -7,7 +7,7 @@ const Order = require("../models/orders");
 // export createOrder function
 exports.createOrder = async (req, res) => {
 
-    const d = new Date(req.boby.date);
+    const d = new Date(req.body.date);
     const readable = d.toLocaleString();
     
 
