@@ -15,9 +15,12 @@ const hashVal = async function(val) {
 // export createCard function
 exports.createCard = async (req, res) => {
     
-    Card.
-
-    console.log("out");
+    const count = await Card.count({ userID: req.body.userId });
+    if (count >= 3) {
+        return res.status(210).json({message: "You have too many cards!"});
+    }
+    
+    
     const hashedCard = await hashVal(req.body.cardNumber);
     const hashedcvc = await hashVal(req.body.securityCode);
     let lastFour = req.body.cardNumber.substring(15);
