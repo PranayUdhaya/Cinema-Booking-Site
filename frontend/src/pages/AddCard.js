@@ -117,7 +117,7 @@ class AddCard extends React.Component{
                       <option value="other">Other</option>
                   </select><br></br>
                   <label htmlFor="cardNum">Enter Card Number</label><br></br>
-                  <input class="textfield" id="cardNum" name="cardNum" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" value={this.state.cardNum} onChange={this.handleInputChange} required></input><br></br>
+                  <input class="textfield" id="cardNum" name="cardNum" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="19" placeholder="xxxx xxxx xxxx xxxx" value={this.state.cardNum} onChange={this.handleInputChange} required></input><br></br>
                   <label htmlFor="cvc">Enter Security Code</label><br></br>
                   <input class="textfield" type="number" id="cvc" name="cvc" max="999" value={this.state.cvc} onChange={this.handleInputChange} required></input><br></br>
                   <label htmlFor="expiration">Enter Expiration Date</label><br></br>
