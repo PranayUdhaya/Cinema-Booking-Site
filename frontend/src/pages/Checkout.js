@@ -56,14 +56,63 @@ class Checkout extends React.Component {
     }
 
 
-    handleContinue(event) {
+    async handleContinue(event) {
         event.preventDefault()
         if (!this.state.chosenCard) {
             window.alert("Please select or enter a payment card")
             return
         }
-        sessionStorage.setItem("card", JSON.stringify(this.state.chosenCard))
-        window.location.href = "/orderconfirmation"
+
+        const cartObject = JSON.parse(sessionStorage.getItem("cart"))
+        const tempSeats = cartObject.cart.tickets
+
+        let a = 0
+        let y = 0
+        let e = 0
+
+        for (let i in cartObject.cart.tickets) {
+            switch(cartObject.cart.tickets[i].type) {
+                case "adult":
+                    a++
+                    break
+                case "youth":
+                    y++
+                    break
+                case "elder":
+                    e++
+                    break
+            }
+        }
+
+        const newOrder = {
+            email: sessionStorage.getItem("email"),
+            showingId: sessionStorage.getItem("currentShowing"),
+            seats: tempSeats,
+            numOfYouth: y,
+            numOfSenior: e,
+            totalPrice: sessionStorage.getItem("total")
+        }
+
+        const response = await fetch("http://localhost:5000/orders/add", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+        },
+            body: JSON.stringify(newOrder),
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+
+        const record = await response.json();
+        console.log(record)
+        if (!response.ok) {
+            window.alert("Response error")
+            return
+        }
+
+        //window.location.href = "/orderconfirmation"
     }
 
     addCard(event) {
@@ -85,7 +134,8 @@ class Checkout extends React.Component {
                 <div class="checkout">
                     <h1 class="checkoutTitle">Checkout</h1>
                     <div class="checkoutPay">
-                        {this.state.chosenCard && <div class="selectedCard" key={this.state.chosenCard._id}>
+                        {this.state.chosenCard && 
+                        <div key={this.state.chosenCard._id}>
                             <h2 class="checkoutPayTitle">Selected Payment Card</h2>
                             <br></br>
                             <p>{this.state.chosenCard.type}</p>

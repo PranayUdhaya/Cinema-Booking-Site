@@ -8,7 +8,7 @@ class OrderConfirmation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          
+            
         }
     
         //this.handleInputChange = this.handleInputChange.bind(this);

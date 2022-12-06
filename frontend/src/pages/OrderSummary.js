@@ -96,7 +96,9 @@ class OrderSummary extends React.Component {
 
       handleSubmit(event) {
         event.preventDefault()
+        sessionStorage.setItem("total", this.state.total)
         window.location.href="/checkout"
+
       }
 
       async checkPromo(event) {
@@ -152,17 +154,17 @@ class OrderSummary extends React.Component {
                         ))}</p>
                         {this.state.numAdult > 0 && <div>
                             <p>Adult Tickets x{this.state.numAdult}</p>
-                            <p>Unit Price $12</p>
+                            <p>Unit Price $12.00</p>
                             <br></br>
                         </div>}
                         {this.state.numElder > 0 && <div>
                             <p>Senior Tickets x{this.state.numElder}</p>
-                            <p>Unit Price $9</p>
+                            <p>Unit Price $9.00</p>
                             <br></br>
                         </div>}
                         {this.state.numYouth > 0 && <div>
                             <p>Youth Tickets x{this.state.numYouth}</p>
-                            <p>Unit Price $8</p>
+                            <p>Unit Price $8.00</p>
                             <br></br>
                         </div>}
                     </div>
@@ -172,7 +174,7 @@ class OrderSummary extends React.Component {
                 <div class="orderTotal">
                     {this.state.cart && <div>
                         {/*this.state.cart.promo !== 0 && <p>Discount: -{this.state.cart.promo}%</p>*/}
-                        <p>Subtotal: ${this.state.subtotal}</p>
+                        <p>Subtotal: ${this.state.subtotal}.00</p>
                         <p>Total: ${this.state.total}</p>
                     </div>}
                 </div>
