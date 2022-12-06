@@ -64,7 +64,11 @@ class Checkout extends React.Component {
         }
 
         const cartObject = JSON.parse(sessionStorage.getItem("cart"))
-        const tempSeats = cartObject.cart.tickets
+        let tempSeats = [];
+        for (var i in cartObject.cart.tickets) {
+            tempSeats [i] = cartObject.cart.tickets[i].identifier
+        }
+        
 
         let a = 0
         let y = 0
@@ -84,14 +88,18 @@ class Checkout extends React.Component {
             }
         }
 
+        const idObject = JSON.parse(sessionStorage.getItem("currentShowing"))._id;
+
         const newOrder = {
             email: sessionStorage.getItem("email"),
-            showingId: sessionStorage.getItem("currentShowing"),
+            showingId: idObject,
             seats: tempSeats,
             numOfYouth: y,
             numOfSenior: e,
             totalPrice: sessionStorage.getItem("total")
         }
+
+        console.log(newOrder);
 
         const response = await fetch("http://localhost:5000/orders/add", {
             method: "POST",

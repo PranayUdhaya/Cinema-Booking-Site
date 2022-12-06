@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
  
 const OrderSchema = mongoose.Schema({
     email: String,
+    date: Date,
+    dateReadable: String,
     showingID: ObjectId,
     seats: [String],
     numOfYouth: Number,

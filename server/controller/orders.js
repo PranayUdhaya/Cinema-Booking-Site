@@ -7,13 +7,19 @@ const Order = require("../models/orders");
 // export createOrder function
 exports.createOrder = async (req, res) => {
 
+    const d = new Date(req.boby.date);
+    const readable = d.toLocaleString();
+    
+
     let newOrder = new Order({
         email: req.body.email,
+        date: req.body.date,
+        dateReadable: readable,
         showingID: req.body.showingId,
         seats: req.body.seats,
         numOfYouth: req.body.numOfYouth,
         numOfSenior: req.body.numOfSenior, 
-        totalPrice: req.body.totalPrice
+        totalPrice: req.body.totalPrice,
     });    
 
     try  {
@@ -46,5 +52,23 @@ exports.findOrders = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.json(e);
+    }
+};
+
+
+exports.confirmationEmail = async (req, res) => {
+    //confirmation number, price, tickets, theater, date/time, movie
+    let email = req.body.email;
+    //add other variables here
+
+    try {
+        //sends email with order details
+        //add in order detail information here later
+        await sendEmail(email, `Order Confirmation ${"confirmation number"}`, `Order details`);
+        return res.json();
+
+    } catch(e) {
+        console.log(e);
+        return res.status(404).json({message: `Email could not be sent to ${user.email}`})
     }
 };
