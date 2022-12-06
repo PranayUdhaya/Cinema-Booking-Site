@@ -91,7 +91,7 @@ class OrderSummary extends React.Component {
         console.log(tot)
         tot = tot * 1.06
         tot = Math.round(tot * 100) / 100
-        this.setState({total: tot})
+        this.setState({total: tot.toPrecision(4)})
       }
 
       handleSubmit(event) {
