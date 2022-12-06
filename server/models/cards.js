@@ -106,7 +106,6 @@ CardSchema.methods.decryptAddress = function() {
     decryptedState += stateDecipher.final("utf8");
     decryptedZip += zipDecipher.final("utf8");
     const fullAddress = decryptedAddress + " " + decryptedCity + ", " + decryptedState + " " + decryptedZip;
-    console.log("Full address: " + fullAddress);
     return fullAddress;
 }
 

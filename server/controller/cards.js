@@ -17,7 +17,7 @@ exports.createCard = async (req, res) => {
     
     const count = await Card.count({ userID: req.body.userId });
     if (count >= 3) {
-        return res.status(210).json({message: "You have too many cards!"});
+        return res.status(205).json({message: "You have too many cards!"});
     }
     
     
