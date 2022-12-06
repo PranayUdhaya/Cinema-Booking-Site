@@ -137,6 +137,17 @@ class Seat extends React.Component {
 
         sessionStorage.setItem("checkout", "true")
 
+
+        const newArray = this.state.activeArray
+        for (let i in this.state.boolArray) {
+            if (this.state.boolArray[i] === false) {
+                continue
+            }
+            newArray[i] = "unavailable"
+        }
+
+        sessionStorage.setItem("seatArray", newArray)
+
         if (window.sessionStorage.getItem("loggedIn") === "true") {
             const showing = JSON.parse(sessionStorage.getItem("currentShowing"))
             window.location.href = "/ordersummary"

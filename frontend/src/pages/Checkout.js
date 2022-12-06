@@ -34,10 +34,10 @@ class Checkout extends React.Component {
     async fetchCards() {
         const query = {
             userId: sessionStorage.getItem("id")
-          }
+        }
         
           
-          const response = await fetch("http://localhost:5000/cards/find", {
+        const response = await fetch("http://localhost:5000/cards/find", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -100,7 +100,7 @@ class Checkout extends React.Component {
             date: new Date(),
         }
 
-        console.log(newOrder);
+        //console.log(newOrder);
 
         const response = await fetch("http://localhost:5000/orders/add", {
             method: "POST",
@@ -115,9 +115,33 @@ class Checkout extends React.Component {
         });
 
         const record = await response.json();
-        console.log(record)
+        sessionStorage.setItem("currentOrder", record)
+
         if (!response.ok) {
             window.alert("Response error")
+            return
+        }
+
+        const seatQuery = {
+            seats: sessionStorage.getItem("seatArray"),
+        }
+
+        const response2 = await fetch("http://localhost:5000/showings/updateseats", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+        },
+            body: JSON.stringify(seatQuery),
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+
+        const record2 = await response.json();
+
+        if (!response2.ok) {
+            window.alert("Response2 error")
             return
         }
 
