@@ -2,6 +2,7 @@
  *  Defining the CRUD functions that will be called in routes/showings.js
  */
 // importing model
+const { findOneAndUpdate } = require("../models/showings");
 const Showing = require("../models/showings");
 
 // export createShowing function
@@ -119,3 +120,18 @@ exports.findShowingsById = async (req, res) => {
         return res.json(e);
     }
 };
+
+// export a method that updates the available seats based off of a customer's order
+exports.updateShowingSeats = async (req, res) => {
+    let seatUpdate = {
+        seats: req.body.seats
+    };
+
+    try {
+        let showing = await findOneAndUpdate({_id: req.body._id}, seatUpdate);
+        return res.json(showing);
+    } catch (e) {
+        console.log(e);
+        return res.json(e);
+    }
+}
