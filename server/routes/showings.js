@@ -18,5 +18,8 @@ router.post("/showings/delete", showingsController.deleteShowing);
 
 // This request will find all showings associated with a movie ID
 router.post("/showings/findall", showingsController.findShowings);
- 
+
+// This request will update the seats array for a showing based off of customer orders
+router.post("/showings/updateseats", showingsController.updateShowingSeats);
+
 module.exports = router;

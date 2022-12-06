@@ -3,6 +3,9 @@
  */
 // importing model
 const Order = require("../models/orders");
+const Showing = require("../models/showings");
+const Movie = require("../models/movies");
+const sendEmail = require("../utils/sendEmail");
 
 // export createOrder function
 exports.createOrder = async (req, res) => {
@@ -28,6 +31,25 @@ exports.createOrder = async (req, res) => {
         console.log(e);
         return res.json(e);
     }
+
+    try {
+        // sends confirmation email to user
+        const showing = await Showing.find({_id: newOrder.showingID});
+        const movie = await Movie.find({_id:showing.movie});
+        const startTime = showing.startReadable
+        const movieName = movie.title
+        await sendEmail(email, `Order Confirmation ${newOrder._id}`, 
+            "Order details:" +
+            "\nMovie: " + movieName + 
+            "\nDate and Time: " + startTime);
+        return res.json();
+
+    } catch(e) {
+        console.log(e);
+        return res.status(404).json({message: `Email could not be sent to ${user.email}`})
+    }
+
+
     return res.json(newOrder);
 };
 
@@ -52,23 +74,5 @@ exports.findOrders = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.json(e);
-    }
-};
-
-
-exports.confirmationEmail = async (req, res) => {
-    //confirmation number, price, tickets, theater, date/time, movie
-    let email = req.body.email;
-    //add other variables here
-
-    try {
-        //sends email with order details
-        //add in order detail information here later
-        await sendEmail(email, `Order Confirmation ${"confirmation number"}`, `Order details`);
-        return res.json();
-
-    } catch(e) {
-        console.log(e);
-        return res.status(404).json({message: `Email could not be sent to ${user.email}`})
     }
 };
