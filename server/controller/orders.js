@@ -93,6 +93,7 @@ exports.findOrders = async (req, res) => {
 
             let order = {
                 orderNumber: doc._id,
+                date: doc.dateReadable,
                 movie: movieName,
                 time: startTime,
                 seats: orderedSeats,
