@@ -156,12 +156,12 @@ class OrderSummary extends React.Component {
                         </div>}
                         {this.state.numElder > 0 && <div>
                             <p>Senior Tickets x{this.state.numElder}</p>
-                            <p>Unit Price $8</p>
+                            <p>Unit Price $9</p>
                             <br></br>
                         </div>}
                         {this.state.numYouth > 0 && <div>
                             <p>Youth Tickets x{this.state.numYouth}</p>
-                            <p>Unit Price $9</p>
+                            <p>Unit Price $8</p>
                             <br></br>
                         </div>}
                     </div>
