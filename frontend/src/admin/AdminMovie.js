@@ -116,14 +116,13 @@ export default function Movie() {
                                 <h4>Showing</h4>
                                 <p>Time: {showing.startReadable}</p>
                                 <p>Showroom: {showing.room}</p>
-                                <a href="/book">Book This Showing</a><br></br><br></br><br></br>
+                                <br></br><br></br><br></br>
                             </div>
                         ))
                         
                         }
                         {!showingsFound && 
                         <p>No available showtimes</p>}
-                    <a hidden href="/book">Book Tickets</a>
                 </div>
             </div>
             }

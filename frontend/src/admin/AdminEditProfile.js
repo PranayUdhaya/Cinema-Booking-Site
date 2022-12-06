@@ -28,14 +28,16 @@ class AdminEditProfile extends React.Component {
             pState: "",
             pZip: "",
             promo: promoBool,
+            cardsArray: "",
         };
-        console.log(this.state.promo)
+        //console.log(this.state.promo)
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
         this.updatePersonalInfo = this.updatePersonalInfo.bind(this);
         this.logout = this.logout.bind(this);
         this.handlePromo = this.handlePromo.bind(this);
+        this.removeCard = this.removeCard.bind(this);
     }
     
 
@@ -51,14 +53,19 @@ class AdminEditProfile extends React.Component {
     handlePromo(event) {
         //console.log(!this.state.promo)
         const flip = !this.state.promo;
-        console.log(flip)
+        //console.log(flip)
         this.setState({promo: flip});
-        console.log(this.state.promo)
+        //console.log(this.state.promo)
     }
     
     async updatePassword(event) {
         event.preventDefault(event);
         
+        if (this.state.newPass.localeCompare(this.state.newPass2) != 0) {
+            window.alert("Passwords do not match")
+            return
+          }
+
         /*if (this.state.newPass != this.state.newPass2) {
             alert("New Passwords do not match!");
             return;
@@ -75,10 +82,10 @@ class AdminEditProfile extends React.Component {
         updatedPassword: this.state.newPass
       }
     
-      console.log("email is: " + sessionStorage.getItem("email"));
-      console.log("loggedIn is: " + sessionStorage.getItem("loggedIn"));
+      //console.log("email is: " + sessionStorage.getItem("email"));
+      //console.log("loggedIn is: " + sessionStorage.getItem("loggedIn"));
 
-      await fetch("http://localhost:5000/users/updatepass", {
+      const response = await fetch("http://localhost:5000/users/updatepass", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,6 +96,16 @@ class AdminEditProfile extends React.Component {
        window.alert(error);
         return;
       });
+
+      if (response.status === 505) {
+        alert("Original password is incorrect")
+        return
+      }
+
+      if (response.status === 500) {
+        alert("Error")
+        return
+      }
 
       alert("Password updated");
 
@@ -101,7 +118,7 @@ class AdminEditProfile extends React.Component {
 
     async updatePersonalInfo(event) {
         event.preventDefault(event);
-        console.log(this.state.promo)
+        //console.log(this.state.promo)
 
         const personalInfo = {
             email: sessionStorage.getItem("email"),
@@ -132,13 +149,70 @@ class AdminEditProfile extends React.Component {
 
     logout(event) {
         sessionStorage.clear()
-        /*sessionStorage.setItem("loggedIn", "false");
-        sessionStorage.setItem("fname", "");
-        sessionStorage.setItem("lname", "")
-        sessionStorage.setItem("phone", "")
-        sessionStorage.setItem("promo", false)
-        sessionStorage.setItem("email", "")*/
         window.location.href = "/home";
+    }
+
+    componentDidMount() {
+        this.fetchCards()
+    }
+
+    async fetchCards() {
+        console.log("In fetchCards")
+        const query = {
+            userId: sessionStorage.getItem("id")
+          }
+          console.log(query)
+          const response = await fetch("http://localhost:5000/cards/find", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+        })
+        .catch(error => {
+        window.alert(error);
+            return;
+        });
+        if (!response.ok) {
+            console.log("Card fetch error")
+            return
+        }
+        const record = await response.json();
+        console.log(record)
+        for (let i in record) {
+            console.log(record[i].userID)
+            console.log(record[i]._id)
+        }
+        this.setState({cardsArray: record})
+    }
+
+    async removeCard(event) {
+        event.preventDefault();
+        console.log(event.target.value)
+
+        const query = {
+            cardId: event.target.value
+        }
+        console.log(query)
+        const response = await fetch("http://localhost:5000/cards/delete", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query)
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+        if (!response.ok) {
+            console.log("Card not deleted");
+            return;
+        }
+        const deleted = await response.json();
+        console.log(deleted)
+        window.alert("Card has been removed")
+        window.location.reload();
     }
 
     render() {
@@ -189,16 +263,6 @@ class AdminEditProfile extends React.Component {
                         </form>
                         </div>
 
-                        <div class="paymentDetails">
-                            <h3>Payment Details</h3>
-                            <h5 hidden>Saved Card</h5>
-                            <h6 hidden class="ticketItemInfo">Card Type: Visa</h6>
-                            <h6 hidden class="ticketItemInfo">Card Number: **** **** **** 5848</h6>
-                            <a hidden>Remove Card</a><br></br>
-                            <a>Add New Card</a>
-                        </div>
-
-                        <a>View Order History</a>
                         <button class="logoutButton" onClick={this.logout}>logout</button>
                 </div>
                 

@@ -11,6 +11,7 @@ class AdminSearch extends React.Component {
             genreQuery: "",
             availability: "",
             results: "",
+            noResult: "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -56,7 +57,56 @@ class AdminSearch extends React.Component {
         this.setState({results: queryResults})
 
         console.log(queryResults)
+        if (queryResults.length == 0) {
+            this.setState({noResult: true})
+        } else {
+            this.setState({noResult: false})
+        }
     }
+
+    componentDidMount() {
+        this.defaultSearch();
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    async defaultSearch() {
+        const query = {
+            title: this.state.titleQuery,
+            category: this.state.genreQuery,
+            availability: this.state.availability,
+
+        }
+
+        //console.log(this.state)
+        const response = await fetch("http://localhost:5000/search", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+          })
+          .catch(error => {
+           window.alert(error);
+            return;
+          });
+
+        //console.log(response);
+
+        const queryResults = await response.json();
+
+        this.setState({results: queryResults})
+        if (queryResults.length == 0) {
+            this.setState({noResult: true})
+        } else {
+            this.setState({noResult: false})
+        }
+
+        //console.log(queryResults)
+    }
+
 
     render() {
       return (
@@ -89,6 +139,7 @@ class AdminSearch extends React.Component {
                         </div>
                     </div>
                 ))}
+                {this.state.noResult && <h2>Movie does not exist. Please try another.</h2>}
                 </div>
             </div>
         )

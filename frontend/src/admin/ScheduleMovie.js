@@ -158,7 +158,7 @@ export default function ScheduleMovie() {
                     </form>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="date">Enter Date: </label><br></br>
-                        <input class="textfield" type="date" id="date" name="date" min="2022-11-21" value={date} onChange={handleDateChange}></input><br></br>
+                        <input class="textfield" type="date" id="date" name="date" min="2023-12-07" value={date} onChange={handleDateChange}></input><br></br>
 
                         <label htmlFor="startTime">Enter Start Time: </label><br></br>
                         <input class="textfield" type="time" id="startTime" name="startTime" value={start} onChange={handleStartChange}></input><br></br>

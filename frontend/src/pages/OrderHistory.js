@@ -54,11 +54,16 @@ class OrderHistory extends React.Component {
                     {this.state.orderArray && this.state.orderArray.map((order) => (
                         <div key={order._id}>
                             <h2>{order.dateReadable}</h2><br></br>
-                            <p class="bookingNumber">Order Number: {order._id}</p>
-
-                            <p>Showtime: {}</p>
-                            <p>{order.seats}</p>
-                            <p>Order Total: ${order.totalPrice.toPrecision(4)}</p>
+                            <p class="bookingNumber">Order Number: {order.orderNumber}</p>
+                            <p>Order Date: {order.date}</p>
+                            <br></br>
+                            <p>Movie: {order.movie}</p>
+                            <br></br>
+                            <p>Showtime: {order.time}</p>
+                            <br></br>
+                            <p>Selected Seats: {order.seats}</p>
+                            <br></br>
+                            <p>Order Total: ${order.price}</p>
                             <br></br>
                             <hr></hr>
                             <br></br>
