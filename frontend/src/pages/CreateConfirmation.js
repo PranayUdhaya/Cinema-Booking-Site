@@ -90,7 +90,7 @@ class CreateConfirmation extends React.Component {
                   <input class="smalltextfield" type="text" id="confCode" name="confCode" value={this.state.confCode} onChange={this.handleInputChange}></input>
                   <input class="submit" type="submit" value="Enter"></input>
               </form>
-              <button>Resend Code</button>
+              <button hidden>Resend Code</button>
           </div>
       </div>
     )

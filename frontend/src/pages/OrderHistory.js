@@ -55,7 +55,10 @@ class OrderHistory extends React.Component {
                         <div key={order._id}>
                             <h2>{order.dateReadable}</h2><br></br>
                             <p class="bookingNumber">Order Number: {order._id}</p>
-                            <p>Order Total: {order.totalPrice}$</p>
+
+                            <p>Showtime: {}</p>
+                            <p>{order.seats}</p>
+                            <p>Order Total: ${order.totalPrice.toPrecision(4)}</p>
                             <br></br>
                             <hr></hr>
                             <br></br>

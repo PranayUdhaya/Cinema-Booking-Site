@@ -39,8 +39,11 @@ class CreateAccount extends React.Component{
 
   // This function will handle the submission.
  async handleSubmit(e) {
-  e.preventDefault();
-
+    e.preventDefault();
+    if (this.state.pass.localeCompare(this.state.pass2) != 0) {
+        window.alert("Passwords do not match")
+        return
+      }
 
   // When a post request is sent to the create url, we'll add a new record to the database.
   //const newPerson = { ...form };

@@ -33,7 +33,7 @@ class OrderConfirmation extends React.Component {
                 <h2>Order Details</h2>
                     {this.state.order && 
                     <div>
-                        <p>Total: {}</p>
+                        <p>Total: {this.state.order.totalPrice}</p>
                     </div>}
                 </div>
             </div>

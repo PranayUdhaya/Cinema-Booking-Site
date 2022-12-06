@@ -115,7 +115,7 @@ class AddCardCA extends React.Component{
                   <label htmlFor="cvc">Enter Security Code</label><br></br>
                   <input class="textfield" type="number" id="cvc" name="cvc" max="999" value={this.state.cvc} onChange={this.handleInputChange} required></input><br></br>
                   <label htmlFor="expiration">Enter Expiration Date</label><br></br>
-                  <input class="textfield" type="month" id="expiration" name="expiration" min="2022-09" value={this.state.expiration} onChange={this.handleInputChange} required></input><br></br><br></br>
+                  <input class="textfield" type="month" id="expiration" name="expiration" min="2023-01" value={this.state.expiration} onChange={this.handleInputChange} required></input><br></br><br></br>
                   
                   <h4>Enter Billing Address Info</h4>
                   <label htmlFor="bAddress">Street Address</label><br></br>

@@ -27,6 +27,7 @@ class OrderSummary extends React.Component {
         this.calcSubtotal = this.calcSubtotal.bind(this);
         this.calcTotal = this.calcTotal.bind(this);
         this.checkPromo = this.checkPromo.bind(this);
+        this.handleCancel = this.handleCancel.bind(this)
       }
 
       handleInputChange(event) {
@@ -77,6 +78,9 @@ class OrderSummary extends React.Component {
         for (let ticket in this.state.ticketsArray) {
             sub += this.state.ticketsArray[ticket].price
         }
+        if (this.state.foundPromo && this.state.foundPromo <= 100) {
+            sub = sub * (1 - (this.state.foundPromo/100))
+        }
         console.log(sub)
         this.setState({subtotal: sub})
         return sub
@@ -85,18 +89,17 @@ class OrderSummary extends React.Component {
       calcTotal() {
         console.log(this.state.total)
         let tot = this.calcSubtotal()
-        if (this.state.foundPromo && this.state.foundPromo <= 100) {
-            tot = tot * (1 - (this.state.foundPromo/100))
-        }
         console.log(tot)
         tot = tot * 1.06
         tot = Math.round(tot * 100) / 100
-        this.setState({total: tot.toPrecision(4)})
+        this.setState({total: tot})
       }
 
       handleSubmit(event) {
         event.preventDefault()
         sessionStorage.setItem("total", this.state.total)
+        const numTotal = this.state.numAdult + this.state.numElder + this.state.numYouth
+        sessionStorage.setItem("numTickets", numTotal)
         window.location.href="/checkout"
 
       }
@@ -136,6 +139,15 @@ class OrderSummary extends React.Component {
         this.calcTotal()
 
     }
+
+    handleCancel(event) {
+        event.preventDefault()
+        sessionStorage.setItem("cart", "")
+        sessionStorage.setItem("currentShowing", "")
+        sessionStorage.setItem("seatArray", "")
+        sessionStorage.setItem("checkout", "false")
+        window.location.href = "/home"
+    }
     
     render() {
     return (
@@ -145,7 +157,7 @@ class OrderSummary extends React.Component {
         <form onSubmit={this.handleSubmit}>
             <div class="allTickets">
                 <h2>Showing</h2>
-                <p>{this.state.showing._id}</p>
+                <p>{this.state.showing.startReadable}</p>
 
                 {this.state.ticketsArray &&
                     <div>
@@ -174,8 +186,9 @@ class OrderSummary extends React.Component {
                 <div class="orderTotal">
                     {this.state.cart && <div>
                         {/*this.state.cart.promo !== 0 && <p>Discount: -{this.state.cart.promo}%</p>*/}
-                        <p>Subtotal: ${this.state.subtotal}.00</p>
-                        <p>Total: ${this.state.total}</p>
+                        {this.state.foundPromo && <p>Promo: {this.state.promo} applied for {this.state.foundPromo}% off</p>}
+                        <p>Subtotal: ${this.state.subtotal && this.state.subtotal.toPrecision(4)}</p>
+                        <p>Total: ${this.state.total && this.state.total.toPrecision()}</p>
                     </div>}
                 </div>
                 <div>
@@ -184,8 +197,10 @@ class OrderSummary extends React.Component {
                     <button onClick={this.checkPromo}>Apply</button>
                     <br></br><br></br>
                 </div>
-                <button>Cancel</button>
                 <button onClick={this.handleSubmit}>Continue to Checkout</button>
+                <br></br>
+                <br></br>
+                <button onClick={this.handleCancel}>Cancel</button>
             </div>
         </form>
     </div>

@@ -123,12 +123,14 @@ exports.findShowingsById = async (req, res) => {
 
 // export a method that updates the available seats based off of a customer's order
 exports.updateShowingSeats = async (req, res) => {
+    console.log("In updateShowingSeats")
+    console.log(req.body.seats)
     let seatUpdate = {
         seats: req.body.seats
     };
 
     try {
-        let showing = await Showing.findOneAndUpdate({_id: req.body._id}, seatUpdate, options.new=true);
+        let showing = await Showing.findOneAndUpdate({_id: req.body._id}, seatUpdate);
         return res.json(showing);
     } catch (e) {
         console.log(e);

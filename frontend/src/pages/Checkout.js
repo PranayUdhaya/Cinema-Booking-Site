@@ -49,9 +49,9 @@ class Checkout extends React.Component {
             return;
           });
           //console.log(response.ok);
-          console.log(response);
+          //console.log(response);
           const record = await response.json();
-          console.log(record)
+          //console.log(record)
           this.setState({cardsArray: record})
     }
 
@@ -115,16 +115,23 @@ class Checkout extends React.Component {
         });
 
         const record = await response.json();
-        sessionStorage.setItem("currentOrder", record)
+        //console.log(record)
+        sessionStorage.setItem("currentOrder", JSON.stringify(record))
 
         if (!response.ok) {
             window.alert("Response error")
             return
         }
 
+
+        //console.log(sessionStorage.getItem("seatArray"))
+        //console.log(JSON.parse(sessionStorage.getItem("seatArray")))
         const seatQuery = {
-            seats: sessionStorage.getItem("seatArray"),
+            seats: JSON.parse(sessionStorage.getItem("seatArray")),
+            _id: JSON.parse(sessionStorage.getItem("currentShowing"))._id
         }
+
+
 
         const response2 = await fetch("http://localhost:5000/showings/updateseats", {
             method: "POST",
@@ -138,14 +145,13 @@ class Checkout extends React.Component {
             return;
         });
 
-        const record2 = await response.json();
-
         if (!response2.ok) {
             window.alert("Response2 error")
             return
         }
-
-        //window.location.href = "/orderconfirmation"
+        //console.log(response)
+        //const record2 = await response.json();
+        window.location.href = "/orderconfirmation"
     }
 
     addCard(event) {
@@ -156,9 +162,9 @@ class Checkout extends React.Component {
     chooseCard(event) {
         event.preventDefault()
         const card = this.state.cardsArray[event.target.value]
-        console.log(card)
+        //console.log(card)
         this.setState({chosenCard: card})
-        console.log(this.state.chosenCard)
+        //console.log(this.state.chosenCard)
     }
 
     render() {

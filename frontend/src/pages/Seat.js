@@ -139,6 +139,7 @@ class Seat extends React.Component {
 
 
         const newArray = this.state.activeArray
+        console.log(newArray)
         for (let i in this.state.boolArray) {
             if (this.state.boolArray[i] === false) {
                 continue
@@ -146,7 +147,7 @@ class Seat extends React.Component {
             newArray[i] = "unavailable"
         }
 
-        sessionStorage.setItem("seatArray", newArray)
+        sessionStorage.setItem("seatArray", JSON.stringify(newArray))
 
         if (window.sessionStorage.getItem("loggedIn") === "true") {
             const showing = JSON.parse(sessionStorage.getItem("currentShowing"))

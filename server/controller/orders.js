@@ -51,7 +51,7 @@ exports.createOrder = async (req, res) => {
             "\nMovie: " + movieName + 
             "\nDate and Time: " + startTime + 
             "\nSeats: " + orderedSeats + 
-            "\nPrice: $" + newOrder.totalPrice);
+            "\nPrice: $" + newOrder.totalPrice.toPrecision(4));
 
     } catch(e) {
         console.log(e);

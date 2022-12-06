@@ -80,7 +80,7 @@ class EditProfile extends React.Component {
       //console.log("email is: " + sessionStorage.getItem("email"));
       //console.log("loggedIn is: " + sessionStorage.getItem("loggedIn"));
 
-      await fetch("http://localhost:5000/users/updatepass", {
+      const response = await fetch("http://localhost:5000/users/updatepass", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,6 +91,16 @@ class EditProfile extends React.Component {
        window.alert(error);
         return;
       });
+
+      if (response.status === 505) {
+        alert("Original password is incorrect")
+        return
+      }
+
+      if (response.status === 500) {
+        alert("Error")
+        return
+      }
 
       alert("Password updated");
 
@@ -196,6 +206,7 @@ class EditProfile extends React.Component {
         }
         const deleted = await response.json();
         console.log(deleted)
+        window.alert("Card has been removed")
         window.location.reload();
     }
 

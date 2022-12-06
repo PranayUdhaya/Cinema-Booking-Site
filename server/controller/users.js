@@ -100,9 +100,9 @@ exports.updatePassword = async (req, res) => {
     let user = await User.findOne({ email });
     user.comparePassword(password, async function(matchError, isMatch) {
         if (matchError) {
-            return res.status(404).json({ message: "Error"});
+            return res.status(500).json({ message: "Error"});
         } else if (!isMatch) {
-            return res.status(404).json({ message: "Incorrect Password"});
+            return res.status(505).json({ message: "Incorrect Password"});
         } else if (isMatch) {
             user.password = updatedPassword;
             await user.save();
@@ -188,8 +188,8 @@ exports.verifyAccount = async (req, res) => {
         if (tokenDb) {
             user.status = "active";
             await user.save();
-            return res.json({message: "Success"});
             await Token.deleteOne(tokenDb);
+            return res.json({message: "Success"});
         } else {
             return res.status(404).json({message: "Failure"});
         }
