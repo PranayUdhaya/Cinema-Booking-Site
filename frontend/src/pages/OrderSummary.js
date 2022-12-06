@@ -94,7 +94,8 @@ class OrderSummary extends React.Component {
         this.setState({total: tot})
       }
 
-      handleSubmit() {
+      handleSubmit(event) {
+        event.preventDefault()
         window.location.href="/checkout"
       }
 
@@ -182,7 +183,7 @@ class OrderSummary extends React.Component {
                     <br></br><br></br>
                 </div>
                 <button>Cancel</button>
-                <input class="textfield" type="submit" value="Continue to Checkout"></input>
+                <button onClick={this.handleSubmit}>Continue to Checkout</button>
             </div>
         </form>
     </div>
