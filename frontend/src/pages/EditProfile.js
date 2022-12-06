@@ -167,7 +167,7 @@ class EditProfile extends React.Component {
     }
 
     removeCard(event) {
-        query = {
+        const query = {
             cardId: event.target.value
         }
 
