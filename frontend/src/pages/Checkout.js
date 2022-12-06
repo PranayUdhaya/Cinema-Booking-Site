@@ -90,7 +90,8 @@ class Checkout extends React.Component {
             seats: tempSeats,
             numOfYouth: y,
             numOfSenior: e,
-            totalPrice: sessionStorage.getItem("total")
+            totalPrice: sessionStorage.getItem("total"),
+            date: new Date(),
         }
 
         const response = await fetch("http://localhost:5000/orders/add", {
