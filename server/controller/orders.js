@@ -41,23 +41,38 @@ exports.createOrder = async (req, res) => {
 
         const startTime = s.startReadable;
         const movieName = m.title;
+        const theater = s.room;
         
         let orderedSeats = "";
+        let tickets = 0;
         for (var i in newOrder.seats) {
             orderedSeats += newOrder.seats[i] + " ";
+            tickets++;
         }
         await sendEmail(newOrder.email, `Order Confirmation ${newOrder._id}`, 
             "Order details:" +
             "\nMovie: " + movieName + 
             "\nDate and Time: " + startTime + 
+            "\nTheater: " + theater + 
             "\nSeats: " + orderedSeats + 
             "\nPrice: $" + newOrder.totalPrice.toPrecision(4));
 
+        let orderDetails = {
+            orderID: newOrder._id,
+            movie: movieName,
+            time: startTime,
+            orderedSeats: orderedSeats,
+            theater: theater,
+            numOftickets: tickets,
+            numOfYouth: newOrder.numOfYouth,
+            numOfSenior: newOrder.numOfSenior,
+            price: newOrder.totalPrice,
+        }
+        return res.json(orderDetails);
     } catch(e) {
         console.log(e);
         return res.status(404).json({message: `Email could not be sent to ${newOrder.email}`})
     }
-    return res.json(newOrder);
 };
 
 // export deleteOrder function
