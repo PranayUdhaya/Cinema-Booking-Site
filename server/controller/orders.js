@@ -38,7 +38,7 @@ exports.createOrder = async (req, res) => {
         let s = await showing.next();
         const movie = Movie.find({_id:s.movie}).cursor();
         let m = await movie.next();
-        
+
         const startTime = s.startReadable;
         const movieName = m.title;
         
@@ -51,7 +51,7 @@ exports.createOrder = async (req, res) => {
             "\nMovie: " + movieName + 
             "\nDate and Time: " + startTime + 
             "\nSeats: " + orderedSeats + 
-            "\nPrice: " + newOrder.totalPrice);
+            "\nPrice: $" + newOrder.totalPrice);
 
     } catch(e) {
         console.log(e);
