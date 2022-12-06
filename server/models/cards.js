@@ -41,7 +41,6 @@ CardSchema.pre("save", function (next) {
                     let encryptedCard = cipher.update(msgCard, "utf-8", "hex");
                     encryptedCard += cipher.final("hex");
                     card.cardLastFour = encryptedCard;
-                    console.log("cardLastFour: " + encryptedCard);
                     break;
                 case 1:
                     // getting the msg (address)
@@ -49,7 +48,6 @@ CardSchema.pre("save", function (next) {
                     let encryptedAddress = cipher.update(msgAddress, "utf-8", "hex");
                     encryptedAddress += cipher.final("hex");
                     card.address = encryptedAddress;
-                    console.log("address: " + encryptedAddress);
                     break;
                 case 2:
                     // getting the msg (city)
@@ -57,7 +55,6 @@ CardSchema.pre("save", function (next) {
                     let encryptedCity = cipher.update(msgCity, "utf-8", "hex");
                     encryptedCity += cipher.final("hex");
                     card.city = encryptedCity;
-                    console.log("city: " + encryptedCity);
                     break;
                 case 3:
                     // getting the msg (state)
@@ -65,7 +62,6 @@ CardSchema.pre("save", function (next) {
                     let encryptedState = cipher.update(msgState, "utf-8", "hex");
                     encryptedState += cipher.final("hex");
                     card.state = encryptedState;
-                    console.log("state: " + encryptedState);
                     break;
                 case 4:
                     // getting the msg (zip)
@@ -73,12 +69,9 @@ CardSchema.pre("save", function (next) {
                     let encryptedZip = cipher.update(msgZip, "utf-8", "hex");
                     encryptedZip += cipher.final("hex");
                     card.zip = encryptedZip;
-                    console.log("zip: " + encryptedZip);
                     break;
             }
-            console.log("in loop");
         }
-        console.log("out of loop");
         next();
     }
 });

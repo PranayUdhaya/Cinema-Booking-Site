@@ -12,29 +12,14 @@ const hashVal = async function(val) {
     return hashedval;
 }
 
-
 // export createCard function
 exports.createCard = async (req, res) => {
     
-    let numDocs;
-    var query = Card.find({ userID: req.body.userId });
-    query.count(function (err, count) {
-        if (err) {
-            return res.json.status(200);
-        }
-        else {
-            numDocs = count;
-        }
-    });
+    Card.
 
-    if (numDocs >= 3) {
-        return res.json.status(205);
-    }
-
+    console.log("out");
     const hashedCard = await hashVal(req.body.cardNumber);
     const hashedcvc = await hashVal(req.body.securityCode);
-    console.log("card: " + hashedCard);
-    console.log("cvc: " + hashedcvc);
     let lastFour = req.body.cardNumber.substring(15);
 
     // generate 16 bytes of random data
@@ -86,10 +71,10 @@ exports.findCards = async (req, res) => {
         const cards = Card.find({ userID: req.body.userId }).cursor();
         let arr = [];
         for (let doc = await cards.next(); doc != null; doc  = await cards.next()) {
-            console.log(doc);
             var decryptedCard = doc.decryptCard();
             var decryptedAddress = doc.decryptAddress();
             let obj = {
+                _id: doc._id,
                 userID: doc.userID,
                 cardLastFour: decryptedCard,
                 expDate: doc.expDate,
