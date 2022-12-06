@@ -73,7 +73,7 @@ exports.findCards = async (req, res) => {
     try {
         const cards = Card.find({ userID: req.body.userId }).cursor();
         let arr = [];
-        for (let doc = await cards.next(); doc != null; doc  = await cards.next()) {
+        for (let doc = await cards.next(); doc != null; doc = await cards.next()) {
             var decryptedCard = doc.decryptCard();
             var decryptedAddress = doc.decryptAddress();
             let obj = {

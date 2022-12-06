@@ -34,22 +34,29 @@ exports.createOrder = async (req, res) => {
 
     try {
         // sends confirmation email to user
-        const showing = await Showing.find({_id: newOrder.showingID});
-        const movie = await Movie.find({_id:showing.movie});
-        const startTime = showing.startReadable
-        const movieName = movie.title
-        await sendEmail(email, `Order Confirmation ${newOrder._id}`, 
+        const showing = Showing.find({_id: newOrder.showingID}).cursor();
+        let s = await showing.next();
+        const movie = Movie.find({_id:s.movie}).cursor();
+        let m = await movie.next();
+        
+        const startTime = s.startReadable;
+        const movieName = m.title;
+        
+        let orderedSeats = "";
+        for (var i in newOrder.seats) {
+            orderedSeats += newOrder.seats[i] + " ";
+        }
+        await sendEmail(newOrder.email, `Order Confirmation ${newOrder._id}`, 
             "Order details:" +
             "\nMovie: " + movieName + 
-            "\nDate and Time: " + startTime);
-        return res.json();
+            "\nDate and Time: " + startTime + 
+            "\nSeats: " + orderedSeats + 
+            "\nPrice: " + newOrder.totalPrice);
 
     } catch(e) {
         console.log(e);
-        return res.status(404).json({message: `Email could not be sent to ${user.email}`})
+        return res.status(404).json({message: `Email could not be sent to ${newOrder.email}`})
     }
-
-
     return res.json(newOrder);
 };
 
