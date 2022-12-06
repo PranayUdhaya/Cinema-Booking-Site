@@ -75,7 +75,7 @@ exports.deleteCard = async (req, res) => {
         return res.json(card);
     } catch (e) {
         console.log(e);
-        return res.json(e);
+        return res.status(404).json(e);
     }
 };
 

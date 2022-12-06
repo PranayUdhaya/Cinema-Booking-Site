@@ -37,6 +37,7 @@ class EditProfile extends React.Component {
         this.updatePersonalInfo = this.updatePersonalInfo.bind(this);
         this.logout = this.logout.bind(this);
         this.handlePromo = this.handlePromo.bind(this);
+        this.removeCard = this.removeCard.bind(this);
     }
     
 
@@ -166,12 +167,30 @@ class EditProfile extends React.Component {
         this.setState({cardsArray: record})
     }
 
-    removeCard(event) {
+    async removeCard(event) {
+        event.preventDefault();
+        console.log(event.target.value)
         const query = {
             cardId: event.target.value
         }
-
-        //Fetch request here
+        console.log(query)
+        const response = await fetch("http://localhost:5000/cards/delete", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query)
+        })
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+        if (!response.ok) {
+            console.log("Card not deleted");
+            return;
+        }
+        const deleted = await response.json();
+        console.log(deleted)
     }
 
     render() {
