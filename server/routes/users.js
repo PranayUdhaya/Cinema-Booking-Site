@@ -29,15 +29,9 @@ router.post("/users/findusers", userController.findAllUsers);
 router.post("/users/forgetpassword", userController.forgetPassword);
 
 // this api will verify if the password reset code and user match with one in the database
-router.post("/users/verifyforgetpassword", userController.verifyForgetPassword)
+router.post("/users/verifyforgetpassword", userController.verifyForgetPassword);
 
 // this api will update the user's password in the database after going through the forgot password process
-router.post("/users/changeforgetpassword", userController.changeForgetPassword)
-
-// this api will send the user a confirmation email of their order
-router.post("/users/confirmationemail", userController.confirmationEmail)
-
-// this api will retrieve the user's order history
-router.post("/users/orderhistory", userController.orderHistory)
+router.post("/users/changeforgetpassword", userController.changeForgetPassword);
 
 module.exports = router;
