@@ -128,7 +128,7 @@ exports.updateShowingSeats = async (req, res) => {
     };
 
     try {
-        let showing = await findOneAndUpdate({_id: req.body._id}, seatUpdate);
+        let showing = await Showing.findOneAndUpdate({_id: req.body._id}, seatUpdate, options.new=true);
         return res.json(showing);
     } catch (e) {
         console.log(e);
