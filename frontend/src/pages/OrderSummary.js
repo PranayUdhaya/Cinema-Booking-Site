@@ -87,10 +87,10 @@ class OrderSummary extends React.Component {
         let tot = this.calcSubtotal()
         if (this.state.foundPromo && this.state.foundPromo <= 100) {
             tot = tot * (1 - (this.state.foundPromo/100))
-            tot = Math.round(tot * 100) / 100
         }
         console.log(tot)
         tot = tot * 1.06
+        tot = Math.round(tot * 100) / 100
         this.setState({total: tot})
       }
 
